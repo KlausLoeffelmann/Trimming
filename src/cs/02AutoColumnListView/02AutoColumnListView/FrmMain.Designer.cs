@@ -31,7 +31,7 @@ namespace AutoColumnListViewDemo
         private void InitializeComponent()
         {
             _btnDeployDemoData = new Button();
-            autoColumnListView1 = new AutoColumnListView();
+            _customerListView = new AutoColumnListView();
             SuspendLayout();
             // 
             // _btnDeployDemoData
@@ -42,26 +42,27 @@ namespace AutoColumnListViewDemo
             _btnDeployDemoData.TabIndex = 1;
             _btnDeployDemoData.Text = "Populate Demo Data";
             _btnDeployDemoData.UseVisualStyleBackColor = true;
+            _btnDeployDemoData.Click += _btnDeployDemoData_Click;
             // 
-            // autoColumnListView1
+            // _customerListView
             // 
-            autoColumnListView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            autoColumnListView1.FullRowSelect = true;
-            autoColumnListView1.GridLines = true;
-            autoColumnListView1.ItemType = typeof(DataSources.Customer);
-            autoColumnListView1.Location = new Point(11, 12);
-            autoColumnListView1.Name = "autoColumnListView1";
-            autoColumnListView1.Size = new Size(819, 325);
-            autoColumnListView1.TabIndex = 2;
-            autoColumnListView1.UseCompatibleStateImageBehavior = false;
-            autoColumnListView1.View = View.Details;
+            _customerListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            _customerListView.FullRowSelect = true;
+            _customerListView.GridLines = true;
+            _customerListView.ItemType = typeof(DataSources.Customer);
+            _customerListView.Location = new Point(11, 12);
+            _customerListView.Name = "_customerListView";
+            _customerListView.Size = new Size(819, 325);
+            _customerListView.TabIndex = 2;
+            _customerListView.UseCompatibleStateImageBehavior = false;
+            _customerListView.View = View.Details;
             // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(843, 423);
-            Controls.Add(autoColumnListView1);
+            Controls.Add(_customerListView);
             Controls.Add(_btnDeployDemoData);
             Name = "FrmMain";
             Text = "AutoColumnListView - Demo";
@@ -70,6 +71,6 @@ namespace AutoColumnListViewDemo
 
         #endregion
         private Button _btnDeployDemoData;
-        private AutoColumnListView autoColumnListView1;
+        private AutoColumnListView _customerListView;
     }
 }

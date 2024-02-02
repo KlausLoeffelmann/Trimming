@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Reflection;
 
 namespace AutoColumnListViewDemo.Controls;
@@ -8,12 +10,13 @@ namespace AutoColumnListViewDemo.Controls;
 /// </summary>
 public partial class AutoColumnListView : ListView
 {
-    private Type? _itemType;
-
     /// <summary>
     ///  Raised when the <see cref="ItemType"/> property has changed.
     /// </summary>
     public event EventHandler? ItemTypeChanged;
+
+    private Type? _itemType;
+    private INotifyCollectionChanged? _observableCollection;
 
     /// <summary>
     ///  Initializes a new instance of the <see cref="AutoColumnListView"/> class.
@@ -43,6 +46,74 @@ public partial class AutoColumnListView : ListView
             BuildColumns();
             OnItemTypeChanged();
         }
+    }
+
+    protected override void OnDataContextChanged(EventArgs e)
+    {
+        base.OnDataContextChanged(e);
+        if (base.DataContext is INotifyCollectionChanged observableCollection)
+        {
+            if (_observableCollection is not null)
+            {
+                _observableCollection.CollectionChanged -= ObservableCollection_CollectionChanged;
+            }
+
+            _observableCollection = observableCollection;
+            _observableCollection.CollectionChanged += ObservableCollection_CollectionChanged;
+        }
+        else
+        {
+            if (_observableCollection is not null)
+            {
+                _observableCollection.CollectionChanged -= ObservableCollection_CollectionChanged;
+                _observableCollection = null;
+            }
+        }
+    }
+
+    private void ObservableCollection_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems is not null)
+        {
+            foreach (var item in e.NewItems)
+            {
+                AddItem(item);
+            }
+        }
+        else if (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems is not null)
+        {
+            foreach (var item in e.OldItems)
+            {
+                //RemoveItem(item);
+            }
+        }
+    }
+
+    private void AddItem(object item)
+    {
+        if (item is null)
+        {
+            return;
+        }
+
+        var listViewItem = new ListViewItem();
+
+        PropertyInfo[] properties = item.GetType().GetProperties();
+
+        foreach (PropertyInfo property in properties)
+        {
+            var displayAttribute = property.GetCustomAttribute<SRDisplayNameAttribute>();
+
+            if (displayAttribute is not null)
+            {
+                listViewItem.SubItems.Add(property.GetValue(item)?.ToString() ?? string.Empty);
+                continue;
+            }
+
+            listViewItem.SubItems.Add(property.Name);
+        }
+
+        Items.Add(listViewItem);
     }
 
     /// <summary>
