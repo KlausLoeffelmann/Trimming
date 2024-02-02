@@ -55,6 +55,7 @@ public class Customer : INotifyPropertyChanged
         }
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_CustomerNumber), typeof(SR))]
     public int CustomerNumber
     {
         get => _customerNumber;
@@ -68,6 +69,7 @@ public class Customer : INotifyPropertyChanged
         }
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_FirstName), typeof(SR))]
     public string? FirstName
     {
         get => _firstName;
@@ -88,6 +90,7 @@ public class Customer : INotifyPropertyChanged
         return firstNames[random.Next(firstNames.Length)];
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_LastName), typeof(SR))]
     public string? LastName
     {
         get => _lastName;
@@ -108,6 +111,7 @@ public class Customer : INotifyPropertyChanged
         return lastNames[random.Next(lastNames.Length)];
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_Email), typeof(SR))]
     public string? Email
     {
         get => _email;
@@ -130,6 +134,7 @@ public class Customer : INotifyPropertyChanged
         return $"{firstName.ToLower()}.{lastName.ToLower()}@{domains[random.Next(domains.Length)]}";
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_AddressLine1), typeof(SR))]
     public string? AddressLine1
     {
         get => _addressLine1;
@@ -143,6 +148,7 @@ public class Customer : INotifyPropertyChanged
         }
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_AddressLine2), typeof(SR))]
     public string? AddressLine2
     {
         get => _addressLine2;
@@ -163,6 +169,7 @@ public class Customer : INotifyPropertyChanged
         return addressLines[random.Next(addressLines.Length)];
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_City), typeof(SR))]
     public string? City
     {
         get => _city;
@@ -183,6 +190,7 @@ public class Customer : INotifyPropertyChanged
         return cities[random.Next(cities.Length)];
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_State), typeof(SR))]
     public string? State
     {
         get => _state;
@@ -203,6 +211,7 @@ public class Customer : INotifyPropertyChanged
         return states[random.Next(states.Length)];
     }
 
+    [SRDisplayName(nameof(SR.Customer_DisplayName_PostalCode), typeof(SR))]
     public string? PostalCode
     {
         get => _postalCode;
@@ -221,6 +230,7 @@ public class Customer : INotifyPropertyChanged
         Random random = new();
         return random.Next(10000, 99999).ToString();
     }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName)

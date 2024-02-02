@@ -36,10 +36,9 @@ namespace AutoColumnListViewDemo
             // 
             // _btnDeployDemoData
             // 
-            _btnDeployDemoData.Location = new Point(276, 271);
-            _btnDeployDemoData.Margin = new Padding(3, 2, 3, 2);
+            _btnDeployDemoData.Location = new Point(315, 361);
             _btnDeployDemoData.Name = "_btnDeployDemoData";
-            _btnDeployDemoData.Size = new Size(151, 32);
+            _btnDeployDemoData.Size = new Size(173, 43);
             _btnDeployDemoData.TabIndex = 1;
             _btnDeployDemoData.Text = "Populate Demo Data";
             _btnDeployDemoData.UseVisualStyleBackColor = true;
@@ -50,22 +49,20 @@ namespace AutoColumnListViewDemo
             autoColumnListView1.FullRowSelect = true;
             autoColumnListView1.GridLines = true;
             autoColumnListView1.ItemType = typeof(DataSources.Customer);
-            autoColumnListView1.Location = new Point(10, 9);
-            autoColumnListView1.Margin = new Padding(3, 2, 3, 2);
+            autoColumnListView1.Location = new Point(11, 12);
             autoColumnListView1.Name = "autoColumnListView1";
-            autoColumnListView1.Size = new Size(717, 241);
+            autoColumnListView1.Size = new Size(819, 325);
             autoColumnListView1.TabIndex = 2;
             autoColumnListView1.UseCompatibleStateImageBehavior = false;
             autoColumnListView1.View = View.Details;
             // 
             // FrmMain
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(738, 345);
+            ClientSize = new Size(843, 423);
             Controls.Add(autoColumnListView1);
             Controls.Add(_btnDeployDemoData);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "FrmMain";
             Text = "AutoColumnListView - Demo";
             ResumeLayout(false);

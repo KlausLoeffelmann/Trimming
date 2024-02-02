@@ -61,11 +61,92 @@ namespace AutoColumnListViewDemo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Customer ID&quot;.
+        ///   Looks up a localized string similar to Address1.
+        /// </summary>
+        internal static string Customer_DisplayName_AddressLine1 {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_AddressLine1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address2.
+        /// </summary>
+        internal static string Customer_DisplayName_AddressLine2 {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_AddressLine2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        internal static string Customer_DisplayName_City {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer No.
+        /// </summary>
+        internal static string Customer_DisplayName_CustomerNumber {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_CustomerNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string Customer_DisplayName_Email {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First name.
+        /// </summary>
+        internal static string Customer_DisplayName_FirstName {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer ID.
         /// </summary>
         internal static string Customer_DisplayName_IDCustomerName {
             get {
                 return ResourceManager.GetString("Customer_DisplayName_IDCustomerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last name.
+        /// </summary>
+        internal static string Customer_DisplayName_LastName {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZIP Code.
+        /// </summary>
+        internal static string Customer_DisplayName_PostalCode {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_PostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State.
+        /// </summary>
+        internal static string Customer_DisplayName_State {
+            get {
+                return ResourceManager.GetString("Customer_DisplayName_State", resourceCulture);
             }
         }
     }
