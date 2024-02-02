@@ -7,6 +7,33 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AppDesignerFolder>Resources</AppDesignerFolder>
+    <UpdateXlfOnBuild>true</UpdateXlfOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.XliffTasks" Version="9.0.0-beta.24101.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\SR.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SR.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <!-- Add more language-specific resource files here -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="xlf\" />
+    <Folder Include="Resources\xlf\" />
+  </ItemGroup>
 
 </Project>

@@ -1,6 +1,9 @@
-﻿using System.ComponentModel;
+﻿using AutoColumnListViewDemo.Controls;
+using AutoColumnListViewDemo.Resources;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
-namespace AutoColumnListViewDemo;
+namespace AutoColumnListViewDemo.DataSources;
 
 public class Customer : INotifyPropertyChanged
 {
@@ -15,6 +18,30 @@ public class Customer : INotifyPropertyChanged
     private string? _state;
     private string? _postalCode;
 
+    public static async Task GenerateSampleRecordsAsync(ObservableCollection<Customer> customers, int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            Customer customer = new()
+            {
+                IdCustomer = Guid.NewGuid(),
+                CustomerNumber = i + 1,
+                FirstName = GenerateRandomFirstName(),
+                LastName = GenerateRandomLastName(),
+                Email = GenerateRandomEmail(),
+                AddressLine1 = GenerateRandomAddressLine(),
+                AddressLine2 = GenerateRandomAddressLine(),
+                City = GenerateRandomCity(),
+                State = GenerateRandomState(),
+                PostalCode = GenerateRandomPostalCode()
+            };
+
+            customers.Add(customer);
+            await Task.Delay(100); // Delay to simulate asynchronous operation
+        }
+    }
+
+    [SRDisplayName(nameof(SR.Customer_DisplayName_IDCustomerName), typeof(SR))]
     public Guid IdCustomer
     {
         get => _idCustomer;
@@ -54,6 +81,13 @@ public class Customer : INotifyPropertyChanged
         }
     }
 
+    private static string GenerateRandomFirstName()
+    {
+        string[] firstNames = ["John", "Emma", "Michael", "Olivia", "William", "Ava", "James", "Sophia", "Benjamin", "Isabella"];
+        Random random = new();
+        return firstNames[random.Next(firstNames.Length)];
+    }
+
     public string? LastName
     {
         get => _lastName;
@@ -67,6 +101,13 @@ public class Customer : INotifyPropertyChanged
         }
     }
 
+    private static string GenerateRandomLastName()
+    {
+        string[] lastNames = ["Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor"];
+        Random random = new();
+        return lastNames[random.Next(lastNames.Length)];
+    }
+
     public string? Email
     {
         get => _email;
@@ -78,6 +119,15 @@ public class Customer : INotifyPropertyChanged
                 OnPropertyChanged(nameof(Email));
             }
         }
+    }
+
+    private static string GenerateRandomEmail()
+    {
+        string[] domains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com"];
+        Random random = new();
+        string firstName = GenerateRandomFirstName();
+        string lastName = GenerateRandomLastName();
+        return $"{firstName.ToLower()}.{lastName.ToLower()}@{domains[random.Next(domains.Length)]}";
     }
 
     public string? AddressLine1
@@ -106,6 +156,13 @@ public class Customer : INotifyPropertyChanged
         }
     }
 
+    private static string GenerateRandomAddressLine()
+    {
+        string[] addressLines = ["123 Main St", "456 Elm St", "789 Oak St", "321 Pine St", "654 Maple St"];
+        Random random = new();
+        return addressLines[random.Next(addressLines.Length)];
+    }
+
     public string? City
     {
         get => _city;
@@ -117,6 +174,13 @@ public class Customer : INotifyPropertyChanged
                 OnPropertyChanged(nameof(City));
             }
         }
+    }
+
+    private static string GenerateRandomCity()
+    {
+        string[] cities = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"];
+        Random random = new();
+        return cities[random.Next(cities.Length)];
     }
 
     public string? State
@@ -132,6 +196,13 @@ public class Customer : INotifyPropertyChanged
         }
     }
 
+    private static string GenerateRandomState()
+    {
+        string[] states = ["California", "Texas", "Florida", "New York", "Pennsylvania", "Illinois", "Ohio", "Georgia", "North Carolina", "Michigan"];
+        Random random = new();
+        return states[random.Next(states.Length)];
+    }
+
     public string? PostalCode
     {
         get => _postalCode;
@@ -145,6 +216,11 @@ public class Customer : INotifyPropertyChanged
         }
     }
 
+    private static string GenerateRandomPostalCode()
+    {
+        Random random = new();
+        return random.Next(10000, 99999).ToString();
+    }
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName)
