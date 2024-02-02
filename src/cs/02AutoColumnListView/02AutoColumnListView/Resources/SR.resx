@@ -117,7 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Customer_DisplayName_AddressLine1" xml:space="preserve">
+    <value>Address1</value>
+  </data>
+  <data name="Customer_DisplayName_AddressLine2" xml:space="preserve">
+    <value>Address2</value>
+  </data>
+  <data name="Customer_DisplayName_City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Customer_DisplayName_CustomerNumber" xml:space="preserve">
+    <value>Customer No</value>
+  </data>
+  <data name="Customer_DisplayName_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Customer_DisplayName_FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
   <data name="Customer_DisplayName_IDCustomerName" xml:space="preserve">
-    <value>"Customer ID"</value>
+    <value>Customer ID</value>
+  </data>
+  <data name="Customer_DisplayName_LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="Customer_DisplayName_PostalCode" xml:space="preserve">
+    <value>ZIP Code</value>
+  </data>
+  <data name="Customer_DisplayName_State" xml:space="preserve">
+    <value>State</value>
   </data>
 </root>
