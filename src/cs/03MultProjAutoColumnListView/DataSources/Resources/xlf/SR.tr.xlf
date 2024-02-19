@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="tr" original="../SR.resx">
+    <body>
+      <trans-unit id="Customer_DisplayName_AddressLine1">
+        <source>Address1</source>
+        <target state="new">Address1</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_AddressLine2">
+        <source>Address2</source>
+        <target state="new">Address2</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_City">
+        <source>City</source>
+        <target state="new">City</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_CustomerNumber">
+        <source>Customer No</source>
+        <target state="new">Customer No</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_Email">
+        <source>Email</source>
+        <target state="new">Email</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_FirstName">
+        <source>First name</source>
+        <target state="new">First name</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_IDCustomerName">
+        <source>Customer ID</source>
+        <target state="new">Customer ID</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_LastName">
+        <source>Last name</source>
+        <target state="new">Last name</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_PostalCode">
+        <source>ZIP Code</source>
+        <target state="new">ZIP Code</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Customer_DisplayName_State">
+        <source>State</source>
+        <target state="new">State</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
