@@ -12,6 +12,31 @@
         <target state="new">Populate Demo Data</target>
         <note />
       </trans-unit>
+      <trans-unit id="exitToolStripMenuItem.Text">
+        <source>Quit</source>
+        <target state="new">Quit</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="fileToolStripMenuItem.Text">
+        <source>&amp;File</source>
+        <target state="new">&amp;File</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="menuStrip1.Text">
+        <source>menuStrip1</source>
+        <target state="new">menuStrip1</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="optionsToolStripMenuItem.Text">
+        <source>&amp;Options...</source>
+        <target state="new">&amp;Options...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="toolsToolStripMenuItem.Text">
+        <source>&amp;Tools</source>
+        <target state="new">&amp;Tools</target>
+        <note />
+      </trans-unit>
     </body>
   </file>
 </xliff>

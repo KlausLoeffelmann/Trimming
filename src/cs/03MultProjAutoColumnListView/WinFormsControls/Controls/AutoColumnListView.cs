@@ -17,6 +17,7 @@ public partial class AutoColumnListView : ListView
 
     private Type? _itemType;
     private INotifyCollectionChanged? _observableCollection;
+    private string[] _keyFilter = [];
 
     /// <summary>
     ///  Initializes a new instance of the <see cref="AutoColumnListView"/> class.
@@ -80,12 +81,20 @@ public partial class AutoColumnListView : ListView
                 AddItem(item);
             }
         }
-        else if (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems is not null)
+    }
+
+    public string[] KeyFilter
+    {
+        get => _keyFilter;
+        set
         {
-            foreach (var item in e.OldItems)
+            if (_keyFilter == value)
             {
-                //RemoveItem(item);
+                return;
             }
+
+            _keyFilter = value;
+            BuildColumns();
         }
     }
 
@@ -169,16 +178,21 @@ public partial class AutoColumnListView : ListView
 
         foreach (PropertyInfo property in properties)
         {
+            if (_keyFilter.Length > 0 && !_keyFilter.Contains(property.Name))
+            {
+                continue;
+            }
+
             // Check if we have a DisplayNameAttribute, and if yes, use it:
             var displayAttribute = property.GetCustomAttribute<SRDisplayNameAttribute>();
 
             if (displayAttribute is not null)
             {
-                Columns.Add(displayAttribute.DisplayName);
+                Columns.Add(displayAttribute.ResourceKey, displayAttribute.DisplayName);
                 continue;
             }
 
-            Columns.Add(property.Name);
+            Columns.Add(property.Name, property.Name);
         }
 
         AutoSizeColumnsByColumnTextWidth();

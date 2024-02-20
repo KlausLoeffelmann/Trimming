@@ -16,4 +16,6 @@ public class SRDisplayNameAttribute(string resourceKey, Type resourceType) : Dis
             return displayName ?? base.DisplayName;
         }
     }
+
+    public string ResourceKey => _resourceKey;
 }
