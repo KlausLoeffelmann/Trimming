@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-Windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	  <PublishTrimmed>true</PublishTrimmed>
+	  <PublishAot>true</PublishAot>
+	  <InvariantGlobalization>true</InvariantGlobalization>
+	  <TrimmerSingleWarn>false</TrimmerSingleWarn>
+	  <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+	  <EnableTrimAnalyzers>true</EnableTrimAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DataSource\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="8.0.0" />
+    <PackageReference Include="Private.WinForms" Version="8.0.0" />
+    <PackageReference Include="System.CodeDom" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

@@ -5,17 +5,20 @@ VisualStudioVersion = 17.10.34529.300
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoColumnListView", "AutoColumnListView\AutoColumnListView.csproj", "{2852A0FC-36DE-461B-B478-A916EC435C06}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA10030D-9F76-445B-A599-7D7483ABA1A5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{BA10030D-9F76-445B-A599-7D7483ABA1A5}"
 	ProjectSection(SolutionItems) = preProject
-		DisSig.bat = DisSig.bat
-		NuGet.config = NuGet.config
+		..\NuGet.config = ..\NuGet.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsControls", "WinFormsControls\WinFormsControls.csproj", "{0D04133E-BD8C-4A30-B475-A300A6DBCA6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsControls", "WinFormsControls\WinFormsControls.csproj", "{0D04133E-BD8C-4A30-B475-A300A6DBCA6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSources", "DataSources\DataSources.csproj", "{8C783633-243E-4F91-A686-DE3D03B02CCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSources", "DataSources\DataSources.csproj", "{8C783633-243E-4F91-A686-DE3D03B02CCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLib", "CommonLib\CommonLib.csproj", "{09B5202C-3DF7-44F8-976B-8CE59B5E6240}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLib", "CommonLib\CommonLib.csproj", "{09B5202C-3DF7-44F8-976B-8CE59B5E6240}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompileTimeReflection", "CompileTimeReflection\CompileTimeReflection.csproj", "{1625DE54-5D80-459C-A5B0-41AE59600BEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeGen", "CodeGen", "{D803B207-F433-4CA8-A0A5-92549B1E6D95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +42,16 @@ Global
 		{09B5202C-3DF7-44F8-976B-8CE59B5E6240}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09B5202C-3DF7-44F8-976B-8CE59B5E6240}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09B5202C-3DF7-44F8-976B-8CE59B5E6240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1625DE54-5D80-459C-A5B0-41AE59600BEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1625DE54-5D80-459C-A5B0-41AE59600BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1625DE54-5D80-459C-A5B0-41AE59600BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1625DE54-5D80-459C-A5B0-41AE59600BEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1625DE54-5D80-459C-A5B0-41AE59600BEF} = {D803B207-F433-4CA8-A0A5-92549B1E6D95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08E13B7C-91C6-427F-A4A4-5480367B9891}
