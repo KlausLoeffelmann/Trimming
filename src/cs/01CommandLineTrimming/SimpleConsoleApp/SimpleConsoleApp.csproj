@@ -1,16 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PublishTrimmed>true</PublishTrimmed>
 	<PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <TrimmerSingleWarn>true</TrimmerSingleWarn>
     <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
     <EnableTrimAnalyzers>true</EnableTrimAnalyzers>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\03MultProjAutoColumnListView\DataSources\DataSources.csproj" />
+  </ItemGroup>
 
 </Project>
