@@ -22,12 +22,8 @@ internal static class TestAssemblyResolver
         var privateCoreLib = MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location);
 
         // Extract just the base-path of the assembly location, so we have a hint-path for the System.Runtime reference.
-        var basePath = Path.GetDirectoryName(privateCoreLib.Display);
-
-        if (basePath is null)
-        {
-            throw new InvalidOperationException("Could not determine base path of the core library.");
-        }
+        var basePath = Path.GetDirectoryName(privateCoreLib.Display) 
+            ?? throw new InvalidOperationException("Could not determine base path of the core library.");
 
         // Create the compilation that will be used to generate the source.
         var references = s_requiredAssemblies.Select(assemblyName =>
@@ -42,10 +38,10 @@ internal static class TestAssemblyResolver
         // Create the compilation.
         var compilation = CSharpCompilation.Create(
             assemblyName: "compilation",
-            syntaxTrees: new[]
-                {
+            syntaxTrees:
+                [
                     CSharpSyntaxTree.ParseText(source, new CSharpParseOptions(LanguageVersion.Preview))
-                },
+                ],
             references: references,
             options: new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 

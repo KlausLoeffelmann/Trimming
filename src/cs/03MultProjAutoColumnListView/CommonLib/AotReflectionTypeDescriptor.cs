@@ -1,97 +1,74 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
+namespace CommonLib;
+
 public abstract partial class AotReflectionTypeDescriptor<T> : ICustomTypeDescriptor
 {
-    AttributeCollection ICustomTypeDescriptor.GetAttributes()
-    {
-        return new AttributeCollection(GetAttributes());
-    }
+    AttributeCollection ICustomTypeDescriptor.GetAttributes() => new(GetAttributes());
 
-    protected abstract Attribute[] GetAttributes();
+    protected virtual Attribute[] GetAttributes() => Array.Empty<Attribute>();
 
-    string ICustomTypeDescriptor.GetClassName()
-    {
-        return GetClassName();
-    }
 
-    protected abstract string GetClassName();
+    string ICustomTypeDescriptor.GetClassName() => GetClassName();
 
-    string ICustomTypeDescriptor.GetComponentName()
-    {
-        return GetComponentName();
-    }
+    protected virtual string GetClassName() => typeof(T).Name;
 
-    protected abstract string GetComponentName();
+
+    string? ICustomTypeDescriptor.GetComponentName() => GetComponentName();
+
+    protected virtual string? GetComponentName() => null;
+
 
     [RequiresUnreferencedCode("TypeConverter requires unreferenced code.")]
-    TypeConverter ICustomTypeDescriptor.GetConverter()
-    {
-        return GetConverter();
-    }
+    TypeConverter? ICustomTypeDescriptor.GetConverter() => GetConverter();
 
-    protected abstract TypeConverter GetConverter();
+    protected virtual TypeConverter? GetConverter() => null;
+
 
     [RequiresUnreferencedCode("AttributeCollection requires unreferenced code.")]
-    EventDescriptor ICustomTypeDescriptor.GetDefaultEvent()
-    {
-        return GetDefaultEvent();
-    }
+    EventDescriptor? ICustomTypeDescriptor.GetDefaultEvent() => GetDefaultEvent();
 
-    protected abstract EventDescriptor GetDefaultEvent();
+    protected virtual EventDescriptor? GetDefaultEvent() => null;
+
 
     [RequiresUnreferencedCode("AttributeCollection requires unreferenced code.")]
-    PropertyDescriptor ICustomTypeDescriptor.GetDefaultProperty()
-    {
-        return GetDefaultProperty();
-    }
+    PropertyDescriptor? ICustomTypeDescriptor.GetDefaultProperty() => GetDefaultProperty();
 
-    protected abstract PropertyDescriptor GetDefaultProperty();
+    protected virtual PropertyDescriptor? GetDefaultProperty() => null;
+
 
     [RequiresUnreferencedCode("AttributeCollection requires unreferenced code.")]
-    object ICustomTypeDescriptor.GetEditor(Type editorBaseType)
-    {
-        return GetEditor(editorBaseType);
-    }
+    object? ICustomTypeDescriptor.GetEditor(Type editorBaseType) => GetEditor(editorBaseType);
 
-    protected abstract object GetEditor(Type editorBaseType);
+    protected virtual object? GetEditor(Type editorBaseType) => null;
 
-    EventDescriptorCollection ICustomTypeDescriptor.GetEvents()
-    {
-        return new EventDescriptorCollection(GetEvents());
-    }
 
-    protected abstract EventDescriptor[] GetEvents();
+    EventDescriptorCollection ICustomTypeDescriptor.GetEvents() => new(GetEvents());
+
+    protected virtual EventDescriptor[]? GetEvents() => null;
+
 
     [RequiresUnreferencedCode("AttributeCollection requires unreferenced code.")]
-    EventDescriptorCollection ICustomTypeDescriptor.GetEvents(Attribute[]? attributes)
-    {
-        return new EventDescriptorCollection(GetEvents(attributes));
-    }
+    EventDescriptorCollection ICustomTypeDescriptor.GetEvents(Attribute[]? attributes) => new(GetEvents(attributes));
 
-    protected abstract EventDescriptor[] GetEvents(Attribute[]? attributes);
+    protected virtual EventDescriptor[]? GetEvents(Attribute[]? attributes) => null;
+
 
     [UnconditionalSuppressMessage("Trimming", "IL2046:RequiresUnreferencedCode",
         Justification = "The returned properties are code-generated and therefore known at compile-time.")]
-    PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties()
-    {
-        return new PropertyDescriptorCollection(GetProperties());
-    }
+    PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties() => new(GetProperties());
 
-    protected abstract PropertyDescriptor[] GetProperties();
+    protected virtual PropertyDescriptor[]? GetProperties() => null;
+
 
     [RequiresUnreferencedCode("AttributeCollection requires unreferenced code.")]
-    PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties(Attribute[]? attributes)
-    {
-        return new PropertyDescriptorCollection(GetProperties(attributes));
-    }
+    PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties(Attribute[]? attributes) => new(GetProperties(attributes));
 
-    protected abstract PropertyDescriptor[] GetProperties(Attribute[]? attributes);
+    protected virtual PropertyDescriptor[]? GetProperties(Attribute[]? attributes) => null;
 
-    object? ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor? pd)
-    {
-        return GetPropertyOwner(pd);
-    }
 
-    protected abstract object? GetPropertyOwner(PropertyDescriptor? pd);
+    object? ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor? pd) => GetPropertyOwner(pd);
+
+    protected virtual object? GetPropertyOwner(PropertyDescriptor? pd) => null;
 }

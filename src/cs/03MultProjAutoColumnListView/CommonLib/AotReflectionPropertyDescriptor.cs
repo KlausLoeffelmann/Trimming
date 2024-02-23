@@ -23,8 +23,6 @@ public class AotReflectionPropertyDescriptor<T, U>(
     private readonly Func<bool> _shouldSerializeValuePredicate
         = shouldSerializeValuePredicate ?? (() => false);
 
-    private readonly Type _propertyType = typeof(U);
-
     /// <summary>
     ///  Gets a value indicating whether the property can be reset.
     /// </summary>
