@@ -1,3 +1,4 @@
+using CommonLib.Attributes;
 using CompileTimeReflection;
 using CompileTimeReflection.Test.TestData;
 using Microsoft.CodeAnalysis;
@@ -14,15 +15,13 @@ namespace PowerTools.UnitTests
         {
             string userSource =
                 """
-                //using CommonLib;
-                //using CommonLib.Attributes;
+                using CommonLib;
                 using CompileTimeReflection.Test.TestData;
                 using System;
                 
-                //public partial class AotReflectionTypeDescriptor : AotReflectionTypeDescriptor<Contact>
-                //{
-
-                //}
+                public partial class AotReflectionTypeDescriptor : AotReflectionTypeDescriptor<Contact>
+                {
+                }
 
                 internal class Program
                 {
@@ -47,14 +46,15 @@ namespace PowerTools.UnitTests
 
             var additionalReferences = new[]
             {
-                MetadataReference.CreateFromFile(typeof(Contact).GetTypeInfo().Assembly.Location)
+                MetadataReference.CreateFromFile(typeof(Contact).GetTypeInfo().Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(AotReflectionAttribute).GetTypeInfo().Assembly.Location),
             };
             
             Compilation comp = CreateCompilation(userSource, additionalReferences);
 
             var newComp = RunGenerators(comp, out var generatorDiagnostics, new AotReflectionGenerator());
-
             Assert.Empty(generatorDiagnostics);
+
             var diagnostic = newComp.GetDiagnostics();
             Assert.Empty(diagnostic);
         }
