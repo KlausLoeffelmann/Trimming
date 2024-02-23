@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompileTimeReflection", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSources", "..\03MultProjAutoColumnListView\DataSources\DataSources.csproj", "{E9589827-1E17-488A-8DE2-A45185D27481}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeGen", "CodeGen", "{63143228-F04D-4A41-BFA5-46C6AA00DE8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompileTimeReflection.Test", "CompileTimeReflection.Test\CompileTimeReflection.Test.csproj", "{4DDDC39F-5076-4310-99A4-BC0270B81AE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,9 +49,17 @@ Global
 		{E9589827-1E17-488A-8DE2-A45185D27481}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9589827-1E17-488A-8DE2-A45185D27481}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9589827-1E17-488A-8DE2-A45185D27481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DDDC39F-5076-4310-99A4-BC0270B81AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DDDC39F-5076-4310-99A4-BC0270B81AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DDDC39F-5076-4310-99A4-BC0270B81AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DDDC39F-5076-4310-99A4-BC0270B81AE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A4048E9F-5810-44E6-B16C-2898B1E6D7DF} = {63143228-F04D-4A41-BFA5-46C6AA00DE8E}
+		{4DDDC39F-5076-4310-99A4-BC0270B81AE8} = {63143228-F04D-4A41-BFA5-46C6AA00DE8E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {223D0818-AD8F-4CE9-A33A-E0483769A49A}

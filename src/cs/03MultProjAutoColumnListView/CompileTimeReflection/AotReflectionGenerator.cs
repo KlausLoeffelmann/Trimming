@@ -4,7 +4,7 @@ using System;
 namespace CompileTimeReflection;
 
 [Generator]
-public partial class CompileTimeReflectionGenerator : ISourceGenerator
+public partial class AotReflectionGenerator : ISourceGenerator
 {
     public void Initialize(GeneratorInitializationContext context)
     {

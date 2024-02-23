@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-public abstract partial class CompileTimeReflectionTypeDescriptor<T> : ICustomTypeDescriptor
+public abstract partial class AotReflectionTypeDescriptor<T> : ICustomTypeDescriptor
 {
     AttributeCollection ICustomTypeDescriptor.GetAttributes()
     {

@@ -1,5 +1,4 @@
 ﻿using AutoColumnListViewDemo.DataSources;
-using CommonLib;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -18,80 +17,32 @@ internal class Program
             Email = "john@doe.de"
         };
 
-        //var typeDescriptor = TypeDescriptor.GetProvider(customer).GetTypeDescriptor(customer);
-        //var properties = typeDescriptor.GetProperties();
-        //foreach (PropertyInfo property in properties)
-        //{
-        //    Console.WriteLine($"{property.Name}: {property.GetValue(customer)}");
-        //}
+        foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            // Check if the assembly has a location. Some assemblies might be loaded in memory and won't have a physical location.
+            if (!string.IsNullOrEmpty(assembly.Location))
+            {
+                Console.WriteLine($"Assembly: {assembly.GetName().Name}");
+                Console.WriteLine($"Path: {assembly.Location}\n");
+            }
+            else
+            {
+                // Handle assemblies without a location, if necessary.
+                Console.WriteLine($"Assembly: {assembly.GetName().Name} is loaded in memory.");
+            }
+        }
 
-        var customerCompileTimeReflection = new CustomerCompileTimeReflection();
+        var typeDescriptor = TypeDescriptor.GetProvider(customer).GetTypeDescriptor(customer);
+        var properties = typeDescriptor.GetProperties();
+        foreach (PropertyInfo property in properties)
+        {
+            Console.WriteLine($"{property.Name}: {property.GetValue(customer)}");
+        }
+
+        var customerCompileTimeReflection = new CustomerCompileTimeReflectionResult();
 
         Console.WriteLine($"Hello, World, {customerCompileTimeReflection}!");
         Console.WriteLine("Press any key to exit...");
         Console.ReadLine();
-    }
-}
-
-internal class CustomerCompileTimeReflection : CompileTimeReflectionTypeDescriptor<Customer>
-{
-    protected override Attribute[] GetAttributes()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override string GetClassName()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override string GetComponentName()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override TypeConverter GetConverter()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override EventDescriptor GetDefaultEvent()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override PropertyDescriptor GetDefaultProperty()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override object GetEditor(Type editorBaseType)
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override EventDescriptor[] GetEvents()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override EventDescriptor[] GetEvents(Attribute[]? attributes)
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override PropertyDescriptor[] GetProperties()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override PropertyDescriptor[] GetProperties(Attribute[]? attributes)
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override object? GetPropertyOwner(PropertyDescriptor? pd)
-    {
-        throw new NotImplementedException();
     }
 }

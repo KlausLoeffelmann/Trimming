@@ -5,7 +5,11 @@ using System.ComponentModel;
 
 namespace AutoColumnListViewDemo.DataSources;
 
-public class Customer : INotifyPropertyChanged
+//public partial class AotReflectionTypeDescriptor : AotReflectionTypeDescriptor<Customer>
+//{
+//}
+
+public partial class Customer : INotifyPropertyChanged
 {
     private Guid _idCustomer;
     private int _customerNumber;
