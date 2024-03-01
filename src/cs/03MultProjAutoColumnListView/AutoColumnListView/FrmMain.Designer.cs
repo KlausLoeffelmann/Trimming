@@ -50,10 +50,10 @@ namespace AutoColumnListViewDemo
             // 
             // _customerListView
             // 
+            resources.ApplyResources(_customerListView, "_customerListView");
             _customerListView.FullRowSelect = true;
             _customerListView.GridLines = true;
             _customerListView.ItemType = typeof(DataSources.Customer);
-            resources.ApplyResources(_customerListView, "_customerListView");
             _customerListView.Name = "_customerListView";
             _customerListView.UseCompatibleStateImageBehavior = false;
             _customerListView.View = View.Details;

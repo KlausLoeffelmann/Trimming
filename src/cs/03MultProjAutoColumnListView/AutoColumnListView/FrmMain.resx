@@ -117,12 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="_btnDeployDemoData.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="_btnDeployDemoData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>337, 359</value>
+    <value>319, 359</value>
   </data>
   <data name="_btnDeployDemoData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 43</value>
+    <value>213, 43</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="_btnDeployDemoData.TabIndex" type="System.Int32, mscorlib">
@@ -142,6 +146,9 @@
   </data>
   <data name="&gt;&gt;_btnDeployDemoData.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="_customerListView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="_customerListView.Location" type="System.Drawing.Point, System.Drawing">
     <value>21, 50</value>
@@ -180,7 +187,7 @@
     <value>&amp;File</value>
   </data>
   <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 26</value>
+    <value>153, 26</value>
   </data>
   <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Options...</value>

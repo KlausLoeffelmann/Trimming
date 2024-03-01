@@ -9,17 +9,17 @@
       </trans-unit>
       <trans-unit id="_btnDeployDemoData.Text">
         <source>Populate Demo Data</source>
-        <target state="new">Populate Demo Data</target>
+        <target state="new">Demo-Daten generieren...</target>
         <note />
       </trans-unit>
       <trans-unit id="exitToolStripMenuItem.Text">
         <source>Quit</source>
-        <target state="new">Quit</target>
+        <target state="new">Beenden</target>
         <note />
       </trans-unit>
       <trans-unit id="fileToolStripMenuItem.Text">
         <source>&amp;File</source>
-        <target state="new">&amp;File</target>
+        <target state="new">&amp;Datei</target>
         <note />
       </trans-unit>
       <trans-unit id="menuStrip1.Text">
@@ -29,12 +29,12 @@
       </trans-unit>
       <trans-unit id="optionsToolStripMenuItem.Text">
         <source>&amp;Options...</source>
-        <target state="new">&amp;Options...</target>
+        <target state="new">&amp;Optionen...</target>
         <note />
       </trans-unit>
       <trans-unit id="toolsToolStripMenuItem.Text">
         <source>&amp;Tools</source>
-        <target state="new">&amp;Tools</target>
+        <target state="new">&amp;Extras</target>
         <note />
       </trans-unit>
     </body>
