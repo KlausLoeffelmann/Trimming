@@ -1,26 +1,10 @@
 ﻿using CommonLib;
-using CommonLib.Attributes;
-using DataSources.Resources;
 using System.ComponentModel;
 
 namespace AutoColumnListViewDemo.DataSources;
 
 public class CustomerCompileTimeReflectionResult : AotReflectionTypeDescriptor<Customer>
 {
-    private static readonly AotReflectionPropertyDescriptor<Customer, Guid> IdCustomerProperty
-        = new(
-            name: nameof(Customer.IdCustomer),
-            attributes: [new SRDisplayNameAttribute("IdCustomer", typeof(SR))],
-            valueGetter: c => c.IdCustomer,
-            valueSetter: (c, v) => c.IdCustomer = v);
-
-    private static readonly AotReflectionPropertyDescriptor<Customer, int> CustomerNumberProperty
-        = new(
-            name: nameof(Customer.CustomerNumber),
-            attributes: [new SRDisplayNameAttribute("CustomerNumber", typeof(SR))],
-            valueGetter: c => c.CustomerNumber,
-            valueSetter: (c, v) => c.CustomerNumber = v);
-
     protected override Attribute[] GetAttributes()
     {
         throw new NotImplementedException();
@@ -30,7 +14,7 @@ public class CustomerCompileTimeReflectionResult : AotReflectionTypeDescriptor<C
 
     protected override string GetComponentName() => null!;
 
-    protected override TypeConverter GetConverter() => new TypeConverter();
+    protected override TypeConverter GetConverter() => new();
 
     protected override EventDescriptor GetDefaultEvent() => null!;
 
@@ -50,7 +34,10 @@ public class CustomerCompileTimeReflectionResult : AotReflectionTypeDescriptor<C
 
     protected override PropertyDescriptor[] GetProperties()
     {
-        throw new NotImplementedException();
+        var typeSafeProperties = PropertyDescriptorGenerator.GeneratePropertyDescriptors();
+        var propertiesAsObjects = typeSafeProperties.Cast<object>();
+        var properties=propertiesAsObjects.Cast<PropertyDescriptor>();
+        return [.. properties];
     }
 
     protected override PropertyDescriptor[] GetProperties(Attribute[]? attributes)

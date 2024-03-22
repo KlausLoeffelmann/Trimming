@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿// Ignore Spelling: Aot
+
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CommonLib;

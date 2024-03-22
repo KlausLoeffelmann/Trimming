@@ -1,24 +1,41 @@
-﻿using System.ComponentModel;
+﻿// Ignore Spelling: Aot
+
+using System.ComponentModel;
 
 namespace CommonLib;
+
+public interface IAotReflectionPropertyGetter<T> 
+{
+    object? GetValue(object? component);
+    T? GetPropertyValue(object? component) => (T?)GetValue(component);
+}
+
+public interface IAotReflectionPropertySetter<T>
+{
+    void SetValue(object? component, object? value);
+    void SetPropertyValue(object? component, T? value) => SetValue(component, value);
+}
 
 /// <summary>
 ///  Represents a compile-time reflection property descriptor.
 /// </summary>
-/// <typeparam name="U">The type of the property.</typeparam>
+/// <typeparam name="TReturn">The type of the property.</typeparam>
 /// <param name="name">The name of the property.</param>
 /// <param name="attributes">The attributes of the property.</param>
 /// <param name="valueGetter">The function to get the value of the property.</param>
 /// <param name="valueSetter">The action to set the value of the property.</param>
 /// <param name="valueReSetter">The action to reset the value of the property.</param>
 /// <param name="shouldSerializeValuePredicate">The function to determine whether the value of the property should be serialized.</param>
-public class AotReflectionPropertyDescriptor<T, U>(
+public class AotReflectionPropertyDescriptor<T, TReturn>(
     string name,
     Attribute[] attributes,
-    Func<T, U>? valueGetter = default,
-    Action<T, U?>? valueSetter = default,
+    Func<T, TReturn>? valueGetter = default,
+    Action<T, TReturn?>? valueSetter = default,
     Action? valueReSetter = default,
-    Func<bool>? shouldSerializeValuePredicate = default) : PropertyDescriptor(name, attributes)
+    Func<bool>? shouldSerializeValuePredicate = default) 
+    : PropertyDescriptor(name, attributes), 
+        IAotReflectionPropertyGetter<TReturn>,
+        IAotReflectionPropertySetter<TReturn>
 {
     private readonly Func<bool> _shouldSerializeValuePredicate
         = shouldSerializeValuePredicate ?? (() => false);
@@ -53,7 +70,7 @@ public class AotReflectionPropertyDescriptor<T, U>(
     /// <summary>
     ///  Gets the type of the property.
     /// </summary>
-    public override Type PropertyType => typeof(U);
+    public override Type PropertyType => typeof(TReturn);
 
     /// <summary>
     ///  Resets the value of the property for the specified component.
@@ -66,7 +83,7 @@ public class AotReflectionPropertyDescriptor<T, U>(
     /// </summary>
     /// <param name="component">The component to set the value for.</param>
     /// <param name="value">The value to set.</param>
-    public override void SetValue(object? component, object? value) => valueSetter?.Invoke((T)component!, (U?)value);
+    public override void SetValue(object? component, object? value) => valueSetter?.Invoke((T)component!, (TReturn?)value);
 
     /// <summary>
     ///  Determines whether the value of the property should be serialized.
@@ -80,4 +97,3 @@ public class AotReflectionPropertyDescriptor<T, U>(
     /// </summary>
     public override AttributeCollection Attributes => base.Attributes;
 }
-

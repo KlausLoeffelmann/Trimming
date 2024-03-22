@@ -1,4 +1,6 @@
 ﻿using AutoColumnListViewDemo.DataSources;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace SimpleConsoleApp;
 
@@ -15,16 +17,13 @@ internal class Program
             Email = "john@doe.de"
         };
 
-        //var typeDescriptor = TypeDescriptor.GetProvider(customer).GetTypeDescriptor(customer);
-        //var properties = typeDescriptor.GetProperties();
-        //foreach (PropertyInfo property in properties)
-        //{
-        //    Console.WriteLine($"{property.Name}: {property.GetValue(customer)}");
-        //}
+        var typeDescriptor = TypeDescriptor.GetReflectionType(typeof(Customer));
+        var properties = typeDescriptor.GetProperties();
+        foreach (PropertyInfo property in properties)
+        {
+            Console.WriteLine($"{property.Name}: {property.GetValue(customer)}");
+        }
 
-        var customerCompileTimeReflection = new CustomerCompileTimeReflectionResult();
-
-        Console.WriteLine($"Hello, World, {customerCompileTimeReflection}!");
         Console.WriteLine("Press any key to exit...");
         Console.ReadLine();
     }
