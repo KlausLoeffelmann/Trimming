@@ -4,7 +4,7 @@ using DataSources.Resources;
 
 namespace AutoColumnListViewDemo.DataSources;
 
-public class PropertyDescriptorGenerator
+public class GeneratedPropertyDescriptorFactory
 {
     public static Dictionary<string, IAotReflectionPropertyGetter<object>> GeneratePropertyDescriptors()
     {

@@ -7,6 +7,13 @@ namespace CommonLib;
 
 public abstract partial class AotReflectionTypeDescriptor<T> : ICustomTypeDescriptor
 {
+    protected readonly ICustomTypeDescriptor BaseDescriptor;
+
+    protected AotReflectionTypeDescriptor(ICustomTypeDescriptor baseDescriptor)
+    {
+        BaseDescriptor = baseDescriptor;
+    }
+
     AttributeCollection ICustomTypeDescriptor.GetAttributes() => new(GetAttributes());
 
     protected virtual Attribute[] GetAttributes() => Array.Empty<Attribute>();

@@ -3,14 +3,16 @@ using System.ComponentModel;
 
 namespace AutoColumnListViewDemo.DataSources;
 
-public class CustomerCompileTimeReflectionResult : AotReflectionTypeDescriptor<Customer>
+public class CustomerTypeDescriptor : AotReflectionTypeDescriptor<Customer>
 {
+    public CustomerTypeDescriptor(ICustomTypeDescriptor baseDescriptor) : base(baseDescriptor) { }
+
     protected override Attribute[] GetAttributes()
     {
         throw new NotImplementedException();
     }
 
-    protected override string GetClassName() => "Customer";
+    protected override string GetClassName() => nameof(Customer);
 
     protected override string GetComponentName() => null!;
 
@@ -32,11 +34,18 @@ public class CustomerCompileTimeReflectionResult : AotReflectionTypeDescriptor<C
         throw new NotImplementedException();
     }
 
+    // Getting the properties without actually using reflection.
     protected override PropertyDescriptor[] GetProperties()
     {
-        var typeSafeProperties = PropertyDescriptorGenerator.GeneratePropertyDescriptors();
-        var propertiesAsObjects = typeSafeProperties.Cast<object>();
+        var typeSafePropertyDescriptors = GeneratedPropertyDescriptorFactory.GeneratePropertyDescriptors();
+
+        // For debugging purposes.
+        var propertiesAsObjects = typeSafePropertyDescriptors.Cast<object>();
+
+        // Casting to descriptors.
         var properties=propertiesAsObjects.Cast<PropertyDescriptor>();
+
+        // Return as an array.
         return [.. properties];
     }
 

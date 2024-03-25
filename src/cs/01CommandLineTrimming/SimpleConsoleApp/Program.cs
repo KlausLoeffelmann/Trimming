@@ -17,8 +17,11 @@ internal class Program
             Email = "john@doe.de"
         };
 
-        var typeDescriptor = TypeDescriptor.GetReflectionType(typeof(Customer));
-        var properties = typeDescriptor.GetProperties();
+        TypeDescriptionProvider originalProvider = TypeDescriptor.GetProvider(typeof(object));
+        var globalBindingProvider = new BindingTypeDescriptionProvider(originalProvider);
+        TypeDescriptor.AddProvider(globalBindingProvider, typeof(object));
+
+        var properties = TypeDescriptor.GetProperties(typeof(Customer));    
         foreach (PropertyInfo property in properties)
         {
             Console.WriteLine($"{property.Name}: {property.GetValue(customer)}");
