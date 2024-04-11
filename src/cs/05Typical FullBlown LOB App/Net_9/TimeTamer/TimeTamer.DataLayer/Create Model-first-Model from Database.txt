@@ -1,0 +1,7 @@
+﻿* Show Package Manager in VS
+* Pick the correct Default Project in the Package Manager Console (the DataLayer project)
+* Install-Package Microsoft.EntityFrameworkCore.Tools
+* Install-Package Microsoft.EntityFrameworkCore.SqlServer
+* Install-Package Microsoft.EntityFrameworkCore.Tools
+* Install-Package Microsoft.EntityFrameworkCore.Design
+* Scaffold-DbContext "Data Source=(localdb)\mssqllocaldb;Initial Catalog=TimeTamer;Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context "TimeTamerContext" -DataAnnotations

@@ -1,0 +1,50 @@
+USE TimeTamer;
+GO
+
+CREATE TABLE Users (
+    UserId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    Username NVARCHAR(255) NOT NULL,
+    FirstName NVARCHAR(255),
+    LastName NVARCHAR(255),
+    Email NVARCHAR(255) NOT NULL,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    Role NVARCHAR(50)
+);
+GO
+
+CREATE TABLE Categories (
+    CategoryId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    Name NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX)
+);
+GO
+
+CREATE TABLE Projects (
+    ProjectId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    Name NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX),
+    StartDate DATETIME,
+    EndDate DATETIME,
+    OwnerId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Users(UserId),
+    Status NVARCHAR(50),
+    ExternalReference NVARCHAR(255)
+);
+GO
+
+CREATE TABLE Tasks (
+    TaskId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    ProjectId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Projects(ProjectId),
+    Name NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX),
+    AssignedToUserId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Users(UserId),
+    DueDate DATETIME,
+    Status NVARCHAR(50),
+    ExternalReference NVARCHAR(255)
+);
+GO
+
+-- Indexes
+CREATE INDEX IDX_Project_Owner ON Projects(OwnerId);
+CREATE INDEX IDX_Task_Project ON Tasks(ProjectId);
+CREATE INDEX IDX_Task_AssignedTo ON Tasks(AssignedToUserId);
+GO
