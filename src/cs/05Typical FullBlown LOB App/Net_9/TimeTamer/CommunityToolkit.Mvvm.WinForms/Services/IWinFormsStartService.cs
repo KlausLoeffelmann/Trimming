@@ -50,6 +50,8 @@ public interface IWinFormsStartService : IApplicationStartService
 
         // Let's register the views now in the ViewLocator:
         viewLocator!.SetViewLookup(s_viewFactories);
+
+        // TODO: Pass the actual Form.
         Application.Run();
     }
 
