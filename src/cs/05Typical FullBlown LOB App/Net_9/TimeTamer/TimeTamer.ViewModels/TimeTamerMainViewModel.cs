@@ -9,7 +9,7 @@ namespace TimeTamer.ViewModels;
 public partial class TimeTamerMainViewModel : ObservableObject
 {
     private readonly IMapper _mapper;
-    private readonly Func<SynchronizationContext?> _syncContext;
+    private readonly ISyncContextService _syncContextService;
 
     private readonly System.Threading.Timer? _timer;
 
@@ -24,7 +24,7 @@ public partial class TimeTamerMainViewModel : ObservableObject
         _currentDisplayTime = AssignCurrentDateAndTimeInCurrentCulture();
         _timer = new System.Threading.Timer(UpdateCurrentTime, null, 0, 1000);
         _mapper = mapper;
-        _syncContext = syncContextService.GetSynchronizationContext;
+        _syncContextService = syncContextService;
     }
 
     private static string AssignCurrentDateAndTimeInCurrentCulture()

@@ -6,10 +6,13 @@ public partial class TimeTamerMainViewModel
 {
     private void UpdateCurrentTime(object? state)
     {
-        _syncContext.Invoke()?.Post(_ =>
+        if (_syncContextService.IsSyncContextAvailable)
         {
-            CurrentDisplayTime = AssignCurrentDateAndTimeInCurrentCulture();
-        }, null);
+            _syncContextService.SyncContext!.Post(_ =>
+            {
+                CurrentDisplayTime = AssignCurrentDateAndTimeInCurrentCulture();
+            }, null);
+        }
     }
 
     private static User GetOrCreateDefaultUser()

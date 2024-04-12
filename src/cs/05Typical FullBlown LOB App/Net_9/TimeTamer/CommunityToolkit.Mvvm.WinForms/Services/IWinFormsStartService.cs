@@ -51,11 +51,12 @@ public interface IWinFormsStartService : IApplicationStartService
         // Let's register the views now in the ViewLocator:
         viewLocator!.SetViewLookup(s_viewFactories);
 
-        // TODO: Pass the actual Form.
-        Application.Run();
+        var startService = ServiceProvider.GetRequiredService<IApplicationStartService>();
+        startService.StartApplication();
     }
 
     public static void RegisterView<TViewModel>(Func<Form> viewFactory)
+        where TViewModel : class, INotifyPropertyChanged
     {
         Type viewModelType = typeof(TViewModel);
 
@@ -65,5 +66,8 @@ public interface IWinFormsStartService : IApplicationStartService
         }
 
         s_viewFactories.Add(viewModelType, viewFactory);
+
+        // Register the ViewModel in the ServiceCollection
+        Services.AddTransient<TViewModel>();
     }
 }
