@@ -34,7 +34,6 @@
             _lblCurrentUser = new ToolStripStatusLabel();
             _lblDateTime = new ToolStripStatusLabel();
             _timeTamerMainViewModelBindingSource = new BindingSource(components);
-            _lblPlaceHolder = new ToolStripStatusLabel();
             _mainMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             exportToolStripMenuItem = new ToolStripMenuItem();
@@ -62,52 +61,42 @@
             _statusStrip.GripMargin = new Padding(5);
             _statusStrip.GripStyle = ToolStripGripStyle.Visible;
             _statusStrip.ImageScalingSize = new Size(20, 20);
-            _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSpringLabel, _lblCurrentUser, _lblDateTime, _lblPlaceHolder });
-            _statusStrip.Location = new Point(0, 697);
+            _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSpringLabel, _lblCurrentUser, _lblDateTime });
+            _statusStrip.Location = new Point(0, 556);
+            _statusStrip.Margin = new Padding(0, 0, 2, 0);
             _statusStrip.Name = "_statusStrip";
+            _statusStrip.Padding = new Padding(1, 0, 11, 0);
             _statusStrip.RenderMode = ToolStripRenderMode.ManagerRenderMode;
-            _statusStrip.Size = new Size(808, 41);
+            _statusStrip.Size = new Size(867, 25);
             _statusStrip.TabIndex = 0;
             _statusStrip.Text = "statusStrip1";
             // 
             // _lblSpringLabel
             // 
             _lblSpringLabel.Name = "_lblSpringLabel";
-            _lblSpringLabel.Padding = new Padding(3);
-            _lblSpringLabel.Size = new Size(478, 35);
+            _lblSpringLabel.Size = new Size(660, 20);
             _lblSpringLabel.Spring = true;
             _lblSpringLabel.Text = "#Spring#";
             _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // _lblCurrentUser
             // 
-            _lblCurrentUser.BorderSides = ToolStripStatusLabelBorderSides.Left | ToolStripStatusLabelBorderSides.Top | ToolStripStatusLabelBorderSides.Right | ToolStripStatusLabelBorderSides.Bottom;
-            _lblCurrentUser.BorderStyle = Border3DStyle.RaisedOuter;
             _lblCurrentUser.Name = "_lblCurrentUser";
-            _lblCurrentUser.Padding = new Padding(3);
-            _lblCurrentUser.Size = new Size(79, 35);
+            _lblCurrentUser.Size = new Size(56, 20);
             _lblCurrentUser.Text = "#User#";
             // 
             // _lblDateTime
             // 
-            _lblDateTime.BorderSides = ToolStripStatusLabelBorderSides.Left | ToolStripStatusLabelBorderSides.Top | ToolStripStatusLabelBorderSides.Right | ToolStripStatusLabelBorderSides.Bottom;
-            _lblDateTime.BorderStyle = Border3DStyle.SunkenOuter;
             _lblDateTime.DataBindings.Add(new Binding("Text", _timeTamerMainViewModelBindingSource, "CurrentDisplayTime", true));
             _lblDateTime.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            _lblDateTime.Margin = new Padding(0, 3, 2, 2);
             _lblDateTime.Name = "_lblDateTime";
-            _lblDateTime.Padding = new Padding(3);
-            _lblDateTime.Size = new Size(172, 35);
+            _lblDateTime.Size = new Size(137, 20);
             _lblDateTime.Text = "#DatePlaceholder#";
             // 
             // _timeTamerMainViewModelBindingSource
             // 
             _timeTamerMainViewModelBindingSource.DataSource = typeof(ViewModels.TimeTamerMainViewModel);
-            // 
-            // _lblPlaceHolder
-            // 
-            _lblPlaceHolder.Name = "_lblPlaceHolder";
-            _lblPlaceHolder.Size = new Size(64, 35);
-            _lblPlaceHolder.Text = "#Test#";
             // 
             // _mainMenuStrip
             // 
@@ -116,8 +105,8 @@
             _mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, baseDataToolStripMenuItem, testsToolStripMenuItem, toolsToolStripMenuItem });
             _mainMenuStrip.Location = new Point(0, 0);
             _mainMenuStrip.Name = "_mainMenuStrip";
-            _mainMenuStrip.Padding = new Padding(10, 5, 5, 5);
-            _mainMenuStrip.Size = new Size(808, 39);
+            _mainMenuStrip.Padding = new Padding(8, 4, 4, 4);
+            _mainMenuStrip.Size = new Size(867, 32);
             _mainMenuStrip.TabIndex = 1;
             _mainMenuStrip.Text = "menuStrip1";
             // 
@@ -125,103 +114,103 @@
             // 
             fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exportToolStripMenuItem, importToolStripMenuItem, toolStripMenuItem1, quitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(52, 29);
+            fileToolStripMenuItem.Size = new Size(44, 24);
             fileToolStripMenuItem.Text = "&File";
             // 
             // exportToolStripMenuItem
             // 
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(165, 30);
+            exportToolStripMenuItem.Size = new Size(132, 24);
             exportToolStripMenuItem.Text = "&Export...";
             // 
             // importToolStripMenuItem
             // 
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(165, 30);
+            importToolStripMenuItem.Size = new Size(132, 24);
             importToolStripMenuItem.Text = "&Import...";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(162, 6);
+            toolStripMenuItem1.Size = new Size(129, 6);
             // 
             // quitToolStripMenuItem
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            quitToolStripMenuItem.Size = new Size(165, 30);
+            quitToolStripMenuItem.Size = new Size(132, 24);
             quitToolStripMenuItem.Text = "&Quit";
             // 
             // baseDataToolStripMenuItem
             // 
             baseDataToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usersToolStripMenuItem, prToolStripMenuItem, catagoriesToolStripMenuItem });
             baseDataToolStripMenuItem.Name = "baseDataToolStripMenuItem";
-            baseDataToolStripMenuItem.Size = new Size(90, 29);
+            baseDataToolStripMenuItem.Size = new Size(75, 24);
             baseDataToolStripMenuItem.Text = "&Manage";
             // 
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            usersToolStripMenuItem.Size = new Size(194, 30);
+            usersToolStripMenuItem.Size = new Size(158, 24);
             usersToolStripMenuItem.Text = "Users...";
             // 
             // prToolStripMenuItem
             // 
             prToolStripMenuItem.Name = "prToolStripMenuItem";
-            prToolStripMenuItem.Size = new Size(194, 30);
+            prToolStripMenuItem.Size = new Size(158, 24);
             prToolStripMenuItem.Text = "&Projects...";
             // 
             // catagoriesToolStripMenuItem
             // 
             catagoriesToolStripMenuItem.Name = "catagoriesToolStripMenuItem";
-            catagoriesToolStripMenuItem.Size = new Size(194, 30);
+            catagoriesToolStripMenuItem.Size = new Size(158, 24);
             catagoriesToolStripMenuItem.Text = "Catagories...";
             // 
             // testsToolStripMenuItem
             // 
             testsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { generateTestDataToolStripMenuItem });
             testsToolStripMenuItem.Name = "testsToolStripMenuItem";
-            testsToolStripMenuItem.Size = new Size(64, 29);
+            testsToolStripMenuItem.Size = new Size(53, 24);
             testsToolStripMenuItem.Text = "&Tests";
             // 
             // generateTestDataToolStripMenuItem
             // 
             generateTestDataToolStripMenuItem.Name = "generateTestDataToolStripMenuItem";
-            generateTestDataToolStripMenuItem.Size = new Size(242, 30);
+            generateTestDataToolStripMenuItem.Size = new Size(200, 24);
             generateTestDataToolStripMenuItem.Text = "&Generate test data";
             // 
             // toolsToolStripMenuItem
             // 
             toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            toolsToolStripMenuItem.Size = new Size(67, 29);
+            toolsToolStripMenuItem.Size = new Size(56, 24);
             toolsToolStripMenuItem.Text = "&Tools";
             // 
             // optionsToolStripMenuItem
             // 
             optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            optionsToolStripMenuItem.Size = new Size(174, 30);
+            optionsToolStripMenuItem.Size = new Size(139, 24);
             optionsToolStripMenuItem.Text = "&Options...";
             // 
             // _dataGridTasks
             // 
-            _dataGridTasks.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _dataGridTasks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            _dataGridTasks.Location = new Point(12, 42);
+            _dataGridTasks.Dock = DockStyle.Fill;
+            _dataGridTasks.Location = new Point(0, 32);
+            _dataGridTasks.Margin = new Padding(2);
             _dataGridTasks.Name = "_dataGridTasks";
             _dataGridTasks.RowHeadersWidth = 51;
-            _dataGridTasks.Size = new Size(784, 656);
+            _dataGridTasks.Size = new Size(867, 524);
             _dataGridTasks.TabIndex = 2;
             // 
             // FrmTimeTamerMain
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(808, 738);
+            ClientSize = new Size(867, 581);
             Controls.Add(_dataGridTasks);
             Controls.Add(_statusStrip);
             Controls.Add(_mainMenuStrip);
             MainMenuStrip = _mainMenuStrip;
-            Margin = new Padding(4);
             Name = "FrmTimeTamerMain";
             Text = "Time Tamer";
             _statusStrip.ResumeLayout(false);
@@ -256,6 +245,5 @@
         private ToolStripMenuItem optionsToolStripMenuItem;
         private ToolStripStatusLabel _lblSpringLabel;
         private BindingSource _timeTamerMainViewModelBindingSource;
-        private ToolStripStatusLabel _lblPlaceHolder;
     }
 }

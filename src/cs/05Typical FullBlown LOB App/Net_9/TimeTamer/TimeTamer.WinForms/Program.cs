@@ -16,6 +16,8 @@ internal static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
 
+        Application.SetDefaultDarkMode(DarkMode.Inherits);
+
         // We're registering the ViewModels and the view here:
         RegisterView<TaskViewModel>(() => new FrmManageProjects());
         RegisterView<TimeTamerMainViewModel>(() => new FrmTimeTamerMain());
