@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using TimeTamer.Generic.UIService;
@@ -8,7 +7,6 @@ namespace TimeTamer.ViewModels;
 
 public partial class TimeTamerMainViewModel : ObservableObject
 {
-    private readonly IMapper _mapper;
     private readonly ISyncContextService _syncContextService;
 
     private readonly System.Threading.Timer? _timer;
@@ -19,11 +17,10 @@ public partial class TimeTamerMainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<TaskViewModel>? _tasks;
 
-    public TimeTamerMainViewModel(IMapper mapper, ISyncContextService syncContextService)
+    public TimeTamerMainViewModel(ISyncContextService syncContextService)
     {
         _currentDisplayTime = AssignCurrentDateAndTimeInCurrentCulture();
         _timer = new System.Threading.Timer(UpdateCurrentTime, null, 0, 1000);
-        _mapper = mapper;
         _syncContextService = syncContextService;
     }
 

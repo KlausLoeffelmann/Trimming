@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using TimeTamer.Generic.UIService;
 using TimeTamer.ViewModels.Services;
 
@@ -23,8 +22,6 @@ public interface IWinFormsStartService : IApplicationStartService
 
     private static void ConfigureServices()
     {
-        // AutoMapper configuration.
-        Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
         // Register ViewLocator Service.
         Services.AddSingleton<IViewLocator<Form>, WinFormsViewLocator>();
