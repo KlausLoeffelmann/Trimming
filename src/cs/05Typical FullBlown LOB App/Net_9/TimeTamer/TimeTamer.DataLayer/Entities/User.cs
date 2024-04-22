@@ -36,9 +36,3 @@ public partial class User
     [InverseProperty(nameof(TaskItem.AssignedToUser))]
     public virtual ICollection<TaskItem> TaskItems { get; set; } = [];
 }
-
-public static class UserExtensions
-{
-
-
-}
