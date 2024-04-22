@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TimeTamer.DataLayer.UnitOfWork;
+namespace TaskTamer.DataLayer.UnitOfWork;
 
-public class TimeTamerUow(DbContext context) : IUnitOfWork
+public class TaskTamerUow(DbContext context) : IUnitOfWork
 {
     private bool _disposed = false;
     private readonly Dictionary<string, object> _repositories = [];

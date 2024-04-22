@@ -1,4 +1,4 @@
-﻿using TimeTamer.Generic.UIService;
+﻿using TaskTamer.Generic.UIService;
 
 namespace CommunityToolkit.Mvvm.WinForms;
 

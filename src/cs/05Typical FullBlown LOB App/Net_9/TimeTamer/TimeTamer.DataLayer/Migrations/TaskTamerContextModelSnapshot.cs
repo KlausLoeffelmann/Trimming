@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TimeTamer.DataLayer.Models;
+using TaskTamer.DataLayer.Models;
 
 #nullable disable
 
-namespace TimeTamer.DataLayer.Migrations
+namespace TaskTamer.DataLayer.Migrations
 {
-    [DbContext(typeof(TimeTamerContext))]
-    partial class TimeTamerContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(TaskTamerContext))]
+    partial class TaskTamerContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,12 +22,11 @@ namespace TimeTamer.DataLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TimeTamer.DataLayer.Models.Category", b =>
+            modelBuilder.Entity("TaskTamer.DataLayer.Models.Category", b =>
                 {
                     b.Property<Guid>("CategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("datetimeoffset");
@@ -46,18 +45,19 @@ namespace TimeTamer.DataLayer.Migrations
                     b.Property<Guid>("SyncId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CategoryId")
-                        .HasName("PK__Categori__19093A0BDF8D7B93");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("TimeTamer.DataLayer.Models.Project", b =>
+            modelBuilder.Entity("TaskTamer.DataLayer.Models.Project", b =>
                 {
                     b.Property<Guid>("ProjectId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("datetimeoffset");
@@ -80,9 +80,6 @@ namespace TimeTamer.DataLayer.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid?>("OwnerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTimeOffset?>("StartDate")
                         .HasColumnType("datetimeoffset");
 
@@ -93,22 +90,25 @@ namespace TimeTamer.DataLayer.Migrations
                     b.Property<Guid>("SyncId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ProjectId")
-                        .HasName("PK__Projects__761ABEF062EF0429");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex(new[] { "OwnerId" }, "IDX_Project_Owner");
+                    b.HasKey("ProjectId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("TimeTamer.DataLayer.Models.TaskItem", b =>
+            modelBuilder.Entity("TaskTamer.DataLayer.Models.TaskItem", b =>
                 {
                     b.Property<Guid>("TaskItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AssignedToUserId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("DateCreated")
@@ -142,22 +142,25 @@ namespace TimeTamer.DataLayer.Migrations
                     b.Property<Guid>("SyncId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("TaskItemId")
-                        .HasName("PK__Tasks__7C6949B18B6BCC9F");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex(new[] { "AssignedToUserId" }, "IDX_TaskItem_AssignedTo");
+                    b.HasKey("TaskItemId");
 
-                    b.HasIndex(new[] { "ProjectId" }, "IDX_TaskItem_Project");
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TaskItems");
                 });
 
-            modelBuilder.Entity("TimeTamer.DataLayer.Models.User", b =>
+            modelBuilder.Entity("TaskTamer.DataLayer.Models.User", b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("(newid())");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("datetimeoffset");
@@ -195,45 +198,57 @@ namespace TimeTamer.DataLayer.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("UserId")
-                        .HasName("PK__Users__1788CC4C491516A0");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TimeTamer.DataLayer.Models.Project", b =>
+            modelBuilder.Entity("TaskTamer.DataLayer.Models.Project", b =>
                 {
-                    b.HasOne("TimeTamer.DataLayer.Models.User", "Owner")
+                    b.HasOne("TaskTamer.DataLayer.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaskTamer.DataLayer.Models.User", "Owner")
                         .WithMany("Projects")
-                        .HasForeignKey("OwnerId")
-                        .HasConstraintName("FK__Projects__OwnerI__2B3F6F97");
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Category");
 
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("TimeTamer.DataLayer.Models.TaskItem", b =>
+            modelBuilder.Entity("TaskTamer.DataLayer.Models.TaskItem", b =>
                 {
-                    b.HasOne("TimeTamer.DataLayer.Models.User", "AssignedToUser")
-                        .WithMany("TaskItems")
-                        .HasForeignKey("AssignedToUserId")
-                        .HasConstraintName("FK__Tasks__AssignedT__300424B4");
+                    b.HasOne("TaskTamer.DataLayer.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
 
-                    b.HasOne("TimeTamer.DataLayer.Models.Project", "Project")
+                    b.HasOne("TaskTamer.DataLayer.Models.Project", "Project")
                         .WithMany("TaskItems")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("FK__Tasks__ProjectId__2F10007B");
+                        .HasForeignKey("ProjectId");
 
-                    b.Navigation("AssignedToUser");
+                    b.HasOne("TaskTamer.DataLayer.Models.User", "Owner")
+                        .WithMany("TaskItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Owner");
 
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("TimeTamer.DataLayer.Models.Project", b =>
+            modelBuilder.Entity("TaskTamer.DataLayer.Models.Project", b =>
                 {
                     b.Navigation("TaskItems");
                 });
 
-            modelBuilder.Entity("TimeTamer.DataLayer.Models.User", b =>
+            modelBuilder.Entity("TaskTamer.DataLayer.Models.User", b =>
                 {
                     b.Navigation("Projects");
 

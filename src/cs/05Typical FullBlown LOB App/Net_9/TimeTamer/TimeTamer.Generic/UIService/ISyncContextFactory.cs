@@ -1,4 +1,4 @@
-﻿namespace TimeTamer.Generic.UIService;
+﻿namespace TaskTamer.Generic.UIService;
 
 /// <summary>
 /// Represents a service for managing synchronization context.

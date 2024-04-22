@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace TimeTamer.DataLayer.Migrations
+namespace TaskTamer.DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateInitialSchema : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,7 +14,7 @@ namespace TimeTamer.DataLayer.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -23,14 +23,14 @@ namespace TimeTamer.DataLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Categori__19093A0BDF8D7B93", x => x.CategoryId);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
@@ -43,19 +43,20 @@ namespace TimeTamer.DataLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Users__1788CC4C491516A0", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
-                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
+                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ExternalReference = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     DateCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -64,10 +65,16 @@ namespace TimeTamer.DataLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Projects__761ABEF062EF0429", x => x.ProjectId);
+                    table.PrimaryKey("PK_Projects", x => x.ProjectId);
                     table.ForeignKey(
-                        name: "FK__Projects__OwnerI__2B3F6F97",
-                        column: x => x.OwnerId,
+                        name: "FK_Projects_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Projects_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
                 });
@@ -76,11 +83,12 @@ namespace TimeTamer.DataLayer.Migrations
                 name: "TaskItems",
                 columns: table => new
                 {
-                    TaskItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TaskItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssignedToUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DueDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ExternalReference = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
@@ -90,46 +98,62 @@ namespace TimeTamer.DataLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Tasks__7C6949B18B6BCC9F", x => x.TaskItemId);
+                    table.PrimaryKey("PK_TaskItems", x => x.TaskItemId);
                     table.ForeignKey(
-                        name: "FK__Tasks__AssignedT__300424B4",
-                        column: x => x.AssignedToUserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
+                        name: "FK_TaskItems_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId");
                     table.ForeignKey(
-                        name: "FK__Tasks__ProjectId__2F10007B",
+                        name: "FK_TaskItems_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "ProjectId");
+                    table.ForeignKey(
+                        name: "FK_TaskItems_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IDX_Project_Owner",
+                name: "IX_Projects_CategoryId",
                 table: "Projects",
-                column: "OwnerId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IDX_TaskItem_AssignedTo",
+                name: "IX_Projects_UserId",
+                table: "Projects",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskItems_CategoryId",
                 table: "TaskItems",
-                column: "AssignedToUserId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IDX_TaskItem_Project",
+                name: "IX_TaskItems_ProjectId",
                 table: "TaskItems",
                 column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskItems_UserId",
+                table: "TaskItems",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "TaskItems");
 
             migrationBuilder.DropTable(
                 name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -15,8 +15,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommunityToolkit.Mvvm.WinForms\CommunityToolkit.Mvvm.WinForms.csproj" />
-    <ProjectReference Include="..\TimeTamer.Generic\TimeTamer.Generic.csproj" />
-    <ProjectReference Include="..\TimeTamer.ViewModels\TimeTamer.ViewModels.csproj" />
+    <ProjectReference Include="..\TimeTamer.Generic\TaskTamer.Generic.csproj" />
+    <ProjectReference Include="..\TimeTamer.ViewModels\TaskTamer.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

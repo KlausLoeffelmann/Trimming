@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TimeTamer.DataLayer.Models;
+namespace TaskTamer.DataLayer.Models;
 
 public partial class Category
 {
@@ -16,12 +16,13 @@ public partial class Category
     public Guid SyncId { get; set; }
 }
 
-public static class CategoryDataGenerator
+public partial class Category
 {
-    public static void GenerateCategories(TimeTamerContext context)
+    public static void EnsureSampleCategoriesData(TaskTamerContext context)
     {
         string[] categoryNames = new string[]
         {
+            "Generic",
             "Development",
             "Testing",
             "Documentation",

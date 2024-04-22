@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
-using TimeTamer.Generic.UIService;
+using TaskTamer.Generic.UIService;
 
-namespace TimeTamer.ViewModels.Services;
+namespace TaskTamer.ViewModels.Services;
 
 public class ViewModelFactory(IServiceProvider serviceProvider) : IViewModelFactory
 {

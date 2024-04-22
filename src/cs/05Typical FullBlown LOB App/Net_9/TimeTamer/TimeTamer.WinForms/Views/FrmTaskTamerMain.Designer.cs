@@ -1,6 +1,6 @@
-﻿namespace TimeTamer.WinForms
+﻿namespace TaskTamer.WinForms
 {
-    partial class FrmTimeTamerMain
+    partial class FrmTaskTamerMain
     {
         /// <summary>
         ///  Required designer variable.
@@ -95,7 +95,7 @@
             // 
             // _timeTamerMainViewModelBindingSource
             // 
-            _timeTamerMainViewModelBindingSource.DataSource = typeof(ViewModels.TimeTamerMainViewModel);
+            _timeTamerMainViewModelBindingSource.DataSource = typeof(ViewModels.TaskTamerMainViewModel);
             // 
             // _mainMenuStrip
             // 

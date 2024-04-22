@@ -1,4 +1,4 @@
-namespace TimeTamer.DTOs;
+namespace TaskTamer.DTOs;
 
 public class CategoryDTO
 {

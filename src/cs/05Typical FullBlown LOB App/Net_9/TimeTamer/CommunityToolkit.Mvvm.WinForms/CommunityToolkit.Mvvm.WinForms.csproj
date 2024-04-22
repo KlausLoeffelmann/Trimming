@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimeTamer.Generic\TimeTamer.Generic.csproj" />
-    <ProjectReference Include="..\TimeTamer.ViewModels\TimeTamer.ViewModels.csproj" />
+    <ProjectReference Include="..\TimeTamer.Generic\TaskTamer.Generic.csproj" />
+    <ProjectReference Include="..\TimeTamer.ViewModels\TaskTamer.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

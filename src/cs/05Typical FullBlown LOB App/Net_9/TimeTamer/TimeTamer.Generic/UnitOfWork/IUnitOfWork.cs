@@ -1,4 +1,4 @@
-﻿namespace TimeTamer.DataLayer.UnitOfWork;
+﻿namespace TaskTamer.DataLayer.UnitOfWork;
 
 public interface IUnitOfWork : IDisposable
 {

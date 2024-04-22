@@ -1,6 +1,6 @@
-﻿namespace TimeTamer.DataLayer.Models;
+﻿namespace TaskTamer.DataLayer.Models;
 
-public static class ProjectExtensions
+public partial class Project
 {
     /// <summary>
     /// Generates sample Project data.
@@ -9,8 +9,11 @@ public static class ProjectExtensions
     /// <remarks>
     /// This method generates sample Project data including the Projects "WinForms Classic Designer", "WinForms OOP-Designer", "WinForms Runtime", "WinForms Async", "WinForms DarkMode", "Copilot conceptional work", "Prototyping", "CommToolkit work".
     /// </remarks>
-    public static void GenerateProjects(TimeTamerContext context, User user)
+    public static void EnsureSampleProjectsData(TaskTamerContext context, User user)
     {
+        // Get the first Category as the default:
+        var category = context.Categories.First();
+
         var projects = new List<Project>
         {
             new Project
@@ -18,9 +21,10 @@ public static class ProjectExtensions
                 ProjectId = Guid.NewGuid(),
                 Name = "WinForms Classic Designer",
                 Description = "Classic designer for WinForms applications",
+                Category = category,
                 StartDate = DateTimeOffset.Now.AddDays(-7).AddHours(new Random().Next(24)),
                 EndDate = DateTimeOffset.Now.AddDays(7).AddHours(new Random().Next(24)),
-                OwnerId = user.UserId,
+                Owner = user,
                 Status = "In Progress",
                 ExternalReference = "ABC123",
                 DateCreated = DateTimeOffset.Now,
@@ -32,9 +36,10 @@ public static class ProjectExtensions
                 ProjectId = Guid.NewGuid(),
                 Name = "WinForms OOP-Designer",
                 Description = "Object-oriented programming designer for WinForms applications",
+                Category = category,
                 StartDate = DateTimeOffset.Now.AddDays(-14).AddHours(new Random().Next(24)),
                 EndDate = DateTimeOffset.Now.AddDays(14).AddHours(new Random().Next(24)),
-                OwnerId = user.UserId,
+                Owner = user,
                 Status = "Not Started",
                 ExternalReference = "DEF456",
                 DateCreated = DateTimeOffset.Now,
@@ -46,9 +51,10 @@ public static class ProjectExtensions
                 ProjectId = Guid.NewGuid(),
                 Name = "WinForms Runtime",
                 Description = "Runtime for WinForms applications",
+                Category = category,
                 StartDate = DateTimeOffset.Now.AddDays(-21).AddHours(new Random().Next(24)),
                 EndDate = DateTimeOffset.Now.AddDays(21).AddHours(new Random().Next(24)),
-                OwnerId = user.UserId,
+                Owner = user,
                 Status = "Completed",
                 ExternalReference = "GHI789",
                 DateCreated = DateTimeOffset.Now,
@@ -60,9 +66,10 @@ public static class ProjectExtensions
                 ProjectId = Guid.NewGuid(),
                 Name = "WinForms Async",
                 Description = "Asynchronous programming for WinForms applications",
+                Category = category,
                 StartDate = DateTimeOffset.Now.AddDays(-30).AddHours(new Random().Next(24)),
                 EndDate = DateTimeOffset.Now.AddDays(30).AddHours(new Random().Next(24)),
-                OwnerId = user.UserId,
+                Owner = user,
                 Status = "In Progress",
                 ExternalReference = "JKL012",
                 DateCreated = DateTimeOffset.Now,
@@ -74,9 +81,10 @@ public static class ProjectExtensions
                 ProjectId = Guid.NewGuid(),
                 Name = "WinForms DarkMode",
                 Description = "Dark mode support for WinForms applications",
+                Category = category,
                 StartDate = DateTimeOffset.Now.AddDays(-30).AddHours(new Random().Next(24)),
                 EndDate = DateTimeOffset.Now.AddDays(30).AddHours(new Random().Next(24)),
-                OwnerId = user.UserId,
+                Owner = user,
                 Status = "Not Started",
                 ExternalReference = "MNO345",
                 DateCreated = DateTimeOffset.Now,
@@ -88,9 +96,10 @@ public static class ProjectExtensions
                 ProjectId = Guid.NewGuid(),
                 Name = "Copilot conceptional work",
                 Description = "Conceptional work for Copilot project",
+                Category = category,
                 StartDate = DateTimeOffset.Now.AddDays(-7).AddHours(new Random().Next(24)),
                 EndDate = DateTimeOffset.Now.AddDays(7).AddHours(new Random().Next(24)),
-                OwnerId = user.UserId,
+                Owner = user,
                 Status = "In Progress",
                 ExternalReference = "PQR678",
                 DateCreated = DateTimeOffset.Now,
@@ -102,9 +111,10 @@ public static class ProjectExtensions
                 ProjectId = Guid.NewGuid(),
                 Name = "Prototyping",
                 Description = "Prototyping for new features",
+                Category = category,
                 StartDate = DateTimeOffset.Now.AddDays(-14).AddHours(new Random().Next(24)),
                 EndDate = DateTimeOffset.Now.AddDays(14).AddHours(new Random().Next(24)),
-                OwnerId = user.UserId,
+                Owner = user,
                 Status = "Not Started",
                 ExternalReference = "STU901",
                 DateCreated = DateTimeOffset.Now,
@@ -116,9 +126,10 @@ public static class ProjectExtensions
                 ProjectId = Guid.NewGuid(),
                 Name = "CommToolkit work",
                 Description = "Work on the Communication Toolkit",
+                Category = category,
                 StartDate = DateTimeOffset.Now.AddDays(-21).AddHours(new Random().Next(24)),
                 EndDate = DateTimeOffset.Now.AddDays(21).AddHours(new Random().Next(24)),
-                OwnerId = user.UserId,
+                Owner = user,
                 Status = "Completed",
                 ExternalReference = "VWX234",
                 DateCreated = DateTimeOffset.Now,

@@ -1,4 +1,4 @@
-﻿namespace TimeTamer9.WinForms.Views
+﻿namespace TaskTamer.WinForms.Views
 {
     partial class frmManageUsers
     {

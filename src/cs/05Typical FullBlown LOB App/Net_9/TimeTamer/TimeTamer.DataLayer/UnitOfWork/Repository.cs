@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TimeTamer.DataLayer.UnitOfWork;
+namespace TaskTamer.DataLayer.UnitOfWork;
 
 public class Repository<T> : IRepository<T> where T : class
 {
