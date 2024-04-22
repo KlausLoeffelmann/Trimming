@@ -16,4 +16,10 @@
     <ProjectReference Include="..\TimeTamer.ViewModels\TimeTamer.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Controls\GridView\GridView_ShadowingBaseProperties.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
