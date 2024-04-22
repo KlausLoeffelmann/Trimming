@@ -1,11 +1,11 @@
 
 using System.ComponentModel;
 
-namespace TimeTamer.WinForms
+namespace TaskTamer.WinForms
 {
-    public partial class FrmTimeTamerMain : Form
+    public partial class FrmTaskTamerMain : Form
     {
-        public FrmTimeTamerMain()
+        public FrmTaskTamerMain()
         {
             InitializeComponent();
         }

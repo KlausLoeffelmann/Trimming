@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace TimeTamer.ViewModels;
+namespace TaskTamer.ViewModels;
 
 public partial class TaskViewModel : ObservableObject
 {

@@ -1,7 +1,7 @@
-﻿using TimeTamer.DataLayer.Models;
-using TimeTamer.DataLayer.UnitOfWork;
+﻿using TaskTamer.DataLayer.Models;
+using TaskTamer.DataLayer.UnitOfWork;
 
-namespace TimeTamer.DataLayer.Services
+namespace TaskTamer.DataLayer.Services
 {
     public class ProductService(IUnitOfWork unitOfWork)
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TimeTamer.DataLayer.Models;
+namespace TaskTamer.DataLayer.Models;
 
 public partial class Category
 {
@@ -14,4 +14,45 @@ public partial class Category
     public DateTimeOffset DateCreated { get; set; }
     public DateTimeOffset DateLastModified { get; set; }
     public Guid SyncId { get; set; }
+}
+
+public partial class Category
+{
+    public static void EnsureSampleCategoriesData(TaskTamerContext context)
+    {
+        string[] categoryNames = new string[]
+        {
+            "Generic",
+            "Development",
+            "Testing",
+            "Documentation",
+            "Bug Fixing",
+            "Feature Implementation",
+            "Code Review",
+            "Deployment",
+            "Database Management",
+            "UI/UX Design",
+            "Project Management"
+        };
+
+        foreach (string categoryName in categoryNames)
+        {
+            if (!context.Categories.Any(c => c.Name == categoryName))
+            {
+                Category category = new Category
+                {
+                    CategoryId = Guid.NewGuid(),
+                    Name = categoryName,
+                    Description = null,
+                    DateCreated = DateTimeOffset.Now,
+                    DateLastModified = DateTimeOffset.Now,
+                    SyncId = Guid.NewGuid()
+                };
+
+                context.Categories.Add(category);
+            }
+        }
+
+        context.SaveChanges();
+    }
 }

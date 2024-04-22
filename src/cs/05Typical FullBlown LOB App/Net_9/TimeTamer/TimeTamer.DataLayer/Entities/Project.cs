@@ -1,25 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TimeTamer.DataLayer.Models;
+namespace TaskTamer.DataLayer.Models;
 
-[Index(nameof(OwnerId), Name = "IDX_Project_Owner")]
 public partial class Project
 {
     [Key]
     public Guid ProjectId { get; set; }
 
-    [StringLength(255)]
+    [Required, StringLength(255)]
     public string Name { get; set; } = null!;
 
     public string? Description { get; set; }
 
+    [ForeignKey(nameof(Category.CategoryId))]
+    public Category Category { get; set; } = null!;
+
+    [ForeignKey(nameof(User.UserId))]
+    [InverseProperty(nameof(User.Projects))]
+    public virtual User? Owner { get; set; }
+
     public DateTimeOffset? StartDate { get; set; }
 
     public DateTimeOffset? EndDate { get; set; }
-
-    public Guid? OwnerId { get; set; }
 
     [StringLength(50)]
     public string? Status { get; set; }
@@ -27,14 +30,11 @@ public partial class Project
     [StringLength(255)]
     public string? ExternalReference { get; set; }
 
-    [ForeignKey(nameof(OwnerId))]
-    [InverseProperty(nameof(User.Projects))]
-    public virtual User? Owner { get; set; }
-    public DateTimeOffset DateCreated { get; set; }
-    public DateTimeOffset DateLastModified { get; set; }
+    public virtual ICollection<TaskItem> TaskItems { get; set; } = [];
+
+    public DateTimeOffset DateCreated { get; set; } = DateTimeOffset.Now;
+
+    public DateTimeOffset DateLastModified { get; set; } = DateTimeOffset.Now;
+
     public Guid SyncId { get; set; }
-
-
-    [InverseProperty(nameof(TaskItem.Project))]
-    public virtual ICollection<TaskItem> TaskItems { get; set; } = new List<TaskItem>();
 }

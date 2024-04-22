@@ -1,6 +1,6 @@
 using System;
 
-namespace TimeTamer.DataLayer.Models
+namespace TaskTamer.DataLayer.Models
 {
     public class TaskItemDto
     {

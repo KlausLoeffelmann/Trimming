@@ -1,8 +1,8 @@
-using TimeTamer.ViewModels;
-using TimeTamer9.WinForms.Views;
+using TaskTamer.ViewModels;
+using TaskTamer.WinForms.Views;
 using static CommunityToolkit.Mvvm.WinForms.IWinFormsStartService;
 
-namespace TimeTamer.WinForms;
+namespace TaskTamer.WinForms;
 
 internal static class Program
 {
@@ -20,10 +20,10 @@ internal static class Program
 
         // We're registering the ViewModels and the view here:
         RegisterView<TaskViewModel>(() => new FrmManageProjects());
-        RegisterView<TimeTamerMainViewModel>(() => new FrmTimeTamerMain());
+        RegisterView<TaskTamerMainViewModel>(() => new FrmTaskTamerMain());
 
         // We're setting the start ViewModel here:
-        SetStartViewModel<TimeTamerMainViewModel>();
+        SetStartViewModel<TaskTamerMainViewModel>();
 
         // Let's go!
         Run();

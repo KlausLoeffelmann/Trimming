@@ -1,4 +1,4 @@
-﻿namespace TimeTamer.Generic.UIService;
+﻿namespace TaskTamer.Generic.UIService;
 
 public interface IUIDialogService
 {

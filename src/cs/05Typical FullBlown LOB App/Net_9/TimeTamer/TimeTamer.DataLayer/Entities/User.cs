@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TimeTamer.DataLayer.Models;
+namespace TaskTamer.DataLayer.Models;
 
 public partial class User
 {
@@ -27,12 +27,14 @@ public partial class User
     public string? Role { get; set; }
 
     public DateTimeOffset DateCreated { get; set; }
+
     public DateTimeOffset DateLastModified { get; set; }
+
     public Guid SyncId { get; set; }
 
     [InverseProperty(nameof(Project.Owner))]
     public virtual ICollection<Project> Projects { get; set; } = [];
 
-    [InverseProperty(nameof(TaskItem.AssignedToUser))]
+    [InverseProperty(nameof(TaskItem.Owner))]
     public virtual ICollection<TaskItem> TaskItems { get; set; } = [];
 }

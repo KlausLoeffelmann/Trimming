@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TimeTamer9.WinForms.Views
+namespace TaskTamer.WinForms.Views
 {
     public partial class frmManageUsers : Form
     {

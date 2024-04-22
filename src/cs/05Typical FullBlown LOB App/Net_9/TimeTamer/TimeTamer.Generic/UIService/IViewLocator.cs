@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TimeTamer.Generic.UIService;
+namespace TaskTamer.Generic.UIService;
 
 public interface IViewLocator<TView>
     where TView : class

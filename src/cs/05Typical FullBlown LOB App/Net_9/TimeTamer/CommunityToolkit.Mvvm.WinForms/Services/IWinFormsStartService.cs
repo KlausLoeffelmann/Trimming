@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using TimeTamer.Generic.UIService;
-using TimeTamer.ViewModels.Services;
+using TaskTamer.Generic.UIService;
+using TaskTamer.ViewModels.Services;
 
 namespace CommunityToolkit.Mvvm.WinForms;
 

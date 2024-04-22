@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using TimeTamer.Generic.UIService;
+using TaskTamer.Generic.UIService;
 
-namespace TimeTamer.ViewModels;
+namespace TaskTamer.ViewModels;
 
-public partial class TimeTamerMainViewModel : ObservableObject
+public partial class TaskTamerMainViewModel : ObservableObject
 {
     private readonly ISyncContextService _syncContextService;
 
@@ -17,11 +17,12 @@ public partial class TimeTamerMainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<TaskViewModel>? _tasks;
 
-    public TimeTamerMainViewModel(ISyncContextService syncContextService)
+    public TaskTamerMainViewModel(ISyncContextService syncContextService)
     {
         _currentDisplayTime = AssignCurrentDateAndTimeInCurrentCulture();
         _timer = new System.Threading.Timer(UpdateCurrentTime, null, 0, 1000);
         _syncContextService = syncContextService;
+        EnsureSampleData();
     }
 
     private static string AssignCurrentDateAndTimeInCurrentCulture()
