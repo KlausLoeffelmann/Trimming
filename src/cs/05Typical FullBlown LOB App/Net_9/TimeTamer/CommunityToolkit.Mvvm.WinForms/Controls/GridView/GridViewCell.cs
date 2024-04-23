@@ -4,24 +4,71 @@ namespace CommunityToolkit.Mvvm.WinForms.Controls;
 
 internal class GridViewCell : DataGridViewCell
 {
-    private static readonly Brush CellBackgroundBrush = new SolidBrush(Color.FromArgb(255,32,32,32));
+    private static readonly Padding s_defaultPadding = new(5, 5, 5, 5);
+
+    private BindingSource? _bindingSource;
+    private GridViewItemTemplate? _itemTemplate;
+    private bool _isMouseOver;
 
     public GridViewCell()
     {
     }
 
-    internal GridViewItemTemplate? ItemTemplate { get; set; }
-
-    protected override object GetFormattedValue(object value, int rowIndex, ref DataGridViewCellStyle cellStyle, TypeConverter valueTypeConverter, TypeConverter formattedValueTypeConverter, DataGridViewDataErrorContexts context)
+    protected override void OnMouseEnter(int rowIndex)
     {
-        //return base.GetFormattedValue(value, rowIndex, ref cellStyle, valueTypeConverter, formattedValueTypeConverter, context);
-        return "Test string";
+        base.OnMouseEnter(rowIndex);
+        _isMouseOver = true;
+        DataGridView?.InvalidateCell(this);
+
     }
 
-    protected override Size GetPreferredSize(Graphics graphics, DataGridViewCellStyle cellStyle, int rowIndex, Size constraintSize)
+    override protected void OnMouseLeave(int rowIndex)
     {
-        var value=base.GetPreferredSize(graphics, cellStyle, rowIndex, constraintSize);
-        return new Size(value.Width, 125);
+        base.OnMouseLeave(rowIndex);
+        _isMouseOver = false;
+        DataGridView?.InvalidateCell(this);
+    }
+
+    internal GridViewItemTemplate? ItemTemplate 
+    { 
+        get => _itemTemplate;
+
+        set
+        {
+            if (_itemTemplate == value)
+            {
+                return;
+            }
+
+            _itemTemplate = value;
+
+            // Check, if the item templates has Bindings. If not, we're done.
+            // It's a miracle, where the data will then come from, but it's not our problem at this time.
+            // We should have an Analyzer to point that out the users, though.
+            if (_itemTemplate is null 
+                || _itemTemplate.DataBindings.Count == 0)
+            {
+                return;
+            }
+
+            // We need to find the BindingContext of the ItemTemplate, in that
+            // we need to make sure, that the Bindings are homogenous to _one_ DataSource in the template:
+            for (var i = 0; i < _itemTemplate.DataBindings.Count; i++)
+            {
+                if (i == 0)
+                {
+                    _bindingSource = _itemTemplate.DataBindings[i].DataSource as BindingSource
+                        ?? throw new InvalidOperationException("All Bindings in the ItemTemplate must have a BindingSource defined!");
+                }
+                else
+                {
+                    if (_bindingSource != _itemTemplate.DataBindings[i].DataSource)
+                    {
+                        throw new InvalidOperationException("All Bindings in the ItemTemplate must have the same BindingSource!");
+                    }
+                }
+            }
+        }
     }
 
     public override object Clone()
@@ -31,35 +78,88 @@ internal class GridViewCell : DataGridViewCell
         return clone;
     }
 
+    protected override object? GetFormattedValue(
+        object? value, 
+        int rowIndex, 
+        ref DataGridViewCellStyle cellStyle, 
+        TypeConverter? valueTypeConverter, 
+        TypeConverter? formattedValueTypeConverter, 
+        DataGridViewDataErrorContexts context)
+    {
+        return $"{(value is null ? "- - -" : value)}";
+    }
+
+    protected override Size GetPreferredSize(Graphics graphics, DataGridViewCellStyle cellStyle, int rowIndex, Size constraintSize) 
+        => ItemTemplate is not null
+            ? ItemTemplate.GetPreferredSize(constraintSize)
+            : base.GetPreferredSize(graphics, cellStyle, rowIndex, constraintSize);
+
     protected override void Paint(
         Graphics graphics, 
         Rectangle clipBounds, 
         Rectangle cellBounds, 
         int rowIndex, 
         DataGridViewElementStates cellState, 
-        object value, 
-        object formattedValue, 
-        string errorText, 
+        object? value, 
+        object? formattedValue, 
+        string? errorText, 
         DataGridViewCellStyle cellStyle, 
         DataGridViewAdvancedBorderStyle advancedBorderStyle, 
         DataGridViewPaintParts paintParts)
     {
-        //base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
-        clipBounds.Inflate(-2, -2);
-        clipBounds.Offset(2, 2);
-        var temp = ItemTemplate?.BindingContext;
-        graphics.FillRectangle(CellBackgroundBrush, clipBounds);
+        if (_bindingSource is not null)
+        {
+            // We need to set the DataSource of the ItemTemplate to the current row:
+            _bindingSource.DataSource = value;
+        }
+
+        if (_itemTemplate is null)
+        {
+            return;
+        }
+
+        var padding = ItemTemplate is null
+            ? s_defaultPadding
+            : ItemTemplate.Padding;
+
+        // Set the padding for the cell:
+        cellBounds.Inflate(-padding.Right, -padding.Bottom);
+        cellBounds.Offset(padding.Left, padding.Top);
+
+        if (DataGridView?.ScrollBars != ScrollBars.None)
+        {
+            // Get the width of the vertical scrollbar:
+            var verticalScrollbarWidth = SystemInformation.VerticalScrollBarWidth;
+            if (verticalScrollbarWidth > 0) 
+            {
+                cellBounds.Width -= verticalScrollbarWidth;
+            }
+        }
+
+        ItemTemplate?.OnPaintContent(new PaintEventArgs(graphics, clipBounds), cellBounds, _isMouseOver);
     }
 
-    protected override void PaintBorder(Graphics graphics, Rectangle clipBounds, Rectangle bounds, DataGridViewCellStyle cellStyle, DataGridViewAdvancedBorderStyle advancedBorderStyle)
+    protected override void PaintErrorIcon(
+        Graphics graphics, 
+        Rectangle clipBounds, 
+        Rectangle cellBounds, 
+        string? errorText)
     {
-        clipBounds.Inflate(-3, -3);
-        clipBounds.Offset(3, 3);
-        graphics.FillRectangle(CellBackgroundBrush, clipBounds);    
-    }
 
-    protected override void PaintErrorIcon(Graphics graphics, Rectangle clipBounds, Rectangle cellValueBounds, string errorText)
-    {
-        base.PaintErrorIcon(graphics, clipBounds, cellValueBounds, errorText);
+        if (_itemTemplate is null)
+        {
+            base.PaintErrorIcon(graphics, clipBounds, cellBounds, errorText);
+            return;
+        }
+
+        var padding = ItemTemplate is null
+            ? s_defaultPadding
+            : ItemTemplate.Padding;
+
+        // Set the padding for the cell:
+        cellBounds.Inflate(-padding.Right, -padding.Bottom);
+        cellBounds.Offset(padding.Left, padding.Top);
+
+        _itemTemplate.PaintErrorIcon(graphics, clipBounds, cellBounds, errorText);
     }
 }

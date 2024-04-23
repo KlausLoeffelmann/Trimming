@@ -120,26 +120,644 @@
   <metadata name="_statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="_statusStrip.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="_lblSpringLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>859, 37</value>
+  </data>
+  <data name="_lblSpringLabel.Text" xml:space="preserve">
+    <value>#Spring#</value>
+  </data>
+  <data name="_lblSpringLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
   <metadata name="_mainViewModelBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>588, 17</value>
   </metadata>
+  <data name="_lblCurrentUser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 37</value>
+  </data>
+  <data name="_lblCurrentUser.Text" xml:space="preserve">
+    <value>#User#</value>
+  </data>
+  <data name="_lblDateTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 38</value>
+  </data>
+  <data name="_lblDateTime.Text" xml:space="preserve">
+    <value>#DatePlaceholder#</value>
+  </data>
+  <data name="_statusStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 654</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="_statusStrip.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 2, 0</value>
+  </data>
+  <data name="_statusStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1140, 43</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="_statusStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="_statusStrip.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;_statusStrip.Name" xml:space="preserve">
+    <value>_statusStrip</value>
+  </data>
+  <data name="&gt;&gt;_statusStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_statusStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;_statusStrip.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <metadata name="_mainMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>193, 17</value>
   </metadata>
+  <data name="_mainMenuStrip.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 13.8pt</value>
+  </data>
+  <data name="exportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 36</value>
+  </data>
+  <data name="exportToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Export...</value>
+  </data>
+  <data name="importToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 36</value>
+  </data>
+  <data name="importToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Import...</value>
+  </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 6</value>
+  </data>
+  <data name="quitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 36</value>
+  </data>
+  <data name="quitToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Quit</value>
+  </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 35</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;File</value>
+  </data>
+  <data name="categoriesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 36</value>
+  </data>
+  <data name="categoriesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Categories...</value>
+  </data>
+  <data name="prToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 36</value>
+  </data>
+  <data name="prToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Projects...</value>
+  </data>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 6</value>
+  </data>
+  <data name="usersToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 36</value>
+  </data>
+  <data name="usersToolStripMenuItem.Text" xml:space="preserve">
+    <value>Users...</value>
+  </data>
+  <data name="baseDataToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 35</value>
+  </data>
+  <data name="baseDataToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Manage</value>
+  </data>
+  <data name="generateTestDataToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>291, 36</value>
+  </data>
+  <data name="generateTestDataToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Generate test data</value>
+  </data>
+  <data name="testsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 35</value>
+  </data>
+  <data name="testsToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Tests</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 36</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Options...</value>
+  </data>
+  <data name="toolsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 35</value>
+  </data>
+  <data name="toolsToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Tools</value>
+  </data>
+  <data name="_mainMenuStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="_mainMenuStrip.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 5, 5, 5</value>
+  </data>
+  <data name="_mainMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1140, 45</value>
+  </data>
+  <data name="_mainMenuStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="_mainMenuStrip.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;_mainMenuStrip.Name" xml:space="preserve">
+    <value>_mainMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;_mainMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_mainMenuStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;_mainMenuStrip.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="_tasksGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
   <metadata name="_taskItemView.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>417, 17</value>
   </metadata>
   <metadata name="taskViewModelBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>899, 17</value>
   </metadata>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="_taskItemView.DateCreated" type="System.DateTimeOffset, mscorlib">
     <value />
   </data>
   <data name="_taskItemView.DateLastModified" type="System.DateTimeOffset, mscorlib">
     <value />
   </data>
+  <data name="_tasksGridView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 58</value>
+  </data>
+  <data name="_tasksGridView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1116, 445</value>
+  </data>
+  <data name="_tasksGridView.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;_tasksGridView.Name" xml:space="preserve">
+    <value>_tasksGridView</value>
+  </data>
+  <data name="&gt;&gt;_tasksGridView.Type" xml:space="preserve">
+    <value>CommunityToolkit.Mvvm.WinForms.Controls.GridView, CommunityToolkit.Mvvm.WinForms, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;_tasksGridView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;_tasksGridView.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="dataGridViewColumn2.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn2.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn2.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
+    <value>CustomDataRowObject</value>
+  </data>
+  <data name="dataGridViewTextBoxColumn1.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewTextBoxColumn1.Width" type="System.Int32, mscorlib">
+    <value>1021</value>
+  </data>
+  <data name="dataGridViewColumn1.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn1.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn1.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn3.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn3.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn3.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>68, 49</value>
+  </data>
+  <data name="textBox1.PlaceholderText" xml:space="preserve">
+    <value>Add new Task</value>
+  </data>
+  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1042, 38</value>
+  </data>
+  <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
+    <value>textBox1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="radioButton1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="radioButton1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 49</value>
+  </data>
+  <data name="radioButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 35</value>
+  </data>
+  <data name="radioButton1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="radioButton1.Text" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="&gt;&gt;radioButton1.Name" xml:space="preserve">
+    <value>radioButton1</value>
+  </data>
+  <data name="&gt;&gt;radioButton1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radioButton1.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;radioButton1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 13.8pt</value>
+  </data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 523</value>
+  </data>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1116, 111</value>
+  </data>
+  <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Create a new task: Enter the task text, press enter!</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="dataGridViewColumn4.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn4.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn4.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn5.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn5.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn5.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn6.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn6.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn6.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn7.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn7.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn7.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn8.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn8.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn8.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn9.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn9.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn9.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn10.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn10.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn10.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn11.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn11.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn11.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn12.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn12.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="dataGridViewColumn12.Width" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="dataGridViewColumn13.HeaderText" xml:space="preserve">
+    <value>DataColumn</value>
+  </data>
+  <data name="dataGridViewColumn13.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>137</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>10, 25</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1140, 697</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Time Tamer</value>
+  </data>
+  <data name="&gt;&gt;_lblSpringLabel.Name" xml:space="preserve">
+    <value>_lblSpringLabel</value>
+  </data>
+  <data name="&gt;&gt;_lblSpringLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_lblCurrentUser.Name" xml:space="preserve">
+    <value>_lblCurrentUser</value>
+  </data>
+  <data name="&gt;&gt;_lblCurrentUser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_mainViewModelBindingSource.Name" xml:space="preserve">
+    <value>_mainViewModelBindingSource</value>
+  </data>
+  <data name="&gt;&gt;_mainViewModelBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_lblDateTime.Name" xml:space="preserve">
+    <value>_lblDateTime</value>
+  </data>
+  <data name="&gt;&gt;_lblDateTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
+    <value>fileToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;fileToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem.Name" xml:space="preserve">
+    <value>exportToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;exportToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem.Name" xml:space="preserve">
+    <value>importToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;importToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem1.Name" xml:space="preserve">
+    <value>toolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;quitToolStripMenuItem.Name" xml:space="preserve">
+    <value>quitToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;quitToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;baseDataToolStripMenuItem.Name" xml:space="preserve">
+    <value>baseDataToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;baseDataToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;categoriesToolStripMenuItem.Name" xml:space="preserve">
+    <value>categoriesToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;categoriesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;prToolStripMenuItem.Name" xml:space="preserve">
+    <value>prToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;prToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
+    <value>toolStripMenuItem2</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;usersToolStripMenuItem.Name" xml:space="preserve">
+    <value>usersToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;usersToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;testsToolStripMenuItem.Name" xml:space="preserve">
+    <value>testsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;testsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;generateTestDataToolStripMenuItem.Name" xml:space="preserve">
+    <value>generateTestDataToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;generateTestDataToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolsToolStripMenuItem.Name" xml:space="preserve">
+    <value>toolsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;toolsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;optionsToolStripMenuItem.Name" xml:space="preserve">
+    <value>optionsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;optionsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_taskItemView.Name" xml:space="preserve">
+    <value>_taskItemView</value>
+  </data>
+  <data name="&gt;&gt;_taskItemView.Type" xml:space="preserve">
+    <value>TaskTamer9.WinForms.Views.TaskItemView, TaskTamer9.WinForms, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;taskViewModelBindingSource.Name" xml:space="preserve">
+    <value>taskViewModelBindingSource</value>
+  </data>
+  <data name="&gt;&gt;taskViewModelBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn2.Name" xml:space="preserve">
+    <value>dataGridViewColumn2</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
+    <value>dataGridViewTextBoxColumn1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn1.Name" xml:space="preserve">
+    <value>dataGridViewColumn1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn3.Name" xml:space="preserve">
+    <value>dataGridViewColumn3</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn4.Name" xml:space="preserve">
+    <value>dataGridViewColumn4</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn5.Name" xml:space="preserve">
+    <value>dataGridViewColumn5</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn6.Name" xml:space="preserve">
+    <value>dataGridViewColumn6</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn7.Name" xml:space="preserve">
+    <value>dataGridViewColumn7</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn8.Name" xml:space="preserve">
+    <value>dataGridViewColumn8</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn9.Name" xml:space="preserve">
+    <value>dataGridViewColumn9</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn10.Name" xml:space="preserve">
+    <value>dataGridViewColumn10</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn11.Name" xml:space="preserve">
+    <value>dataGridViewColumn11</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn12.Name" xml:space="preserve">
+    <value>dataGridViewColumn12</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn13.Name" xml:space="preserve">
+    <value>dataGridViewColumn13</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewColumn13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FrmTaskTamerMain</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

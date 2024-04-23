@@ -11,6 +11,13 @@ public partial class GridView : DataGridView
     private INotifyCollectionChanged? _observableCollection;
     private ICollection? _collection;
 
+    private Color DarkModeBackgroundColor = Color.FromArgb(255, 20, 20, 20);
+    private Color LightModeBackgroundColor = Color.FromArgb(255, 164, 164, 164);
+    private Color ThemedDataGridBackground 
+        => IsDarkModeEnabled 
+        ? DarkModeBackgroundColor 
+        : LightModeBackgroundColor;
+
     public event EventHandler? GridViewItemTemplateChanged;
 
     public GridView()
@@ -92,6 +99,12 @@ public partial class GridView : DataGridView
             }
 
             _gridViewItemTemplate = value;
+
+            if (_gridViewItemTemplate is not null)
+            {
+                _gridViewItemTemplate.IsDarkMode = this.IsDarkModeEnabled;
+            }
+
             OnGridViewItemTemplateChanged();
         }
     }
@@ -115,22 +128,10 @@ public partial class GridView : DataGridView
         Columns.Add(dataRowObjectColumn);
     }
 
-    protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
-    {
-        base.OnCellPainting(e);
-
-        // Custom paint cells
-        if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-        {
-            e.PaintBackground(e.CellBounds, true);
-            e.PaintContent(e.CellBounds);
-            e.Handled = true;
-        }
-    }
-
     protected override void OnRowPrePaint(DataGridViewRowPrePaintEventArgs e)
     {
-        base.OnRowPrePaint(e);
+        e.Graphics.FillRectangle(new SolidBrush(ThemedDataGridBackground), e.RowBounds);
+
         Debug.Print($"GridView - {nameof(OnRowPrePaint)} Row: {e.RowIndex}");
     }
 

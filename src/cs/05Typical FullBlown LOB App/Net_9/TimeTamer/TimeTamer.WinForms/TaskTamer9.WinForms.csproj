@@ -25,4 +25,10 @@
     <ProjectReference Include="..\TimeTamer.ViewModels\TaskTamer.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\TaskItemView - Binding.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
