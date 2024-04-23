@@ -54,6 +54,13 @@ public partial class GridView
 
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public new DataGridViewColumnCollection Columns
+    {
+        get => base.Columns;
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewCellStyle ColumnHeadersDefaultCellStyle
     {
         get => base.ColumnHeadersDefaultCellStyle;

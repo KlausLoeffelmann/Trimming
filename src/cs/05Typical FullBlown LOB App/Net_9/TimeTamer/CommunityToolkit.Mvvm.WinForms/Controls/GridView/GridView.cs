@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace CommunityToolkit.Mvvm.WinForms.Controls;
@@ -6,6 +8,8 @@ namespace CommunityToolkit.Mvvm.WinForms.Controls;
 public partial class GridView : DataGridView
 {
     private GridViewItemTemplate? _gridViewItemTemplate;
+    private INotifyCollectionChanged? _observableCollection;
+    private ICollection? _collection;
 
     public event EventHandler? GridViewItemTemplateChanged;
 
@@ -19,8 +23,8 @@ public partial class GridView : DataGridView
         AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         AutoSizeRowsMode= DataGridViewAutoSizeRowsMode.AllCells;
         DoubleBuffered = true;
+        ColumnHeadersVisible = false;
         RowHeadersVisible = false;
-        RowTemplate = new GridViewRow();
         VirtualMode = true;
     }
 
@@ -47,15 +51,28 @@ public partial class GridView : DataGridView
 
         AutoGenerateColumns = false;
 
-        // Let's try to retrieve the Number of rows:
-        if (DataContext is IBindingList dataSourceList)
+        if (DataContext is null)
         {
+            _collection = null;
+            _observableCollection = null;
+            this.Rows.Clear();
+            this.RowCount = 0;
+
+            return;
+        }
+
+        // Let's try to retrieve the Number of rows:
+        if (DataContext is INotifyCollectionChanged observableCollection
+            and ICollection collection)
+        {
+            _observableCollection = observableCollection;
+            _collection = collection;
+
+            this.Rows.Clear();
+
             try
             {
-                if (dataSourceList is not null)
-                {
-                    this.RowCount = dataSourceList.Count;
-                }
+                this.RowCount = collection.Count;
             }
             catch (Exception)
             {
@@ -87,11 +104,11 @@ public partial class GridView : DataGridView
         base.OnHandleCreated(e);
 
         // Add custom column "DataRowObject"
-        var dataRowObjectColumn = new DataGridViewTextBoxColumn
+        var dataRowObjectColumn = new DataGridViewColumn(new GridViewCell() { ItemTemplate = GridViewItemTemplate })
         {
-            Name = "CustomDataRowObject",
-            HeaderText = "CustomDataRowObject",
-            SortMode = DataGridViewColumnSortMode.NotSortable
+            Name = "DataColumn",
+            HeaderText = "DataColumn",
+            SortMode = DataGridViewColumnSortMode.NotSortable,
         };
 
         Columns.Clear();
@@ -129,20 +146,6 @@ public partial class GridView : DataGridView
         Debug.Print($"GridView - {nameof(OnRowHeightInfoNeeded)} Row: {e.RowIndex}");
     }
 
-    private void GridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-    {
-        // Custom format cells
-        Debug.Print($"GridView - {nameof(GridView_CellFormatting)} Row: {e.RowIndex}");
-        if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && e.CellStyle is not null)
-        {
-            e.CellStyle.Padding = new Padding(10, 5, 10, 5);
-            e.CellStyle.BackColor = Color.White;
-            e.CellStyle.ForeColor = Color.Black;
-            e.CellStyle.SelectionBackColor = Color.LightBlue;
-            e.CellStyle.SelectionForeColor = Color.Black;
-        }
-    }
-
     protected override void OnCurrentCellChanged(EventArgs e)
     {
         base.OnCurrentCellChanged(e);
@@ -152,6 +155,7 @@ public partial class GridView : DataGridView
     protected override void OnCellValueNeeded(DataGridViewCellValueEventArgs e)
     {
         base.OnCellValueNeeded(e);
+        e.Value = _collection?.Cast<object>().ElementAt(e.RowIndex);
         Debug.Print($"GridView - {nameof(OnCellValueNeeded)} Row: {e.RowIndex}");
     }
 
