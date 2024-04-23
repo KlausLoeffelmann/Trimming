@@ -37,4 +37,10 @@ public partial class User
 
     [InverseProperty(nameof(TaskItem.Owner))]
     public virtual ICollection<TaskItem> TaskItems { get; set; } = [];
+
+    public static User GetCurrentUser()
+    {
+        TaskTamerContext context = new();
+        return context.Users.First();
+    }
 }

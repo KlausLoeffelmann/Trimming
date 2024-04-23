@@ -2,7 +2,7 @@ using System;
 
 namespace TaskTamer.DTOs;
 
-public class ProjectDTO
+public class ProjectDto
 {
     public Guid ProjectId { get; set; }
     public string? Name { get; set; }

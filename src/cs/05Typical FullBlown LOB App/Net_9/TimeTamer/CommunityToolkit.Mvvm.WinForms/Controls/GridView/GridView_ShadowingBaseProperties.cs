@@ -2,9 +2,10 @@
 
 namespace CommunityToolkit.Mvvm.WinForms.Controls;
 
-public partial class GridView 
+public partial class GridView
 {
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new bool AllowUserToOrderColumns
     {
         get => base.AllowUserToOrderColumns;
@@ -12,6 +13,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new bool AllowUserToResizeColumns
     {
         get => base.AllowUserToResizeColumns;
@@ -19,6 +21,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new bool AllowUserToResizeRows
     {
         get => base.AllowUserToResizeRows;
@@ -26,6 +29,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewCellStyle AlternatingRowsDefaultCellStyle
     {
         get => base.AlternatingRowsDefaultCellStyle;
@@ -33,6 +37,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewAutoSizeColumnsMode AutoSizeColumnsMode
     {
         get => base.AutoSizeColumnsMode;
@@ -40,6 +45,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewAutoSizeRowsMode AutoSizeRowsMode
     {
         get => base.AutoSizeRowsMode;
@@ -47,6 +53,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewCellStyle ColumnHeadersDefaultCellStyle
     {
         get => base.ColumnHeadersDefaultCellStyle;
@@ -54,6 +61,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new int ColumnHeadersHeight
     {
         get => base.ColumnHeadersHeight;
@@ -61,6 +69,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new bool ColumnHeadersVisible
     {
         get => base.ColumnHeadersVisible;
@@ -68,6 +77,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewHeaderBorderStyle ColumnHeadersBorderStyle
     {
         get => base.ColumnHeadersBorderStyle;
@@ -75,6 +85,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewColumnHeadersHeightSizeMode ColumnHeadersHeightSizeMode
     {
         get => base.ColumnHeadersHeightSizeMode;
@@ -82,6 +93,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new string DataMember
     {
         get => base.DataMember;
@@ -89,6 +101,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewCellStyle DefaultCellStyle
     {
         get => base.DefaultCellStyle;
@@ -96,6 +109,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new bool EnableHeadersVisualStyles
     {
         get => base.EnableHeadersVisualStyles;
@@ -103,6 +117,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewHeaderBorderStyle RowHeadersBorderStyle
     {
         get => base.RowHeadersBorderStyle;
@@ -110,6 +125,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewCellStyle RowsDefaultCellStyle
     {
         get => base.RowsDefaultCellStyle;
@@ -117,6 +133,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewRow RowTemplate
     {
         get => base.RowTemplate;
@@ -124,6 +141,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new int RowHeadersWidth
     {
         get => base.RowHeadersWidth;
@@ -131,6 +149,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new bool RowHeadersVisible
     {
         get => base.RowHeadersVisible;
@@ -138,6 +157,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewCellStyle RowHeadersDefaultCellStyle
     {
         get => base.RowHeadersDefaultCellStyle;
@@ -145,6 +165,7 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new DataGridViewRowHeadersWidthSizeMode RowHeadersWidthSizeMode
     {
         get => base.RowHeadersWidthSizeMode;

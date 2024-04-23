@@ -4,7 +4,7 @@ using TaskTamer.DataLayer.Models;
 
 namespace TaskTamer.ViewModels;
 
-public partial class TaskTamerMainViewModel : ObservableObject
+public partial class MainViewModel : ObservableObject
 {
     [RelayCommand]
     private static void GenerateTestData()

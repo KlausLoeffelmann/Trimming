@@ -12,8 +12,8 @@ using TaskTamer.DataLayer.Models;
 namespace TaskTamer.DataLayer.Migrations
 {
     [DbContext(typeof(TaskTamerContext))]
-    [Migration("20240422073044_InitMigration")]
-    partial class InitMigration
+    [Migration("20240422202411_InitialSetup")]
+    partial class InitialSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,8 +123,8 @@ namespace TaskTamer.DataLayer.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTimeOffset?>("DueDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("ExternalReference")
                         .HasMaxLength(255)
@@ -138,9 +138,8 @@ namespace TaskTamer.DataLayer.Migrations
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("SyncId")
                         .HasColumnType("uniqueidentifier");

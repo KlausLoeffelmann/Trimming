@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Converters\**" />
+    <EmbeddedResource Remove="Converters\**" />
+    <None Remove="Converters\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
   </ItemGroup>
 
@@ -17,10 +23,6 @@
     <ProjectReference Include="..\CommunityToolkit.Mvvm.WinForms\CommunityToolkit.Mvvm.WinForms.csproj" />
     <ProjectReference Include="..\TimeTamer.Generic\TaskTamer.Generic.csproj" />
     <ProjectReference Include="..\TimeTamer.ViewModels\TaskTamer.ViewModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Converters\" />
   </ItemGroup>
 
 </Project>

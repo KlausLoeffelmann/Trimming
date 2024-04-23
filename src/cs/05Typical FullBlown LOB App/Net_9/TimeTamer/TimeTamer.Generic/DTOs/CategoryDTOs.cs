@@ -1,6 +1,6 @@
 namespace TaskTamer.DTOs;
 
-public class CategoryDTO
+public class CategoryDto
 {
     public Guid CategoryId { get; set; }
     public string? Name { get; set; }

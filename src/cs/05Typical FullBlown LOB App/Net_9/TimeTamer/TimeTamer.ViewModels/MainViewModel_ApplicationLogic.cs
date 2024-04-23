@@ -2,7 +2,7 @@
 
 namespace TaskTamer.ViewModels;
 
-public partial class TaskTamerMainViewModel
+public partial class MainViewModel
 {
     private void UpdateCurrentTime(object? state)
     {

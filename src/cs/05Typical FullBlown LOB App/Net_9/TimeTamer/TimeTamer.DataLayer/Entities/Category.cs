@@ -23,16 +23,11 @@ public partial class Category
         string[] categoryNames = new string[]
         {
             "Generic",
-            "Development",
-            "Testing",
-            "Documentation",
-            "Bug Fixing",
-            "Feature Implementation",
-            "Code Review",
-            "Deployment",
-            "Database Management",
-            "UI/UX Design",
-            "Project Management"
+            "Chrono Conundrums",
+            "Avian Ambitions",
+            "Mystical Missions",
+            "Technological Triumphs",
+            "Whimsical Wonders"
         };
 
         foreach (string categoryName in categoryNames)

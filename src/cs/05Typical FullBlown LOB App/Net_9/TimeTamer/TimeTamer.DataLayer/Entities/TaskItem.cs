@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TaskTamer.DTOs;
 
 namespace TaskTamer.DataLayer.Models;
 
@@ -25,11 +26,9 @@ public partial class TaskItem
     [InverseProperty(nameof(TaskTamerContext.TaskItems))]
     public User Owner { get; set; } = null!;
 
-    [Column(TypeName = "datetime")]
-    public DateTime? DueDate { get; set; }
+    public DateTimeOffset? DueDate { get; set; }
 
-    [StringLength(50)]
-    public string? Status { get; set; }
+    public TaskItemStatus Status { get; set; }
 
     [StringLength(255)]
     public string? ExternalReference { get; set; }
@@ -39,4 +38,18 @@ public partial class TaskItem
     public DateTimeOffset DateLastModified { get; set; }
 
     public Guid SyncId { get; set; }
+
+    public static IEnumerable<TaskItem> GetTasksForUser(User currentUser)
+    {
+        using var context = new TaskTamerContext();
+
+        var resultSet = context.TaskItems
+            .Where(task => task.Owner == currentUser)
+            .Include(task => task.Project)
+            .Include(task => task.Owner)
+            .Include(task => task.Category)
+            .ToList();
+
+        return resultSet;
+    }
 }

@@ -1,16 +1,14 @@
-using System;
+namespace TaskTamer.DTOs;
 
-namespace TaskTamer.DataLayer.Models
+public class TaskItemDto
 {
-    public class TaskItemDto
-    {
-        public Guid TaskItemId { get; set; }
-        public Guid? ProjectId { get; set; }
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public Guid? AssignedToUserId { get; set; }
-        public DateTime? DueDate { get; set; }
-        public string? Status { get; set; }
-        public string? ExternalReference { get; set; }
-    }
+    public Guid TaskItemId { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public CategoryDto Category { get; set; } = null!;
+    public ProjectDto Project { get; set; } = null!;
+    public UserDto User { get; set; } = null!;
+    public DateTimeOffset? DueDate { get; set; }
+    public TaskItemStatus TaskStatus { get; set; }
+    public string? ExternalReference { get; set; }
 }

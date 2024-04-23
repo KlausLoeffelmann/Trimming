@@ -1,4 +1,7 @@
-﻿namespace TaskTamer.DataLayer.Models;
+﻿using System;
+using TaskTamer.DTOs;
+
+namespace TaskTamer.DataLayer.Models;
 
 public partial class TaskItem
 {
@@ -6,7 +9,10 @@ public partial class TaskItem
     {
         (string Name, string Description)[] sampleTasksText = GenerateFunnyTasksTexts();
 
-        var projects = user.Projects.ToArray();
+        var projects = context.Projects.ToArray();
+        var categories = context.Categories.ToArray();
+
+        var random = new Random();
 
         foreach (var taskText in sampleTasksText)
         {
@@ -15,17 +21,27 @@ public partial class TaskItem
                 task => task.Name == taskText.Name) is TaskItem task)
             {
                 // Implement the logic to update the due dates of the tasks in the database
-                task.DueDate = CalculateNewDueDate(task.DueDate ?? DateTime.Now);
+                task.DueDate = CalculateNewDueDate(task.DueDate ?? DateTimeOffset.Now);
             }
             else
             {
+                var now = DateTimeOffset.Now;
+                var dueDate = now.AddDays(random.Next(15, 30)).AddHours(random.Next(24));
+                var created = now.AddDays(-random.Next(30, 90)).AddHours(random.Next(24));
+                var modified = created.AddDays(random.Next(5, 25)).AddHours(random.Next(24));
+
                 // Create new sample tasks
                 task = new()
                 {
                     Name = taskText.Name,
+                    DueDate  = dueDate,
+                    DateCreated = created,
+                    DateLastModified = modified,
+                    Status= (TaskItemStatus) random.Next(1, 6),
                     Description = taskText.Description,
                     Owner = user,
-                    Project = projects[new Random().Next(projects.Length)]
+                    Category = categories[random.Next(categories.Length)],
+                    Project = projects[random.Next(projects.Length)]
                 };
 
                 context.TaskItems.Add(task);
@@ -71,10 +87,33 @@ public partial class TaskItem
             ("Design a robot pet", "Create a lifelike robot pet that can provide companionship and emotional support, mimicking the behavior of real animals.")
         };
 
+        string[] categoryNames = new string[]
+        {
+            "Funny Category 1",
+            "Funny Category 2",
+            "Funny Category 3",
+            "Funny Category 4",
+            "Funny Category 5"
+        };
+
+        string[] projectNames = new string[]
+        {
+            "Funny Project 1",
+            "Funny Project 2",
+            "Funny Project 3",
+            "Funny Project 4",
+            "Funny Project 5",
+            "Funny Project 6",
+            "Funny Project 7",
+            "Funny Project 8",
+            "Funny Project 9",
+            "Funny Project 10"
+        };
+
         return tasks;
     }
 
-    private static DateTime CalculateNewDueDate(DateTime dueDate)
+    private static DateTimeOffset CalculateNewDueDate(DateTimeOffset dueDate)
     {
         // Calculate the minimum and maximum offset from the current date
         TimeSpan minOffset = TimeSpan.FromDays(1); // Minimum offset of 1 day
@@ -86,7 +125,7 @@ public partial class TaskItem
             .FromTicks((long)random.NextDouble() * (maxOffset.Ticks - minOffset.Ticks) + minOffset.Ticks);
 
         // Calculate the new due date by adding the random offset to the original due date
-        DateTime newDueDate = dueDate + randomOffset;
+        DateTimeOffset newDueDate = dueDate + randomOffset;
 
         return newDueDate;
     }
