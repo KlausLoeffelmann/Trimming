@@ -1,4 +1,4 @@
-﻿using TaskTamer.Generic.UIService;
+﻿using CommunityToolkit.Mvvm.DesktopGeneric;
 
 namespace CommunityToolkit.Mvvm.WinForms;
 

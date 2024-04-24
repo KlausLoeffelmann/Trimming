@@ -125,6 +125,14 @@ public partial class GridView : DataGridView
         };
 
         Columns.Clear();
+
+        // We do not want to add the column in design mode, because then the CodeDOMSerializer will add the 
+        // column to the code-behind file over and over again.
+        if (IsAncestorSiteInDesignMode)
+        {
+            return;
+        }
+
         Columns.Add(dataRowObjectColumn);
     }
 

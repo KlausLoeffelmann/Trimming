@@ -53,23 +53,9 @@
             _tasksGridView = new CommunityToolkit.Mvvm.WinForms.Controls.GridView();
             _taskItemView = new TaskTamer9.WinForms.Views.TaskItemView();
             taskViewModelBindingSource = new BindingSource(components);
-            dataGridViewColumn2 = new DataGridViewColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewColumn1 = new DataGridViewColumn();
-            dataGridViewColumn3 = new DataGridViewColumn();
             groupBox1 = new GroupBox();
             textBox1 = new TextBox();
             radioButton1 = new RadioButton();
-            dataGridViewColumn4 = new DataGridViewColumn();
-            dataGridViewColumn5 = new DataGridViewColumn();
-            dataGridViewColumn6 = new DataGridViewColumn();
-            dataGridViewColumn7 = new DataGridViewColumn();
-            dataGridViewColumn8 = new DataGridViewColumn();
-            dataGridViewColumn9 = new DataGridViewColumn();
-            dataGridViewColumn10 = new DataGridViewColumn();
-            dataGridViewColumn11 = new DataGridViewColumn();
-            dataGridViewColumn12 = new DataGridViewColumn();
-            dataGridViewColumn13 = new DataGridViewColumn();
             _statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)_mainViewModelBindingSource).BeginInit();
             _mainMenuStrip.SuspendLayout();
@@ -80,25 +66,33 @@
             // 
             // _statusStrip
             // 
-            resources.ApplyResources(_statusStrip, "_statusStrip");
+            _statusStrip.Font = new Font("Segoe UI", 12F);
             _statusStrip.GripMargin = new Padding(5);
             _statusStrip.GripStyle = ToolStripGripStyle.Visible;
             _statusStrip.ImageScalingSize = new Size(20, 20);
             _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSpringLabel, _lblCurrentUser, _lblDateTime });
+            _statusStrip.Location = new Point(0, 632);
+            _statusStrip.Margin = new Padding(0, 0, 2, 0);
             _statusStrip.Name = "_statusStrip";
             _statusStrip.RenderMode = ToolStripRenderMode.ManagerRenderMode;
+            _statusStrip.Size = new Size(1097, 43);
+            _statusStrip.TabIndex = 0;
+            _statusStrip.Text = "statusStrip1";
             // 
             // _lblSpringLabel
             // 
             _lblSpringLabel.Name = "_lblSpringLabel";
-            resources.ApplyResources(_lblSpringLabel, "_lblSpringLabel");
+            _lblSpringLabel.Size = new Size(816, 37);
             _lblSpringLabel.Spring = true;
+            _lblSpringLabel.Text = "#Spring#";
+            _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // _lblCurrentUser
             // 
             _lblCurrentUser.DataBindings.Add(new Binding("Text", _mainViewModelBindingSource, "CurrentUserInfo", true));
             _lblCurrentUser.Name = "_lblCurrentUser";
-            resources.ApplyResources(_lblCurrentUser, "_lblCurrentUser");
+            _lblCurrentUser.Size = new Size(75, 37);
+            _lblCurrentUser.Text = "#User#";
             // 
             // _mainViewModelBindingSource
             // 
@@ -111,98 +105,119 @@
             _lblDateTime.Margin = new Padding(0, 3, 2, 2);
             _lblDateTime.Name = "_lblDateTime";
             _lblDateTime.Padding = new Padding(5);
-            resources.ApplyResources(_lblDateTime, "_lblDateTime");
+            _lblDateTime.Size = new Size(189, 38);
+            _lblDateTime.Text = "#DatePlaceholder#";
             // 
             // _mainMenuStrip
             // 
-            resources.ApplyResources(_mainMenuStrip, "_mainMenuStrip");
+            _mainMenuStrip.Font = new Font("Segoe UI", 13.8F);
             _mainMenuStrip.ImageScalingSize = new Size(20, 20);
             _mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, baseDataToolStripMenuItem, testsToolStripMenuItem, toolsToolStripMenuItem });
+            _mainMenuStrip.Location = new Point(0, 0);
             _mainMenuStrip.Name = "_mainMenuStrip";
+            _mainMenuStrip.Padding = new Padding(10, 5, 5, 5);
+            _mainMenuStrip.Size = new Size(1097, 45);
+            _mainMenuStrip.TabIndex = 1;
+            _mainMenuStrip.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exportToolStripMenuItem, importToolStripMenuItem, toolStripMenuItem1, quitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            resources.ApplyResources(fileToolStripMenuItem, "fileToolStripMenuItem");
+            fileToolStripMenuItem.Size = new Size(63, 35);
+            fileToolStripMenuItem.Text = "&File";
             // 
             // exportToolStripMenuItem
             // 
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            resources.ApplyResources(exportToolStripMenuItem, "exportToolStripMenuItem");
+            exportToolStripMenuItem.Size = new Size(186, 36);
+            exportToolStripMenuItem.Text = "&Export...";
             // 
             // importToolStripMenuItem
             // 
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            resources.ApplyResources(importToolStripMenuItem, "importToolStripMenuItem");
+            importToolStripMenuItem.Size = new Size(186, 36);
+            importToolStripMenuItem.Text = "&Import...";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            resources.ApplyResources(toolStripMenuItem1, "toolStripMenuItem1");
+            toolStripMenuItem1.Size = new Size(183, 6);
             // 
             // quitToolStripMenuItem
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            resources.ApplyResources(quitToolStripMenuItem, "quitToolStripMenuItem");
+            quitToolStripMenuItem.Size = new Size(186, 36);
+            quitToolStripMenuItem.Text = "&Quit";
             // 
             // baseDataToolStripMenuItem
             // 
             baseDataToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { categoriesToolStripMenuItem, prToolStripMenuItem, toolStripMenuItem2, usersToolStripMenuItem });
             baseDataToolStripMenuItem.Name = "baseDataToolStripMenuItem";
-            resources.ApplyResources(baseDataToolStripMenuItem, "baseDataToolStripMenuItem");
+            baseDataToolStripMenuItem.Size = new Size(112, 35);
+            baseDataToolStripMenuItem.Text = "&Manage";
             // 
             // categoriesToolStripMenuItem
             // 
             categoriesToolStripMenuItem.Name = "categoriesToolStripMenuItem";
-            resources.ApplyResources(categoriesToolStripMenuItem, "categoriesToolStripMenuItem");
+            categoriesToolStripMenuItem.Size = new Size(226, 36);
+            categoriesToolStripMenuItem.Text = "Categories...";
             // 
             // prToolStripMenuItem
             // 
             prToolStripMenuItem.Name = "prToolStripMenuItem";
-            resources.ApplyResources(prToolStripMenuItem, "prToolStripMenuItem");
+            prToolStripMenuItem.Size = new Size(226, 36);
+            prToolStripMenuItem.Text = "&Projects...";
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            resources.ApplyResources(toolStripMenuItem2, "toolStripMenuItem2");
+            toolStripMenuItem2.Size = new Size(223, 6);
             // 
             // usersToolStripMenuItem
             // 
             usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            resources.ApplyResources(usersToolStripMenuItem, "usersToolStripMenuItem");
+            usersToolStripMenuItem.Size = new Size(226, 36);
+            usersToolStripMenuItem.Text = "Users...";
             // 
             // testsToolStripMenuItem
             // 
             testsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { generateTestDataToolStripMenuItem });
             testsToolStripMenuItem.Name = "testsToolStripMenuItem";
-            resources.ApplyResources(testsToolStripMenuItem, "testsToolStripMenuItem");
+            testsToolStripMenuItem.Size = new Size(78, 35);
+            testsToolStripMenuItem.Text = "&Tests";
             // 
             // generateTestDataToolStripMenuItem
             // 
             generateTestDataToolStripMenuItem.Name = "generateTestDataToolStripMenuItem";
-            resources.ApplyResources(generateTestDataToolStripMenuItem, "generateTestDataToolStripMenuItem");
+            generateTestDataToolStripMenuItem.Size = new Size(291, 36);
+            generateTestDataToolStripMenuItem.Text = "&Generate test data";
             // 
             // toolsToolStripMenuItem
             // 
             toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            resources.ApplyResources(toolsToolStripMenuItem, "toolsToolStripMenuItem");
+            toolsToolStripMenuItem.Size = new Size(80, 35);
+            toolsToolStripMenuItem.Text = "&Tools";
             // 
             // optionsToolStripMenuItem
             // 
             optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            resources.ApplyResources(optionsToolStripMenuItem, "optionsToolStripMenuItem");
+            optionsToolStripMenuItem.Size = new Size(198, 36);
+            optionsToolStripMenuItem.Text = "&Options...";
             // 
             // _tasksGridView
             // 
             _tasksGridView.AllowUserToAddRows = false;
             _tasksGridView.AllowUserToDeleteRows = false;
-            resources.ApplyResources(_tasksGridView, "_tasksGridView");
+            _tasksGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _tasksGridView.DataBindings.Add(new Binding("DataContext", _mainViewModelBindingSource, "Tasks", true));
             _tasksGridView.DataContext = null;
             _tasksGridView.GridViewItemTemplate = _taskItemView;
+            _tasksGridView.Location = new Point(12, 58);
             _tasksGridView.Name = "_tasksGridView";
+            _tasksGridView.Size = new Size(1073, 423);
+            _tasksGridView.TabIndex = 2;
             _tasksGridView.VirtualMode = true;
             // 
             // _taskItemView
@@ -225,108 +240,53 @@
             // 
             taskViewModelBindingSource.DataSource = typeof(ViewModels.TaskViewModel);
             // 
-            // dataGridViewColumn2
-            // 
-            resources.ApplyResources(dataGridViewColumn2, "dataGridViewColumn2");
-            dataGridViewColumn2.Name = "dataGridViewColumn2";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            resources.ApplyResources(dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dataGridViewColumn1
-            // 
-            resources.ApplyResources(dataGridViewColumn1, "dataGridViewColumn1");
-            dataGridViewColumn1.Name = "dataGridViewColumn1";
-            // 
-            // dataGridViewColumn3
-            // 
-            resources.ApplyResources(dataGridViewColumn3, "dataGridViewColumn3");
-            dataGridViewColumn3.Name = "dataGridViewColumn3";
-            // 
             // groupBox1
             // 
-            resources.ApplyResources(groupBox1, "groupBox1");
+            groupBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(textBox1);
             groupBox1.Controls.Add(radioButton1);
+            groupBox1.Font = new Font("Segoe UI", 13.8F);
+            groupBox1.Location = new Point(12, 501);
             groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(1073, 111);
+            groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
+            groupBox1.Text = "Create a new task: Enter the task text, press enter!";
             // 
             // textBox1
             // 
-            resources.ApplyResources(textBox1, "textBox1");
+            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox1.BorderStyle = BorderStyle.FixedSingle;
+            textBox1.Location = new Point(68, 49);
             textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Add new Task";
+            textBox1.Size = new Size(999, 38);
+            textBox1.TabIndex = 1;
             // 
             // radioButton1
             // 
-            resources.ApplyResources(radioButton1, "radioButton1");
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(24, 49);
             radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(41, 35);
+            radioButton1.TabIndex = 0;
             radioButton1.TabStop = true;
+            radioButton1.Text = " ";
             radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // dataGridViewColumn4
-            // 
-            resources.ApplyResources(dataGridViewColumn4, "dataGridViewColumn4");
-            dataGridViewColumn4.Name = "dataGridViewColumn4";
-            // 
-            // dataGridViewColumn5
-            // 
-            resources.ApplyResources(dataGridViewColumn5, "dataGridViewColumn5");
-            dataGridViewColumn5.Name = "dataGridViewColumn5";
-            // 
-            // dataGridViewColumn6
-            // 
-            resources.ApplyResources(dataGridViewColumn6, "dataGridViewColumn6");
-            dataGridViewColumn6.Name = "dataGridViewColumn6";
-            // 
-            // dataGridViewColumn7
-            // 
-            resources.ApplyResources(dataGridViewColumn7, "dataGridViewColumn7");
-            dataGridViewColumn7.Name = "dataGridViewColumn7";
-            // 
-            // dataGridViewColumn8
-            // 
-            resources.ApplyResources(dataGridViewColumn8, "dataGridViewColumn8");
-            dataGridViewColumn8.Name = "dataGridViewColumn8";
-            // 
-            // dataGridViewColumn9
-            // 
-            resources.ApplyResources(dataGridViewColumn9, "dataGridViewColumn9");
-            dataGridViewColumn9.Name = "dataGridViewColumn9";
-            // 
-            // dataGridViewColumn10
-            // 
-            resources.ApplyResources(dataGridViewColumn10, "dataGridViewColumn10");
-            dataGridViewColumn10.Name = "dataGridViewColumn10";
-            // 
-            // dataGridViewColumn11
-            // 
-            resources.ApplyResources(dataGridViewColumn11, "dataGridViewColumn11");
-            dataGridViewColumn11.Name = "dataGridViewColumn11";
-            // 
-            // dataGridViewColumn12
-            // 
-            resources.ApplyResources(dataGridViewColumn12, "dataGridViewColumn12");
-            dataGridViewColumn12.Name = "dataGridViewColumn12";
-            // 
-            // dataGridViewColumn13
-            // 
-            resources.ApplyResources(dataGridViewColumn13, "dataGridViewColumn13");
-            dataGridViewColumn13.Name = "dataGridViewColumn13";
             // 
             // FrmTaskTamerMain
             // 
-            resources.ApplyResources(this, "$this");
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1097, 675);
             Controls.Add(groupBox1);
             Controls.Add(_tasksGridView);
             Controls.Add(_statusStrip);
             Controls.Add(_mainMenuStrip);
             MainMenuStrip = _mainMenuStrip;
+            Margin = new Padding(4);
             Name = "FrmTaskTamerMain";
+            Text = "Time Tamer";
             _statusStrip.ResumeLayout(false);
             _statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)_mainViewModelBindingSource).EndInit();
@@ -363,24 +323,10 @@
         private CommunityToolkit.Mvvm.WinForms.Controls.GridView _tasksGridView;
         private TaskTamer9.WinForms.Views.TaskItemView _taskItemView;
         private BindingSource _mainViewModelBindingSource;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewColumn dataGridViewColumn1;
         private BindingSource taskViewModelBindingSource;
-        private DataGridViewColumn dataGridViewColumn2;
-        private DataGridViewColumn dataGridViewColumn3;
         private GroupBox groupBox1;
         private TextBox textBox1;
         private RadioButton radioButton1;
-        private DataGridViewColumn dataGridViewColumn4;
-        private DataGridViewColumn dataGridViewColumn5;
-        private DataGridViewColumn dataGridViewColumn6;
-        private DataGridViewColumn dataGridViewColumn7;
-        private DataGridViewColumn dataGridViewColumn8;
-        private DataGridViewColumn dataGridViewColumn9;
-        private DataGridViewColumn dataGridViewColumn10;
-        private DataGridViewColumn dataGridViewColumn11;
-        private DataGridViewColumn dataGridViewColumn12;
         private ToolStripSeparator toolStripMenuItem2;
-        private DataGridViewColumn dataGridViewColumn13;
     }
 }

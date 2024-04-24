@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DesktopGeneric;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using TaskTamer.DataLayer.Models;
-using TaskTamer.Generic.UIService;
 
 namespace TaskTamer.ViewModels;
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TaskTamer.Generic.UIService;
+namespace CommunityToolkit.Mvvm.DesktopGeneric;
 
 public interface IViewModelFactory
 {

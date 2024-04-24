@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskTamer.Generic", "TimeTa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Mvvm.WinForms", "CommunityToolkit.Mvvm.WinForms\CommunityToolkit.Mvvm.WinForms.csproj", "{322CF836-BFD9-4651-A751-B5DAE209E1DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityToolkit.Mvvm.DesktopGeneric", "CommunityToolkit.Mvvm.DesktopGeneric\CommunityToolkit.Mvvm.DesktopGeneric.csproj", "{F966B6D8-4D5C-4661-9EC0-CBC30BFD669D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{322CF836-BFD9-4651-A751-B5DAE209E1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{322CF836-BFD9-4651-A751-B5DAE209E1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{322CF836-BFD9-4651-A751-B5DAE209E1DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F966B6D8-4D5C-4661-9EC0-CBC30BFD669D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F966B6D8-4D5C-4661-9EC0-CBC30BFD669D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F966B6D8-4D5C-4661-9EC0-CBC30BFD669D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F966B6D8-4D5C-4661-9EC0-CBC30BFD669D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{CAE37DC0-3A8C-4009-992C-86792E9D6651} = {6CED1DF5-743C-47FC-B914-F8F901841B1D}
 		{A04A42E0-12AA-4D18-B5F3-E813E5FC6C32} = {54709017-F03B-4757-ACFC-30385AFE06B4}
 		{322CF836-BFD9-4651-A751-B5DAE209E1DE} = {4149F270-B10F-42DD-B47B-D7D51D5B8DBE}
+		{F966B6D8-4D5C-4661-9EC0-CBC30BFD669D} = {54709017-F03B-4757-ACFC-30385AFE06B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42C79E63-FF99-45A0-95C6-4139A4F2B40C}

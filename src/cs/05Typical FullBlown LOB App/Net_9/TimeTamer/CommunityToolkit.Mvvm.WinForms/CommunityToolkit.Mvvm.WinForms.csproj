@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommunityToolkit.Mvvm.DesktopGeneric\CommunityToolkit.Mvvm.DesktopGeneric.csproj" />
     <ProjectReference Include="..\TimeTamer.Generic\TaskTamer.Generic.csproj" />
     <ProjectReference Include="..\TimeTamer.ViewModels\TaskTamer.ViewModels.csproj" />
   </ItemGroup>

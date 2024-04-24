@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
-using TaskTamer.Generic.UIService;
 
 namespace TaskTamer.ViewModels.Services;
 

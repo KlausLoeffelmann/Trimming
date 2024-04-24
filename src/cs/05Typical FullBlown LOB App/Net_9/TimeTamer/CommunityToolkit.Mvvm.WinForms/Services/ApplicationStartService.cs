@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using TaskTamer.Generic.UIService;
+﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+using System.ComponentModel;
 
 namespace CommunityToolkit.Mvvm.WinForms;
 

@@ -1,4 +1,4 @@
-﻿namespace TaskTamer.Generic.UIService;
+﻿namespace CommunityToolkit.Mvvm.DesktopGeneric;
 
 /// <summary>
 /// Represents a service for managing synchronization context.
