@@ -12,7 +12,7 @@ public partial class TaskViewModel : ObservableObject
     private Guid _taskId;
 
     [ObservableProperty]
-    private string? _projectName;
+    private ProjectViewModel? _project;
 
     [ObservableProperty]
     private string _name = null!;
@@ -21,7 +21,7 @@ public partial class TaskViewModel : ObservableObject
     private string? _description;
 
     [ObservableProperty]
-    private string? _assignedToUserName;
+    private UserViewModel? owner;
 
     [ObservableProperty]
     private DateTimeOffset? _dueDate;
@@ -37,10 +37,10 @@ public partial class TaskViewModel : ObservableObject
         return new TaskViewModel
         {
             TaskId = taskItem.TaskItemId,
-            ProjectName = taskItem.Project?.Name,
             Name = taskItem.Name,
             Description = taskItem.Description,
-            AssignedToUserName = $"{taskItem.Owner.FirstName} {taskItem.Owner.LastName}",
+            Project = ProjectViewModel.FromProject(taskItem.Project),
+            Owner = UserViewModel.FromUser(taskItem.Owner),
             DueDate = taskItem.DueDate,
             Status = taskItem.Status,
             ExternalReference = taskItem.ExternalReference

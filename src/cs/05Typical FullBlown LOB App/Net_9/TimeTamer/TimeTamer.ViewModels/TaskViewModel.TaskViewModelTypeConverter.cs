@@ -12,7 +12,11 @@ public partial class TaskViewModel
                 || destinationType == typeof(DateTimeOffset)
                 || base.CanConvertTo(context, destinationType);
 
-        public override object? ConvertTo(ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object? value, Type destinationType)
+        public override object? ConvertTo(
+            ITypeDescriptorContext? context, 
+            System.Globalization.CultureInfo? culture, 
+            object? value, 
+            Type destinationType)
         {
             if (destinationType == typeof(string))
             {

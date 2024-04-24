@@ -222,19 +222,11 @@
             // 
             // _taskItemView
             // 
-            _taskItemView.Category = null;
             _taskItemView.DataBindings.Add(new Binding("TaskDescription", taskViewModelBindingSource, "Description", true));
             _taskItemView.DataBindings.Add(new Binding("TaskName", taskViewModelBindingSource, "Name", true));
             _taskItemView.DataBindings.Add(new Binding("DueDate", taskViewModelBindingSource, "DueDate", true));
             _taskItemView.DataBindings.Add(new Binding("TaskStatus", taskViewModelBindingSource, "Status", true));
-            _taskItemView.DateCreated = (DateTimeOffset)resources.GetObject("_taskItemView.DateCreated");
-            _taskItemView.DateLastModified = (DateTimeOffset)resources.GetObject("_taskItemView.DateLastModified");
-            _taskItemView.DueDate = null;
             _taskItemView.Padding = new Padding(5);
-            _taskItemView.Project = null;
-            _taskItemView.TaskDescription = null;
-            _taskItemView.TaskName = "";
-            _taskItemView.TaskStatus = DTOs.TaskItemStatus.Undefined;
             // 
             // taskViewModelBindingSource
             // 
