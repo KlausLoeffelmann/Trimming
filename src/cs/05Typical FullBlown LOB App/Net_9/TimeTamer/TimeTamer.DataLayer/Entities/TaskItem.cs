@@ -39,12 +39,12 @@ public partial class TaskItem
 
     public Guid SyncId { get; set; }
 
-    public static IEnumerable<TaskItem> GetTasksForUser(User currentUser)
+    public static IEnumerable<TaskItem> GetTasksForUser(Guid userId)
     {
         using var context = new TaskTamerContext();
 
         var resultSet = context.TaskItems
-            .Where(task => task.Owner == currentUser)
+            .Where(task => task.Owner.UserId == userId)
             .Include(task => task.Project)
             .Include(task => task.Owner)
             .Include(task => task.Category)

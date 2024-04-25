@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTaskTamerMain));
             _statusStrip = new StatusStrip();
             _lblSpringLabel = new ToolStripStatusLabel();
             _lblCurrentUser = new ToolStripStatusLabel();
@@ -82,14 +81,14 @@
             // _lblSpringLabel
             // 
             _lblSpringLabel.Name = "_lblSpringLabel";
-            _lblSpringLabel.Size = new Size(816, 37);
+            _lblSpringLabel.Size = new Size(777, 37);
             _lblSpringLabel.Spring = true;
             _lblSpringLabel.Text = "#Spring#";
             _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // _lblCurrentUser
             // 
-            _lblCurrentUser.DataBindings.Add(new Binding("Text", _mainViewModelBindingSource, "CurrentUserInfo", true));
+            _lblCurrentUser.DataBindings.Add(new Binding("Text", _mainViewModelBindingSource, "CurrentUser", true));
             _lblCurrentUser.Name = "_lblCurrentUser";
             _lblCurrentUser.Size = new Size(75, 37);
             _lblCurrentUser.Text = "#User#";
