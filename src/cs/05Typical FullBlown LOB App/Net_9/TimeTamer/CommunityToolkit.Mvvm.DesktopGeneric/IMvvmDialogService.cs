@@ -1,4 +1,6 @@
-﻿namespace CommunityToolkit.Mvvm.DesktopGeneric;
+﻿using System.ComponentModel;
+
+namespace CommunityToolkit.Mvvm.DesktopGeneric;
 
 /// <summary>
 /// Represents a service for displaying user interface dialogs and messages.
@@ -86,5 +88,15 @@ public interface IMvvmDialogService
     /// <typeparam name="TResult">The type of the result.</typeparam>
     /// <param name="viewModel">The view model for the custom dialog.</param>
     /// <returns>The result of the custom dialog.</returns>
-    Task<TResult> ShowCustomDialogAsync<TViewModel, TResult>(TViewModel viewModel) where TViewModel : class;
+    Task<TResult> ShowCustomDialogAsync<TViewModel, TResult, UIStackResult>(TViewModel viewModel)
+        where TViewModel : class, INotifyPropertyChanged
+        where TResult : IDialogResult<UIStackResult>
+        where UIStackResult : struct, Enum;
+}
+
+public interface IDialogResult<UIStackResult>
+    where UIStackResult : struct, Enum
+{
+    object? DialogReturnValue { get; }
+    UIStackResult DialogResult { get; }
 }
