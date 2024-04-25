@@ -1,14 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 
 internal partial class WinFormsDialogService : IMvvmDialogService
 {
-    public WinFormsDialogService(IViewLocator<ScrollableControl> viewLocator)
+    private IViewLocatorService<ContainerControl> _viewLocator = default!;
+    private IServiceProvider _serviceProvider;
+
+    public WinFormsDialogService(IServiceProvider serviceProvider)
     {
-        ViewLocator = viewLocator;
+        _serviceProvider = serviceProvider;
     }
 
-    public IViewLocator<ScrollableControl> ViewLocator { get; }
+    private IViewLocatorService<ContainerControl> ViewLocator
+        => _viewLocator ??= _serviceProvider.GetRequiredService<IViewLocatorService<ContainerControl>>();
 
     public Task ShowMessageAsync(string message, string title) 
         => MessageBox.ShowAsync(message, title);

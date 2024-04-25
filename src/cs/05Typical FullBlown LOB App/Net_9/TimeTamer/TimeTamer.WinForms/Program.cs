@@ -1,5 +1,6 @@
 using TaskTamer.ViewModels;
 using TaskTamer.WinForms.Views;
+
 using static CommunityToolkit.Mvvm.WinForms.IWinFormsStartService;
 
 namespace TaskTamer.WinForms;
@@ -19,7 +20,7 @@ internal static class Program
         Application.SetDefaultDarkMode(DarkMode.Enabled);
 
         // We're registering the ViewModels and the view here:
-        RegisterView<TaskViewModel>(() => new FrmManageProjects());
+        RegisterView<ProjectViewModel>(() => new FrmManageProjects());
         RegisterView<MainViewModel>(() => new FrmTaskTamerMain());
 
         // We're setting the start ViewModel here:

@@ -2,7 +2,7 @@
 
 namespace CommunityToolkit.Mvvm.DesktopGeneric;
 
-public interface IViewModelFactory
+public interface IViewModelFactoryService
 {
     TViewModel CreateViewModel<TViewModel>() where TViewModel : class, INotifyPropertyChanged;
 }

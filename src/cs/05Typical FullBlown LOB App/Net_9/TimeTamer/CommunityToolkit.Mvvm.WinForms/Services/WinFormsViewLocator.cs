@@ -2,7 +2,7 @@
 
 namespace CommunityToolkit.Mvvm.WinForms;
 
-public class WinFormsViewLocator : IViewLocator<Form>
+public class WinFormsViewLocator : IViewLocatorService<Form>
 {
     private Dictionary<Type, Func<Form>> viewFactories;
 
@@ -16,7 +16,7 @@ public class WinFormsViewLocator : IViewLocator<Form>
         viewFactories = viewLookUp;
     }
 
-    Form IViewLocator<Form>.CreateView<TViewModel>(TViewModel viewModel)
+    Form IViewLocatorService<Form>.CreateView<TViewModel>(TViewModel viewModel)
     {
         Type viewModelType = typeof(TViewModel);
 
@@ -31,7 +31,7 @@ public class WinFormsViewLocator : IViewLocator<Form>
         return view;
     }
 
-    void IViewLocator<Form>.Register<TViewModel>(Func<Form> viewFactory)
+    void IViewLocatorService<Form>.Register<TViewModel>(Func<Form> viewFactory)
     {
         Type viewModelType = typeof(TViewModel);
 

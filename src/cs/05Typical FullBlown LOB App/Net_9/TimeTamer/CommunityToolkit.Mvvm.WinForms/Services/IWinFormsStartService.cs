@@ -22,14 +22,17 @@ public interface IWinFormsStartService : IApplicationStartService
 
     private static void ConfigureServices()
     {
-
         // Register ViewLocator Service.
-        Services.AddSingleton<IViewLocator<Form>, WinFormsViewLocator>();
+        Services.AddSingleton<IViewLocatorService<Form>, WinFormsViewLocator>();
+
+        // SyncContext Service
+        Services.AddSingleton<ISyncContextService, SyncContextService>();
 
         // ViewModel Factory
-        Services.AddSingleton<IViewModelFactory, ViewModelFactory>();
+        Services.AddSingleton<IViewModelFactoryService, ViewModelFactory>();
 
-        Services.AddSingleton<ISyncContextService, SyncContextService>();
+        // Dialog Service
+        Services.AddSingleton<IMvvmDialogService, WinFormsDialogService>();
     }
 
     public static void SetStartViewModel<TStartViewModel>()
@@ -43,7 +46,7 @@ public interface IWinFormsStartService : IApplicationStartService
     {
         ServiceProvider = Services.BuildServiceProvider();
 
-        var viewLocator = ServiceProvider.GetRequiredService<IViewLocator<Form>>() as WinFormsViewLocator;
+        var viewLocator = ServiceProvider.GetRequiredService<IViewLocatorService<Form>>() as WinFormsViewLocator;
 
         // Let's register the views now in the ViewLocator:
         viewLocator!.SetViewLookup(s_viewFactories);

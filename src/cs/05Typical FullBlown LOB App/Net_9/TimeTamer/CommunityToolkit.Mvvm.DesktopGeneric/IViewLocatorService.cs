@@ -2,7 +2,7 @@
 
 namespace CommunityToolkit.Mvvm.DesktopGeneric;
 
-public interface IViewLocator<TView>
+public interface IViewLocatorService<TView>
     where TView : class
 {
     TView CreateView<TViewModel>(TViewModel viewModel)
