@@ -1,21 +1,61 @@
-﻿namespace TaskTamer9.WinForms.CustomControls;
+﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
-public class ModernTextBoxWrapper : Panel
+namespace TaskTamer9.WinForms.CustomControls;
+
+public partial class ModernTextBoxWrapper : Panel
 {
-    private TextBox _textBox;
+    private const int DefaultPenWidth = 2;
+    private new const int DefaultPadding = 8;
+
+    private ModernWrapperTextBox _textBox;
     private Pen _foreColorPen;
+    private bool _isDesignMode;
 
     public ModernTextBoxWrapper()
     {
-        SuspendLayout();
-        _textBox = new TextBox();
-        _textBox.BorderStyle = BorderStyle.None;
+        DoubleBuffered = true;
+        ResizeRedraw = true;
+        BorderStyle = BorderStyle.None;
 
-        Padding = new Padding(8);
+        SuspendLayout();
+
+        _foreColorPen = new Pen(ForeColor, DefaultPenWidth);
+        Padding = new Padding(DefaultPadding);
+
+        _textBox = new ModernWrapperTextBox(this);
         Controls.Add(_textBox);
-        _foreColorPen = new Pen(ForeColor, 1);
+
         ResumeLayout(true);
     }
+
+    protected override void OnHandleCreated(EventArgs e)
+    {
+        base.OnHandleCreated(e);
+
+        if (IsAncestorSiteInDesignMode || _isDesignMode)
+        {
+            _isDesignMode = true;
+            return;
+        }
+
+        if (!IsDarkModeEnabled)
+        {
+            _textBox.BorderStyle = BorderStyle.Fixed3D;
+        }
+    }
+
+    [Bindable(true)]
+    [AllowNull]
+    public override string Text
+    {
+        get => _textBox.Text;
+        set => _textBox.Text = value;
+    }
+
+    private void TriggerOnTextChanged() 
+        => OnTextChanged(EventArgs.Empty);
 
     public TextBox TextBox => _textBox;
 
@@ -56,22 +96,46 @@ public class ModernTextBoxWrapper : Panel
             specified);
     }
 
-    protected override void OnPaint(PaintEventArgs e)
+    protected override void OnPaintBackground(PaintEventArgs e)
     {
-        base.OnPaint(e);
+        if (Parent is not null)
+        {
+            e.Graphics.FillRectangle(
+                brush: new SolidBrush(Parent.BackColor),
+                rect: new Rectangle(
+                    x: 0,
+                    y: 0,
+                    width: Width,
+                    height: Height));
+        }
+
+        if (!IsDarkModeEnabled)
+        {
+            return;
+        }
 
         e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         e.Graphics.FillRoundedRectangle(
             brush: new SolidBrush(_textBox.BackColor),
             rect: new Rectangle(
-                x: 0,
-                y: 0,
-                width: Width,
-                height: Height),
+                x: 1,
+                y: 1,
+                width: Width - 2,
+                height: Height - 2),
             radius: new(10, 10));
+    }
 
-        // Draw a border as the client rectangle:
+    protected override void OnPaint(PaintEventArgs e)
+    {
+        if (!IsDarkModeEnabled)
+        {
+            return;
+        }
+
+        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+       // Draw a border as the client rectangle:
         e.Graphics.DrawRoundedRectangle(
             pen: _foreColorPen,
             rect: new Rectangle(

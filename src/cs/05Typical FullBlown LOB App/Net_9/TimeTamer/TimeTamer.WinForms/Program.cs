@@ -17,7 +17,7 @@ internal static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
 
-        Application.SetDefaultDarkMode(DarkMode.Enabled);
+        Application.SetDefaultDarkMode(DarkMode.Disabled);
 
         // We're registering the ViewModels and the view here:
         RegisterView<ProjectViewModel>(() => new FrmManageProjects());

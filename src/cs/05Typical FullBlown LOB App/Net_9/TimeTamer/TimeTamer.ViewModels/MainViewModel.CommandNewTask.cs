@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 
 namespace TaskTamer.ViewModels;
 
@@ -10,8 +11,9 @@ public partial class MainViewModel : ObservableObject
     {
         var task = new TaskViewModel()
         {
-            Name = "New Task",
-            Description = "New Description",
+            Name = NewTaskName!,
+            DueDate = NewTaskDueDate,
+            Project = SelectedProject!
         };
     }
 
@@ -19,7 +21,7 @@ public partial class MainViewModel : ObservableObject
         => !string.IsNullOrWhiteSpace(NewTaskName) && SelectedProject is not null;
 
     [ObservableProperty]
-    private string _newTaskName;
+    private string? _newTaskName;
 
     [ObservableProperty]
     private ProjectViewModel? _selectedProject;
@@ -27,6 +29,11 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private DateTimeOffset _newTaskDueDate;
 
-    partial void OnNewTaskNameChanged(string? oldValue, string newValue)
+    partial void OnNewTaskNameChanged(string? oldValue, string? newValue)
         => AddTaskCommand.NotifyCanExecuteChanged();
+
+    partial void OnSelectedProjectChanged(ProjectViewModel? oldValue, ProjectViewModel? newValue)
+    {
+        Debug.Print($"Selected Project: {newValue}");
+    }
 }

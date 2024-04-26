@@ -20,11 +20,11 @@ public partial class MainViewModel
     {
         if (!_syncContextService.IsSyncContextAvailable) return;
 
-        _syncContextService
-            .SyncContext!
-            .Post(
-                _ => CurrentDisplayTime = AssignCurrentDateAndTimeInCurrentCulture(),
-                state: null);
+        //_syncContextService
+        //    .SyncContext!
+        //    .Post(
+        //        _ => CurrentDisplayTime = AssignCurrentDateAndTimeInCurrentCulture(),
+        //        state: null);
     }
 
     private void EnsureSampleData()

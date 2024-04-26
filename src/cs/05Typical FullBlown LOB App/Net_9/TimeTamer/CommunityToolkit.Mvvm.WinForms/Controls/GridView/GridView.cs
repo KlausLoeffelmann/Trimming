@@ -9,7 +9,7 @@ public partial class GridView : DataGridView
 {
     private GridViewItemTemplate? _gridViewItemTemplate;
     private INotifyCollectionChanged? _observableCollection;
-    private ICollection? _collection;
+    private ICollection? _underlayingList;
 
     private Color DarkModeBackgroundColor = Color.FromArgb(255, 20, 20, 20);
     private Color LightModeBackgroundColor = Color.FromArgb(255, 164, 164, 164);
@@ -60,7 +60,7 @@ public partial class GridView : DataGridView
 
         if (DataContext is null)
         {
-            _collection = null;
+            _underlayingList = null;
             _observableCollection = null;
             this.Rows.Clear();
             this.RowCount = 0;
@@ -70,16 +70,16 @@ public partial class GridView : DataGridView
 
         // Let's try to retrieve the Number of rows:
         if (DataContext is INotifyCollectionChanged observableCollection
-            and ICollection collection)
+            and IList list)
         {
             _observableCollection = observableCollection;
-            _collection = collection;
+            _underlayingList = list;
 
             this.Rows.Clear();
 
             try
             {
-                this.RowCount = collection.Count;
+                this.RowCount = list.Count;
             }
             catch (Exception)
             {
@@ -139,14 +139,6 @@ public partial class GridView : DataGridView
     protected override void OnRowPrePaint(DataGridViewRowPrePaintEventArgs e)
     {
         e.Graphics.FillRectangle(new SolidBrush(ThemedDataGridBackground), e.RowBounds);
-
-        Debug.Print($"GridView - {nameof(OnRowPrePaint)} Row: {e.RowIndex}");
-    }
-
-    protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
-    {
-        base.OnRowPostPaint(e);
-        Debug.Print($"GridView - {nameof(OnRowPostPaint)} Row: {e.RowIndex}");
     }
 
     protected override void OnRowHeightInfoNeeded(DataGridViewRowHeightInfoNeededEventArgs e)
@@ -155,22 +147,16 @@ public partial class GridView : DataGridView
         Debug.Print($"GridView - {nameof(OnRowHeightInfoNeeded)} Row: {e.RowIndex}");
     }
 
-    protected override void OnCurrentCellChanged(EventArgs e)
-    {
-        base.OnCurrentCellChanged(e);
-        Debug.Print($"GridView - {nameof(OnCurrentCellChanged)}");
-    }
-
     protected override void OnCellValueNeeded(DataGridViewCellValueEventArgs e)
     {
         base.OnCellValueNeeded(e);
-        e.Value = _collection?.Cast<object>().ElementAt(e.RowIndex);
-        Debug.Print($"GridView - {nameof(OnCellValueNeeded)} Row: {e.RowIndex}");
-    }
-
-    protected override void OnCellValuePushed(DataGridViewCellValueEventArgs e)
-    {
-        base.OnCellValuePushed(e);
-        Debug.Print($"GridView - {nameof(OnCellValuePushed)} Row: {e.RowIndex}");
+        if (_underlayingList is IList list)
+        {
+            e.Value = list[e.RowIndex];
+        }
+        else
+        {
+            throw new InvalidOperationException("The collection must implement IList.");
+        }
     }
 }

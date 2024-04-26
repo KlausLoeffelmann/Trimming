@@ -20,4 +20,9 @@ public partial class FrmTaskTamerMain : Form
         // So, we can now bind the controls to the ViewModel properties.
         _mainViewModelBindingSource.DataSource = DataContext;
     }
+
+    private void _cmbProject_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        Debug.Print($"Selected Project: {_cmbProject.SelectedItem}");
+    }
 }
