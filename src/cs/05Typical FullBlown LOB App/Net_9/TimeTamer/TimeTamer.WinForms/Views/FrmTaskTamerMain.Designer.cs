@@ -315,10 +315,14 @@
             // _cmbProject
             // 
             _cmbProject.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            _cmbProject.DataBindings.Add(new Binding("SelectedValue", _mainViewModelBindingSource, "SelectedProject", true, DataSourceUpdateMode.OnPropertyChanged));
             _cmbProject.DataSource = projectsBindingSource;
+            _cmbProject.DropDownHeight = 120;
             _cmbProject.FormattingEnabled = true;
+            _cmbProject.IntegralHeight = false;
             _cmbProject.Location = new Point(152, 19);
             _cmbProject.Margin = new Padding(4, 10, 4, 4);
+            _cmbProject.MaxDropDownItems = 10;
             _cmbProject.Name = "_cmbProject";
             _cmbProject.Size = new Size(456, 39);
             _cmbProject.TabIndex = 1;
@@ -383,6 +387,7 @@
             // 
             _btnNewTask.Anchor = AnchorStyles.None;
             _btnNewTask.AutoSize = true;
+            _btnNewTask.DataBindings.Add(new Binding("Command", _mainViewModelBindingSource, "AddTaskCommand", true));
             _btnNewTask.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             _btnNewTask.Location = new Point(1237, 6);
             _btnNewTask.Margin = new Padding(4, 6, 4, 4);
