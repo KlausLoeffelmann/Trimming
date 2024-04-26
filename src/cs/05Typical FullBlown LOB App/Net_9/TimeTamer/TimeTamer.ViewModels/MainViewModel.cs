@@ -18,6 +18,7 @@ public partial class MainViewModel : ObservableObject
         _timer = new System.Threading.Timer(UpdateCurrentTime, null, 0, 1000);
         _syncContextService = syncContextService;
         CurrentUser = UserViewModel.FromUser(User.GetCurrentUser());
+        Projects = ProjectViewModel.GetActive();
 
         InitViewModel();
     }
@@ -50,6 +51,9 @@ public partial class MainViewModel : ObservableObject
     ///// </summary>
     [ObservableProperty]
     private ObservableCollection<TaskViewModel>? _tasks;
+
+    [ObservableProperty]
+    private ObservableCollection<ProjectViewModel>? _projects;
 
     /// <summary>
     ///  Property, which will reflect the currently selected task in the MainView. This is a 2-way binding property.

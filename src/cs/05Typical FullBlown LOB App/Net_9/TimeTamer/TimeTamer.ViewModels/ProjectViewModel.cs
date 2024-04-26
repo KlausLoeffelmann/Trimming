@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 using TaskTamer.DataLayer.Models;
 
 namespace TaskTamer.ViewModels;
@@ -48,4 +49,16 @@ public partial class ProjectViewModel : ObservableObject
             Status = project.Status
         };
     }
+
+    public static ObservableCollection<ProjectViewModel> GetActive()
+    {
+        var projectViewModels = Project
+            .GetActiveProjects()
+            .ToViewModels();
+
+        return projectViewModels;
+    }
+
+    public override string ToString() 
+        => $"{Name} ({Category})";
 }

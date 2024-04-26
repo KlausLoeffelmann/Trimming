@@ -4,7 +4,7 @@ namespace CommunityToolkit.Mvvm.WinForms.Controls;
 
 internal class GridViewCell : DataGridViewCell
 {
-    private static readonly Padding s_defaultPadding = new(5, 5, 5, 5);
+    private static readonly Padding s_defaultPadding = new(5, 5, 8, 5);
 
     private BindingSource? _bindingSource;
     private GridViewItemTemplate? _itemTemplate;
@@ -125,16 +125,6 @@ internal class GridViewCell : DataGridViewCell
         // Set the padding for the cell:
         cellBounds.Inflate(-padding.Right, -padding.Bottom);
         cellBounds.Offset(padding.Left, padding.Top);
-
-        if (DataGridView?.ScrollBars != ScrollBars.None)
-        {
-            // Get the width of the vertical scrollbar:
-            var verticalScrollbarWidth = SystemInformation.VerticalScrollBarWidth;
-            if (verticalScrollbarWidth > 0) 
-            {
-                cellBounds.Width -= verticalScrollbarWidth;
-            }
-        }
 
         ItemTemplate?.OnPaintContent(new PaintEventArgs(graphics, clipBounds), cellBounds, _isMouseOver);
     }

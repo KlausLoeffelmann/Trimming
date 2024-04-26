@@ -23,4 +23,6 @@ public partial class CategoryViewModel : ObservableObject
             Description = category.Description
         };
     }
+
+    public override string ToString() => $"{Name}";
 }

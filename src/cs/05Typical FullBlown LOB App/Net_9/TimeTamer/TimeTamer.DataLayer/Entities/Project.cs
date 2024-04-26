@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskTamer.DataLayer.Models;
@@ -37,4 +38,14 @@ public partial class Project
     public DateTimeOffset DateLastModified { get; set; } = DateTimeOffset.Now;
 
     public Guid SyncId { get; set; }
+
+    public static IEnumerable<Project> GetActiveProjects()
+    {
+        using var context = new TaskTamerContext();
+
+        return context.Projects
+            .Where(p => p.Status != "Inactive")
+            .Include(p => p.Category)
+            .ToArray();
+    }
 }
