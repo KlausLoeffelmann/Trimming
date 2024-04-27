@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.9.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +19,38 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AIControls\SemanticKernelBaseComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\PeriodicTimerComponent.cs" />
     <Compile Update="Controls\GridView\GridView_ShadowingBaseProperties.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\BindableComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\ModernEntry\ModernCommandButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\ModernEntry\ModernDateEntry.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\ModernEntry\ModernGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\ModernEntry\ModernStringEntry.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\ModernEntry\ModernTextEntry.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\ModernEntry\ModernTextEntry.IModernTextEntry.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\ModernEntry\ModernTextEntry.ModernTextEntryTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\ModernEntry\SpinnerControl.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

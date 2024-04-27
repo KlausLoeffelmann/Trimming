@@ -1,4 +1,4 @@
-﻿namespace TaskTamer9.WinForms.CustomControls;
+﻿namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 using System.ComponentModel;
 using System.Drawing;
@@ -6,10 +6,10 @@ using System.Windows.Forms;
 
 public class ModernGroupBox : GroupBox
 {
-    private static Color DefaultModernStyleBackColor 
+    private static Color DefaultModernStyleBackColor
         => Application.SystemColors.ControlLight;
 
-    private static Rectangle DefaultTextMargin 
+    private static Rectangle DefaultTextMargin
         => new Rectangle(10, 0, 5, 10);
 
     private Color _modernStyleBackColor;
@@ -46,10 +46,10 @@ public class ModernGroupBox : GroupBox
 
     private bool UseModernStyle => IsDarkModeEnabled || !ModernStyleInDarkModeOnly;
 
-    public override Color BackColor 
-    {  
-       get => UseModernStyle ? _modernStyleBackColor : base.BackColor; 
-       set
+    public override Color BackColor
+    {
+        get => UseModernStyle ? _modernStyleBackColor : base.BackColor;
+        set
         {
             if (UseModernStyle)
             {
@@ -62,8 +62,8 @@ public class ModernGroupBox : GroupBox
         }
     }
 
-    private bool ShouldSerializeBackColor() => UseModernStyle 
-        ? _modernStyleBackColor != DefaultModernStyleBackColor 
+    private bool ShouldSerializeBackColor() => UseModernStyle
+        ? _modernStyleBackColor != DefaultModernStyleBackColor
         : base.BackColor != Parent?.BackColor;
 
     private new void ResetBackColor()
@@ -114,8 +114,8 @@ public class ModernGroupBox : GroupBox
     // TitleColor is ambient to Parent's BackColor
     public Color TitleColor
     {
-        get => _titleColor is null 
-            ? Parent?.BackColor ?? Application.SystemColors.Control 
+        get => _titleColor is null
+            ? Parent?.BackColor ?? Application.SystemColors.Control
             : _titleColor.Value;
 
         set
@@ -125,8 +125,8 @@ public class ModernGroupBox : GroupBox
                 return;
             }
 
-            _titleColor = value == Parent?.BackColor 
-                ? null 
+            _titleColor = value == Parent?.BackColor
+                ? null
                 : value;
         }
     }

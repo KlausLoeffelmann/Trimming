@@ -1,4 +1,8 @@
-﻿namespace TaskTamer.WinForms
+﻿using CommunityToolkit.Mvvm.WinForms.AI;
+using CommunityToolkit.Mvvm.WinForms.Controls;
+using CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
+
+namespace TaskTamer.WinForms
 {
     partial class FrmTaskTamerMain
     {
@@ -49,22 +53,22 @@
             generateTestDataToolStripMenuItem = new ToolStripMenuItem();
             toolsToolStripMenuItem = new ToolStripMenuItem();
             optionsToolStripMenuItem = new ToolStripMenuItem();
-            _tasksGridView = new CommunityToolkit.Mvvm.WinForms.Controls.GridView();
+            _tasksGridView = new GridView();
             _taskItemView = new TaskTamer9.WinForms.Views.TaskItemView();
             _taskViewModelSource = new BindingSource(components);
-            _addTaskGroupBox = new TaskTamer9.WinForms.CustomControls.ModernGroupBox();
+            _addTaskGroupBox = new ModernGroupBox();
             _tlpNewTaskOuter = new TableLayoutPanel();
             _tlpNewTaskParams = new TableLayoutPanel();
             _lblProject = new Label();
             _lblDueDate = new Label();
-            _cmbProject = new TaskTamer9.WinForms.CustomControls.BindableComboBox();
+            _cmbProject = new BindableComboBox();
             _projectsSource = new BindingSource(components);
-            modernDateEntry1 = new TaskTamer9.WinForms.CustomControls.ModernDateEntry();
+            modernDateEntry1 = new ModernDateEntry();
             _tlpNewTask = new TableLayoutPanel();
-            _btnNewTask = new TaskTamer9.WinForms.CustomControls.ModernCommandButton();
+            _btnNewTask = new ModernCommandButton();
             _optNewTaskDone = new RadioButton();
-            modernStringEntry1 = new TaskTamer9.WinForms.CustomControls.ModernStringEntry();
-            _semanticKernel = new TaskTamer9.WinForms.AIControls.SemanticKernelBaseComponent();
+            modernStringEntry1 = new ModernStringEntry();
+            _semanticKernel = new SemanticKernelBaseComponent();
             _statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)_mainViewModelSource).BeginInit();
             _mainMenuStrip.SuspendLayout();
@@ -468,18 +472,18 @@
         private BindingSource _mainViewModelSource;
         private BindingSource _taskViewModelSource;
         private ToolStripSeparator toolStripMenuItem2;
-        private TaskTamer9.WinForms.CustomControls.ModernGroupBox _addTaskGroupBox;
+        private ModernGroupBox _addTaskGroupBox;
         private TableLayoutPanel _tlpNewTask;
-        private TaskTamer9.WinForms.CustomControls.ModernCommandButton _btnNewTask;
+        private ModernCommandButton _btnNewTask;
         private RadioButton _optNewTaskDone;
         private TableLayoutPanel _tlpNewTaskParams;
         private Label _lblProject;
         private Label _lblDueDate;
         private TableLayoutPanel _tlpNewTaskOuter;
         private BindingSource _projectsSource;
-        private TaskTamer9.WinForms.CustomControls.BindableComboBox _cmbProject;
-        private TaskTamer9.WinForms.AIControls.SemanticKernelBaseComponent _semanticKernel;
-        private TaskTamer9.WinForms.CustomControls.ModernDateEntry modernDateEntry1;
-        private TaskTamer9.WinForms.CustomControls.ModernStringEntry modernStringEntry1;
+        private BindableComboBox _cmbProject;
+        private SemanticKernelBaseComponent _semanticKernel;
+        private ModernDateEntry modernDateEntry1;
+        private ModernStringEntry modernStringEntry1;
     }
 }

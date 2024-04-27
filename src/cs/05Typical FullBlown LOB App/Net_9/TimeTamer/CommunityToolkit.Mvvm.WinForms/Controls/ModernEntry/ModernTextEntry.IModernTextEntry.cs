@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CommunityToolkit.Mvvm.WinForms.Controls;
+using System.ComponentModel;
 
 namespace TaskTamer9.WinForms.CustomControls;
 

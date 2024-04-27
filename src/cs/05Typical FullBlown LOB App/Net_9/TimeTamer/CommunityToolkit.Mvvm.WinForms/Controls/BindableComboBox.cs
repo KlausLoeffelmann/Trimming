@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TaskTamer9.WinForms.CustomControls;
+namespace CommunityToolkit.Mvvm.WinForms.Controls;
 
 public class BindableComboBox : ComboBox
 {
@@ -9,8 +9,8 @@ public class BindableComboBox : ComboBox
     [Bindable(true)]
     public object? BindingValue
     {
-        get => SelectedIndex==-1 
-            ? null 
+        get => SelectedIndex == -1
+            ? null
             : Items[SelectedIndex];
 
         set => SelectedItem = value;

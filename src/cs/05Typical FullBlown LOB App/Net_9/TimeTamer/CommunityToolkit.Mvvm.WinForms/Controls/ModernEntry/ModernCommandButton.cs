@@ -1,5 +1,4 @@
-﻿
-namespace TaskTamer9.WinForms.CustomControls;
+﻿namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 public class ModernCommandButton : Button
 {
@@ -53,7 +52,7 @@ public class ModernCommandButton : Button
 
         if (Enabled)
         {
-            sendIcon =  "\uE725";
+            sendIcon = "\uE725";
             if (_requestHighlight)
             {
                 currentBrush = _highLightedForeColor;
@@ -65,7 +64,7 @@ public class ModernCommandButton : Button
         }
         else
         {
-            sendIcon =  "\uE724";
+            sendIcon = "\uE724";
             currentBrush = _standardForeColor;
         }
 

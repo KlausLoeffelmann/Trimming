@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
+using TaskTamer9.WinForms.CustomControls;
 
-namespace TaskTamer9.WinForms.CustomControls;
+namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 public class ModernDateEntry : ModernTextEntry<DateTime?>
 {
@@ -24,8 +25,8 @@ public class ModernDateEntry : ModernTextEntry<DateTime?>
     [Browsable(true)]
     public DateTime? Value
     {
-        get => base.ValueInternal;
-        set => base.ValueInternal = value;
+        get => ValueInternal;
+        set => ValueInternal = value;
     }
 
     private bool ShouldSerializeValue() => Value.HasValue;

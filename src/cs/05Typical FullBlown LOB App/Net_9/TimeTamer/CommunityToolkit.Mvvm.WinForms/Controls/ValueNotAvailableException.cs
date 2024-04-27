@@ -1,5 +1,4 @@
-﻿
-namespace TaskTamer9.WinForms.CustomControls
+﻿namespace CommunityToolkit.Mvvm.WinForms.Controls
 {
     [Serializable]
     internal class ValueNotAvailableException : Exception

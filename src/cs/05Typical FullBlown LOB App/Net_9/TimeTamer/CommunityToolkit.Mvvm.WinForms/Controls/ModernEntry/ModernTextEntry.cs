@@ -4,12 +4,30 @@ using System.Drawing.Design;
 
 namespace TaskTamer9.WinForms.CustomControls;
 
-public abstract partial class ModernTextEntry<T> 
-    : Panel, ModernTextEntry<T>.IModernTextEntry
+/// <summary>
+///  Represents a base class for a modern text entry control.
+/// </summary>
+/// <typeparam name="T">The type of the value.</typeparam>
+public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IModernTextEntry
 {
+    /// <summary>
+    ///  Occurs when the text, which the user initially entered, changed.
+    /// </summary>
     public event EventHandler? OriginalInputTextChanged;
+
+    /// <summary>
+    ///  Occurs when the text box padding has changed.
+    /// </summary>
     public event EventHandler? TextBoxPaddingChanged;
+
+    /// <summary>
+    ///  Occurs when the value has changed.
+    /// </summary>
     public event EventHandler? ValueChanged;
+
+    /// <summary>
+    /// Occurs when the validation result has changed.
+    /// </summary>
     public event EventHandler? ValidationResultChanged;
 
     private const int DefaultPenWidth = 2;
@@ -21,6 +39,9 @@ public abstract partial class ModernTextEntry<T>
     private string? _originalInputText;
     private string? _validationResult;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ModernTextEntry{T}"/> class.
+    /// </summary>
     public ModernTextEntry()
     {
         DoubleBuffered = true;
@@ -53,6 +74,7 @@ public abstract partial class ModernTextEntry<T>
     /// <returns></returns>
     public abstract Task<bool> TryParseValueAsync(string text, out T value);
 
+    /// <inheritdoc/>
     protected async override void OnValidating(CancelEventArgs e)
     {
         try
@@ -63,6 +85,9 @@ public abstract partial class ModernTextEntry<T>
             // ValidationResult property.
             e.Cancel = false;
             base.OnValidating(e);
+
+            // TODO: Introduce cancellation token, so another validation would cancel the current one.
+            // TODO: Also, cancel the parsing, if the control receives a new value or another keystroke.
             if (await TryParseValueAsync(_textBox.Text, out _))
             {
                 return;
@@ -70,13 +95,30 @@ public abstract partial class ModernTextEntry<T>
         }
         catch (Exception)
         {
-
-            throw;
+            // TODO: Give a derived control the chance to provide a more detailed error message.
+            ValidationResult = "Could not retrieve a value based on the context provided.";
         }
 
         e.Cancel = true;
     }
 
+    protected T ValueInternal
+    {
+        get => ((ModernTextEntry<T>.IModernTextEntry)this).Value;
+        set => ((ModernTextEntry<T>.IModernTextEntry)this).Value = value;
+    }
+
+    // We need to raise the event, so Binding works in both directions.
+    protected virtual void OnValueChanged()
+        => ValueChanged?.Invoke(this, EventArgs.Empty);
+
+    // Passing this just on from the internal TextBox:
+    void IModernTextEntry.OnValueChangedInternal(CancelEventArgs e)
+        => OnValueChanged();
+
+    /// <summary>
+    ///  Gets or sets the original input text.
+    /// </summary>
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     [Bindable(true)]
     [Browsable(true)]
@@ -105,6 +147,9 @@ public abstract partial class ModernTextEntry<T>
     protected virtual void OnOriginalInputTextChanged(EventArgs e)
         => OriginalInputTextChanged?.Invoke(this, e);
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    [Bindable(true)]
+    [Browsable(false)]
     public string? ValidationResult 
     {
         get => _validationResult;
@@ -137,14 +182,6 @@ public abstract partial class ModernTextEntry<T>
     ModernTextEntryTextBox IModernTextEntry.TextBoxInternal 
         => _textBox;
 
-    // We need to raise the event, so Binding works in both directions.
-    protected virtual void OnValueChanged()
-        => ValueChanged?.Invoke(this, EventArgs.Empty);
-
-    // Passing this just on from the internal TextBox:
-    void IModernTextEntry.OnValueChangedInternal(CancelEventArgs e)
-    => OnValueChanged();
-
     // Passing this just on from the internal TextBox:
     void IModernTextEntry.OnValidatingInternal(CancelEventArgs e)
         => OnValidating(e);
@@ -159,6 +196,9 @@ public abstract partial class ModernTextEntry<T>
         }
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Bindable(true)]
+    [Browsable(true)]
     public Padding TextBoxPadding
     {
         get => _textBoxPadding;
@@ -183,18 +223,13 @@ public abstract partial class ModernTextEntry<T>
     private void ResetTextBoxPadding()
         => TextBoxPadding = DefaultTextBoxPadding;
 
-    protected T ValueInternal
-    {
-        get => ((ModernTextEntry<T>.IModernTextEntry)this).Value;
-        set => ((ModernTextEntry<T>.IModernTextEntry)this).Value = value;
-    }
-
     protected override void OnForeColorChanged(EventArgs e)
     {
         base.OnForeColorChanged(e);
         _foreColorPen = new Pen(ForeColor, 2);
     }
 
+    /// <inheritdoc/>
     public override Size GetPreferredSize(Size proposedSize)
     {
         // We need to get the preferred size of the TextBox, but take the padding into account:
@@ -205,6 +240,7 @@ public abstract partial class ModernTextEntry<T>
             height: preferredSize.Height + TextBoxPadding.Top + TextBoxPadding.Bottom);
     }
 
+    /// <inheritdoc/>
     protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
     {
         // Set the bounds of the TextBox to be the same as the bounds of the Panel,
@@ -229,6 +265,7 @@ public abstract partial class ModernTextEntry<T>
             specified);
     }
 
+    /// <inheritdoc/>
     protected override void OnPaintBackground(PaintEventArgs e)
     {
         if (Parent is not null)
@@ -259,6 +296,7 @@ public abstract partial class ModernTextEntry<T>
             radius: new(10, 10));
     }
 
+    /// <inheritdoc/>
     protected override void OnPaint(PaintEventArgs e)
     {
         if (!IsDarkModeEnabled)

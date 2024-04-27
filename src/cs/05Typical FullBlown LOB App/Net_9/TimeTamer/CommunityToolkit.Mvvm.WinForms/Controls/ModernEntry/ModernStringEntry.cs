@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.Design;
 using System.ComponentModel;
 using System.Drawing.Design;
+using TaskTamer9.WinForms.CustomControls;
 
-namespace TaskTamer9.WinForms.CustomControls;
+namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 public class ModernStringEntry : ModernTextEntry<string>
 {
@@ -20,7 +21,7 @@ public class ModernStringEntry : ModernTextEntry<string>
     [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
     public string Value
     {
-        get => base.ValueInternal;
-        set => base.ValueInternal = value;
+        get => ValueInternal;
+        set => ValueInternal = value;
     }
 }

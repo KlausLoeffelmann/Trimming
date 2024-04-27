@@ -2,7 +2,7 @@
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using System.ComponentModel;
 
-namespace TaskTamer9.WinForms.AIControls;
+namespace CommunityToolkit.Mvvm.WinForms.AI;
 
 #pragma warning disable SKEXP0010 
 
