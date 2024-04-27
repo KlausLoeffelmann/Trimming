@@ -3,8 +3,13 @@
 namespace CommunityToolkit.Mvvm.WinForms.Controls;
 
 [ToolboxItem(false)] // Prevents the component from showing up in the toolbox
+/// <summary>
+/// Represents a base class for the GridView item template.
+/// </summary>
 public abstract partial class GridViewItemTemplate : BindableComponent, INotifyPropertyChanged
 {
+    private static readonly Padding DefaultPadding = new Padding(5, 5, 5, 0);
+
     protected static Color LightModeItemBackgroundColor = Color.FromArgb(255, 240, 240, 240);
     protected static Color DarkModeItemBackgroundColor = Color.FromArgb(255, 32, 32, 32);
 
@@ -17,7 +22,7 @@ public abstract partial class GridViewItemTemplate : BindableComponent, INotifyP
     protected static Color LightModeItemForegroundColor = Color.FromArgb(255, 32, 32, 32);
     protected static Color DarkModeItemForegroundColor = Color.FromArgb(255, 240, 240, 240);
 
-    protected static Color LightModeHighlightFontColor= Color.DarkBlue;
+    protected static Color LightModeHighlightFontColor = Color.DarkBlue;
     protected static Color DarkModeHighlightFontColor = Color.LightBlue;
 
     protected static Color LightModeStandardFontColor = Color.FromArgb(255, 32, 32, 32);
@@ -34,33 +39,74 @@ public abstract partial class GridViewItemTemplate : BindableComponent, INotifyP
     public event PropertyChangedEventHandler? PropertyChanged;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GridViewItemTemplate"/> class.
+    /// Gets or sets the padding for the GridView item template.
     /// </summary>
-    public GridViewItemTemplate()
-    {
-        Padding = new Padding(5,5,5,5);
-    }
+    public virtual Padding Padding { get; set; } = DefaultPadding;
 
-    public Padding Padding { get; set; }
+    private bool ShouldSerializePadding() => Padding == DefaultPadding;
+    private void ResetPadding() => Padding = DefaultPadding;
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     internal protected bool IsDarkMode { get; set; }
 
+    /// <summary>
+    /// Gets the background color of the GridView item.
+    /// </summary>
     public Color ItemBackgroundColor => IsDarkMode ? DarkModeItemBackgroundColor : LightModeItemBackgroundColor;
+
+    /// <summary>
+    /// Gets the foreground color of the GridView item.
+    /// </summary>
     public Color ItemForegroundColor => IsDarkMode ? DarkModeItemBackgroundColor : LightModeItemBackgroundColor;
 
+    /// <summary>
+    /// Gets the font color for highlighted GridView items.
+    /// </summary>
     public Color HighlightFontColor => IsDarkMode ? DarkModeHighlightFontColor : LightModeHighlightFontColor;
+
+    /// <summary>
+    /// Gets the standard font color for GridView items.
+    /// </summary>
     public Color StandardFontColor => IsDarkMode ? DarkModeStandardFontColor : LightModeStandardFontColor;
 
+    /// <summary>
+    /// Gets the background color for highlighted GridView items.
+    /// </summary>
     public Color HighlightedBackgroundColor => IsDarkMode ? DarkModeHighlightedBackgroundColor : LightModeHighlightedBackgroundColor;
+
+    /// <summary>
+    /// Gets the background color for selected GridView items.
+    /// </summary>
     public Color SelectedBackgroundColor => IsDarkMode ? DarkModeSelectedBackgroundColor : LightModeSelectedBackgroundColor;
 
+    /// <summary>
+    /// Gets the brush for the GridView item background color.
+    /// </summary>
     public Brush ItemBackgroundColorBrush => _itemBackgroundColorBrush ??= new SolidBrush(ItemBackgroundColor);
+
+    /// <summary>
+    /// Gets the brush for the GridView item foreground color.
+    /// </summary>
     public Brush ItemForegroundColorBrush => _itemForegroundColorBrush ??= new SolidBrush(ItemForegroundColor);
 
+    /// <summary>
+    /// Gets the brush for the highlighted GridView item background color.
+    /// </summary>
     public Brush HighlightedBackgroundColorBrush => _itemHighLightedBackgroundColor ??= new SolidBrush(HighlightedBackgroundColor);
+
+    /// <summary>
+    /// Gets the brush for the selected GridView item background color.
+    /// </summary>
     public Brush SelectedBackgroundColorBrush => _itemSelectedBackgroundColor ??= new SolidBrush(SelectedBackgroundColor);
 
+    /// <summary>
+    /// Paints the border of the GridView item.
+    /// </summary>
+    /// <param name="graphics">The <see cref="Graphics"/> object used for painting.</param>
+    /// <param name="clipBounds">The bounds of the clipping area.</param>
+    /// <param name="cellBounds">The bounds of the GridView cell.</param>
+    /// <param name="cellStyle">The style of the GridView cell.</param>
+    /// <param name="advancedBorderStyle">The advanced border style of the GridView cell.</param>
     protected internal virtual void PaintBorder(
         Graphics graphics,
         Rectangle clipBounds,
@@ -69,24 +115,33 @@ public abstract partial class GridViewItemTemplate : BindableComponent, INotifyP
         DataGridViewAdvancedBorderStyle advancedBorderStyle)
     { }
 
+    /// <summary>
+    /// Paints the error icon of the GridView item.
+    /// </summary>
+    /// <param name="graphics">The <see cref="Graphics"/> object used for painting.</param>
+    /// <param name="clipBounds">The bounds of the clipping area.</param>
+    /// <param name="cellBounds">The bounds of the GridView cell.</param>
+    /// <param name="errorText">The error text to be displayed.</param>
     protected internal virtual void PaintErrorIcon(
-        Graphics graphics, 
-        Rectangle clipBounds, 
-        Rectangle cellBounds, 
+        Graphics graphics,
+        Rectangle clipBounds,
+        Rectangle cellBounds,
         string? errorText)
     { }
 
     /// <summary>
-    /// Gets the preferred size of the control.
+    /// Gets the preferred size of the GridView item template.
     /// </summary>
     /// <param name="restrictedSize">The proposed size for the control.</param>
-    /// <returns>The preferred size of the control.</returns>
+    /// <returns>The preferred size of the GridView item template.</returns>
     internal protected abstract Size GetPreferredSize(Size restrictedSize);
 
     /// <summary>
-    /// Paints the content of the control.
+    /// Paints the content of the GridView item template.
     /// </summary>
     /// <param name="e">A <see cref="PaintEventArgs"/> that contains the event data.</param>
+    /// <param name="clipBounds">The bounds of the clipping area.</param>
+    /// <param name="isMouseOver">Indicates whether the mouse is over the GridView item.</param>
     internal protected abstract void OnPaintContent(PaintEventArgs e, Rectangle clipBounds, bool isMouseOver);
 
     /// <summary>
@@ -115,6 +170,6 @@ public abstract partial class GridViewItemTemplate : BindableComponent, INotifyP
     /// Raises the <see cref="PropertyChanged"/> event for the specified property.
     /// </summary>
     /// <param name="propertyName">The name of the property that has changed.</param>
-    protected virtual void OnPropertyChanged(string propertyName) 
+    protected virtual void OnPropertyChanged(string propertyName)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }

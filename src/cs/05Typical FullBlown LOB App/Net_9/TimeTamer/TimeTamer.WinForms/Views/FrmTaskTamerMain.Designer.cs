@@ -32,7 +32,7 @@
             _statusStrip = new StatusStrip();
             _lblSpringLabel = new ToolStripStatusLabel();
             _lblCurrentUser = new ToolStripStatusLabel();
-            _mainViewModelBindingSource = new BindingSource(components);
+            _mainViewModelSource = new BindingSource(components);
             _lblDateTime = new ToolStripStatusLabel();
             _mainMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
@@ -51,28 +51,29 @@
             optionsToolStripMenuItem = new ToolStripMenuItem();
             _tasksGridView = new CommunityToolkit.Mvvm.WinForms.Controls.GridView();
             _taskItemView = new TaskTamer9.WinForms.Views.TaskItemView();
-            _taskViewModelBindingSource = new BindingSource(components);
+            _taskViewModelSource = new BindingSource(components);
             _addTaskGroupBox = new TaskTamer9.WinForms.CustomControls.ModernGroupBox();
             _tlpNewTaskOuter = new TableLayoutPanel();
             _tlpNewTaskParams = new TableLayoutPanel();
             _lblProject = new Label();
             _lblDueDate = new Label();
-            _txtNewTaskDueDate = new TaskTamer9.WinForms.CustomControls.ModernTextBoxWrapper();
             _cmbProject = new TaskTamer9.WinForms.CustomControls.BindableComboBox();
-            projectsBindingSource = new BindingSource(components);
+            _projectsSource = new BindingSource(components);
+            modernDateEntry1 = new TaskTamer9.WinForms.CustomControls.ModernDateEntry();
             _tlpNewTask = new TableLayoutPanel();
-            _txtNewTaskName = new TaskTamer9.WinForms.CustomControls.ModernTextBoxWrapper();
             _btnNewTask = new TaskTamer9.WinForms.CustomControls.ModernCommandButton();
             _optNewTaskDone = new RadioButton();
+            modernStringEntry1 = new TaskTamer9.WinForms.CustomControls.ModernStringEntry();
+            _semanticKernel = new TaskTamer9.WinForms.AIControls.SemanticKernelBaseComponent();
             _statusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)_mainViewModelBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)_mainViewModelSource).BeginInit();
             _mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)_tasksGridView).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)_taskViewModelBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)_taskViewModelSource).BeginInit();
             _addTaskGroupBox.SuspendLayout();
             _tlpNewTaskOuter.SuspendLayout();
             _tlpNewTaskParams.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)projectsBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)_projectsSource).BeginInit();
             _tlpNewTask.SuspendLayout();
             SuspendLayout();
             // 
@@ -102,18 +103,18 @@
             // 
             // _lblCurrentUser
             // 
-            _lblCurrentUser.DataBindings.Add(new Binding("Text", _mainViewModelBindingSource, "CurrentUser", true));
+            _lblCurrentUser.DataBindings.Add(new Binding("Text", _mainViewModelSource, "CurrentUser", true));
             _lblCurrentUser.Name = "_lblCurrentUser";
             _lblCurrentUser.Size = new Size(60, 31);
             _lblCurrentUser.Text = "#User#";
             // 
-            // _mainViewModelBindingSource
+            // _mainViewModelSource
             // 
-            _mainViewModelBindingSource.DataSource = typeof(ViewModels.MainViewModel);
+            _mainViewModelSource.DataSource = typeof(ViewModels.MainViewModel);
             // 
             // _lblDateTime
             // 
-            _lblDateTime.DataBindings.Add(new Binding("Text", _mainViewModelBindingSource, "CurrentDisplayTime", true));
+            _lblDateTime.DataBindings.Add(new Binding("Text", _mainViewModelSource, "CurrentDisplayTime", true));
             _lblDateTime.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _lblDateTime.Margin = new Padding(0, 3, 2, 2);
             _lblDateTime.Name = "_lblDateTime";
@@ -225,37 +226,36 @@
             _tasksGridView.AllowUserToDeleteRows = false;
             _tasksGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _tasksGridView.BorderStyle = BorderStyle.None;
-            _tasksGridView.DataBindings.Add(new Binding("DataContext", _mainViewModelBindingSource, "Tasks", true));
+            _tasksGridView.DataBindings.Add(new Binding("DataContext", _mainViewModelSource, "Tasks", true));
             _tasksGridView.DataContext = null;
             _tasksGridView.GridViewItemTemplate = _taskItemView;
             _tasksGridView.Location = new Point(14, 52);
             _tasksGridView.Margin = new Padding(4, 3, 4, 3);
             _tasksGridView.Name = "_tasksGridView";
-            _tasksGridView.Size = new Size(949, 226);
+            _tasksGridView.Size = new Size(949, 275);
             _tasksGridView.TabIndex = 1;
             _tasksGridView.VirtualMode = true;
             // 
             // _taskItemView
             // 
-            _taskItemView.DataBindings.Add(new Binding("TaskDescription", _taskViewModelBindingSource, "Description", true));
-            _taskItemView.DataBindings.Add(new Binding("TaskName", _taskViewModelBindingSource, "Name", true));
-            _taskItemView.DataBindings.Add(new Binding("DueDate", _taskViewModelBindingSource, "DueDate", true));
-            _taskItemView.DataBindings.Add(new Binding("TaskStatus", _taskViewModelBindingSource, "Status", true));
-            _taskItemView.Padding = new Padding(5);
+            _taskItemView.DataBindings.Add(new Binding("TaskDescription", _taskViewModelSource, "Description", true));
+            _taskItemView.DataBindings.Add(new Binding("TaskName", _taskViewModelSource, "Name", true));
+            _taskItemView.DataBindings.Add(new Binding("DueDate", _taskViewModelSource, "DueDate", true));
+            _taskItemView.DataBindings.Add(new Binding("TaskStatus", _taskViewModelSource, "Status", true));
+            _taskItemView.Padding = new Padding(5, 5, 5, 0);
             // 
-            // _taskViewModelBindingSource
+            // _taskViewModelSource
             // 
-            _taskViewModelBindingSource.DataSource = typeof(ViewModels.TaskViewModel);
+            _taskViewModelSource.DataSource = typeof(ViewModels.TaskViewModel);
             // 
             // _addTaskGroupBox
             // 
             _addTaskGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _addTaskGroupBox.Controls.Add(_tlpNewTaskOuter);
-            _addTaskGroupBox.Location = new Point(14, 296);
+            _addTaskGroupBox.Location = new Point(14, 341);
             _addTaskGroupBox.Margin = new Padding(4, 3, 4, 3);
-            _addTaskGroupBox.ModernStyleInDarkModeOnly = false;
             _addTaskGroupBox.Name = "_addTaskGroupBox";
-            _addTaskGroupBox.Size = new Size(949, 199);
+            _addTaskGroupBox.Size = new Size(949, 164);
             _addTaskGroupBox.TabIndex = 2;
             _addTaskGroupBox.TabStop = false;
             _addTaskGroupBox.Text = "Add a new task:";
@@ -269,14 +269,14 @@
             _tlpNewTaskOuter.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             _tlpNewTaskOuter.Controls.Add(_tlpNewTaskParams, 0, 0);
             _tlpNewTaskOuter.Controls.Add(_tlpNewTask, 0, 1);
-            _tlpNewTaskOuter.Location = new Point(28, 53);
+            _tlpNewTaskOuter.Location = new Point(28, 49);
             _tlpNewTaskOuter.Margin = new Padding(4, 3, 4, 3);
             _tlpNewTaskOuter.Name = "_tlpNewTaskOuter";
             _tlpNewTaskOuter.RowCount = 3;
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle());
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle());
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            _tlpNewTaskOuter.Size = new Size(864, 133);
+            _tlpNewTaskOuter.Size = new Size(864, 105);
             _tlpNewTaskOuter.TabIndex = 6;
             // 
             // _tlpNewTaskParams
@@ -290,22 +290,22 @@
             _tlpNewTaskParams.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 53F));
             _tlpNewTaskParams.Controls.Add(_lblProject, 0, 0);
             _tlpNewTaskParams.Controls.Add(_lblDueDate, 2, 0);
-            _tlpNewTaskParams.Controls.Add(_txtNewTaskDueDate, 3, 0);
             _tlpNewTaskParams.Controls.Add(_cmbProject, 1, 0);
+            _tlpNewTaskParams.Controls.Add(modernDateEntry1, 3, 0);
             _tlpNewTaskParams.Dock = DockStyle.Fill;
             _tlpNewTaskParams.Location = new Point(4, 3);
             _tlpNewTaskParams.Margin = new Padding(4, 3, 4, 3);
             _tlpNewTaskParams.Name = "_tlpNewTaskParams";
             _tlpNewTaskParams.RowCount = 1;
             _tlpNewTaskParams.RowStyles.Add(new RowStyle());
-            _tlpNewTaskParams.Size = new Size(856, 46);
+            _tlpNewTaskParams.Size = new Size(856, 43);
             _tlpNewTaskParams.TabIndex = 5;
             // 
             // _lblProject
             // 
             _lblProject.Anchor = AnchorStyles.Right;
             _lblProject.AutoSize = true;
-            _lblProject.Location = new Point(55, 12);
+            _lblProject.Location = new Point(55, 11);
             _lblProject.Margin = new Padding(55, 0, 4, 0);
             _lblProject.Name = "_lblProject";
             _lblProject.Size = new Size(61, 21);
@@ -315,44 +315,43 @@
             // _lblDueDate
             // 
             _lblDueDate.Anchor = AnchorStyles.Right;
-            _lblDueDate.Location = new Point(430, 0);
+            _lblDueDate.AutoSize = true;
+            _lblDueDate.Location = new Point(435, 11);
             _lblDueDate.Margin = new Padding(29, 0, 4, 0);
             _lblDueDate.Name = "_lblDueDate";
-            _lblDueDate.Size = new Size(87, 46);
+            _lblDueDate.Size = new Size(77, 21);
             _lblDueDate.TabIndex = 2;
             _lblDueDate.Text = "Due Date:";
             _lblDueDate.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // _txtNewTaskDueDate
-            // 
-            _txtNewTaskDueDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            _txtNewTaskDueDate.DataBindings.Add(new Binding("Text", _mainViewModelBindingSource, "NewTaskDueDate", true, DataSourceUpdateMode.OnPropertyChanged));
-            _txtNewTaskDueDate.Location = new Point(524, 7);
-            _txtNewTaskDueDate.Margin = new Padding(3, 3, 3, 5);
-            _txtNewTaskDueDate.Name = "_txtNewTaskDueDate";
-            _txtNewTaskDueDate.Padding = new Padding(7);
-            _txtNewTaskDueDate.Size = new Size(275, 36);
-            _txtNewTaskDueDate.TabIndex = 3;
             // 
             // _cmbProject
             // 
             _cmbProject.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             _cmbProject.BindingValue = null;
-            _cmbProject.DataBindings.Add(new Binding("BindingValue", _mainViewModelBindingSource, "SelectedProject", true, DataSourceUpdateMode.OnPropertyChanged));
-            _cmbProject.DataSource = projectsBindingSource;
+            _cmbProject.DataBindings.Add(new Binding("BindingValue", _mainViewModelSource, "SelectedProject", true, DataSourceUpdateMode.OnPropertyChanged));
+            _cmbProject.DataSource = _projectsSource;
             _cmbProject.DropDownHeight = 100;
             _cmbProject.FormattingEnabled = true;
             _cmbProject.IntegralHeight = false;
-            _cmbProject.Location = new Point(120, 11);
-            _cmbProject.Margin = new Padding(0);
+            _cmbProject.Location = new Point(123, 10);
             _cmbProject.Name = "_cmbProject";
-            _cmbProject.Size = new Size(281, 29);
+            _cmbProject.Size = new Size(280, 29);
             _cmbProject.TabIndex = 4;
             // 
-            // projectsBindingSource
+            // _projectsSource
             // 
-            projectsBindingSource.DataMember = "Projects";
-            projectsBindingSource.DataSource = _mainViewModelBindingSource;
+            _projectsSource.DataMember = "Projects";
+            _projectsSource.DataSource = _mainViewModelSource;
+            // 
+            // modernDateEntry1
+            // 
+            modernDateEntry1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            modernDateEntry1.AutoSize = true;
+            modernDateEntry1.Location = new Point(519, 3);
+            modernDateEntry1.Name = "modernDateEntry1";
+            modernDateEntry1.Size = new Size(280, 37);
+            modernDateEntry1.TabIndex = 5;
+            modernDateEntry1.TextBoxPadding = new Padding(4);
             // 
             // _tlpNewTask
             // 
@@ -362,40 +361,26 @@
             _tlpNewTask.ColumnStyles.Add(new ColumnStyle());
             _tlpNewTask.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             _tlpNewTask.ColumnStyles.Add(new ColumnStyle());
-            _tlpNewTask.Controls.Add(_txtNewTaskName, 1, 0);
             _tlpNewTask.Controls.Add(_btnNewTask, 2, 0);
             _tlpNewTask.Controls.Add(_optNewTaskDone, 0, 0);
+            _tlpNewTask.Controls.Add(modernStringEntry1, 1, 0);
             _tlpNewTask.Dock = DockStyle.Fill;
-            _tlpNewTask.Location = new Point(4, 55);
-            _tlpNewTask.Margin = new Padding(4, 3, 4, 3);
+            _tlpNewTask.Location = new Point(3, 52);
             _tlpNewTask.Name = "_tlpNewTask";
             _tlpNewTask.RowCount = 1;
             _tlpNewTask.RowStyles.Add(new RowStyle());
-            _tlpNewTask.Size = new Size(856, 55);
+            _tlpNewTask.Size = new Size(858, 43);
             _tlpNewTask.TabIndex = 4;
-            // 
-            // _txtNewTaskName
-            // 
-            _txtNewTaskName.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            _txtNewTaskName.DataBindings.Add(new Binding("Text", _mainViewModelBindingSource, "NewTaskName", true, DataSourceUpdateMode.OnPropertyChanged));
-            _txtNewTaskName.Location = new Point(55, 12);
-            _txtNewTaskName.Margin = new Padding(9, 6, 9, 6);
-            _txtNewTaskName.Name = "_txtNewTaskName";
-            _txtNewTaskName.Padding = new Padding(7);
-            _txtNewTaskName.Size = new Size(737, 36);
-            _txtNewTaskName.TabIndex = 1;
             // 
             // _btnNewTask
             // 
             _btnNewTask.Anchor = AnchorStyles.None;
-            _btnNewTask.AutoSize = true;
-            _btnNewTask.DataBindings.Add(new Binding("Command", _mainViewModelBindingSource, "AddTaskCommand", true));
+            _btnNewTask.DataBindings.Add(new Binding("Command", _mainViewModelSource, "AddTaskCommand", true));
             _btnNewTask.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            _btnNewTask.Location = new Point(805, 5);
-            _btnNewTask.Margin = new Padding(4, 5, 4, 3);
+            _btnNewTask.Location = new Point(808, 5);
+            _btnNewTask.Margin = new Padding(3, 3, 3, 0);
             _btnNewTask.Name = "_btnNewTask";
-            _btnNewTask.Padding = new Padding(0, 5, 0, 0);
-            _btnNewTask.Size = new Size(47, 47);
+            _btnNewTask.Size = new Size(47, 35);
             _btnNewTask.TabIndex = 0;
             _btnNewTask.Text = " ";
             _btnNewTask.UseVisualStyleBackColor = true;
@@ -403,15 +388,26 @@
             // _optNewTaskDone
             // 
             _optNewTaskDone.Anchor = AnchorStyles.None;
-            _optNewTaskDone.AutoSize = true;
-            _optNewTaskDone.Location = new Point(4, 14);
-            _optNewTaskDone.Margin = new Padding(4, 0, 4, 3);
+            _optNewTaskDone.Location = new Point(3, 9);
             _optNewTaskDone.Name = "_optNewTaskDone";
-            _optNewTaskDone.Padding = new Padding(12, 10, 12, 0);
-            _optNewTaskDone.Size = new Size(38, 23);
+            _optNewTaskDone.Size = new Size(27, 25);
             _optNewTaskDone.TabIndex = 0;
             _optNewTaskDone.TabStop = true;
             _optNewTaskDone.UseVisualStyleBackColor = true;
+            // 
+            // modernStringEntry1
+            // 
+            modernStringEntry1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            modernStringEntry1.AutoSize = true;
+            modernStringEntry1.Location = new Point(36, 3);
+            modernStringEntry1.Name = "modernStringEntry1";
+            modernStringEntry1.Size = new Size(766, 37);
+            modernStringEntry1.TabIndex = 1;
+            modernStringEntry1.TextBoxPadding = new Padding(4);
+            // 
+            // _semanticKernel
+            // 
+            _semanticKernel.AssistantInstructions = "";
             // 
             // FrmTaskTamerMain
             // 
@@ -429,17 +425,17 @@
             Text = "Time Tamer";
             _statusStrip.ResumeLayout(false);
             _statusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)_mainViewModelBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)_mainViewModelSource).EndInit();
             _mainMenuStrip.ResumeLayout(false);
             _mainMenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)_tasksGridView).EndInit();
-            ((System.ComponentModel.ISupportInitialize)_taskViewModelBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)_taskViewModelSource).EndInit();
             _addTaskGroupBox.ResumeLayout(false);
             _tlpNewTaskOuter.ResumeLayout(false);
             _tlpNewTaskOuter.PerformLayout();
             _tlpNewTaskParams.ResumeLayout(false);
             _tlpNewTaskParams.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)projectsBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)_projectsSource).EndInit();
             _tlpNewTask.ResumeLayout(false);
             _tlpNewTask.PerformLayout();
             ResumeLayout(false);
@@ -468,8 +464,8 @@
         private ToolStripStatusLabel _lblSpringLabel;
         private CommunityToolkit.Mvvm.WinForms.Controls.GridView _tasksGridView;
         private TaskTamer9.WinForms.Views.TaskItemView _taskItemView;
-        private BindingSource _mainViewModelBindingSource;
-        private BindingSource _taskViewModelBindingSource;
+        private BindingSource _mainViewModelSource;
+        private BindingSource _taskViewModelSource;
         private ToolStripSeparator toolStripMenuItem2;
         private TaskTamer9.WinForms.CustomControls.ModernGroupBox _addTaskGroupBox;
         private TableLayoutPanel _tlpNewTask;
@@ -479,9 +475,10 @@
         private Label _lblProject;
         private Label _lblDueDate;
         private TableLayoutPanel _tlpNewTaskOuter;
-        private TaskTamer9.WinForms.CustomControls.ModernTextBoxWrapper _txtNewTaskName;
-        private TaskTamer9.WinForms.CustomControls.ModernTextBoxWrapper _txtNewTaskDueDate;
-        private BindingSource projectsBindingSource;
+        private BindingSource _projectsSource;
         private TaskTamer9.WinForms.CustomControls.BindableComboBox _cmbProject;
+        private TaskTamer9.WinForms.AIControls.SemanticKernelBaseComponent _semanticKernel;
+        private TaskTamer9.WinForms.CustomControls.ModernDateEntry modernDateEntry1;
+        private TaskTamer9.WinForms.CustomControls.ModernStringEntry modernStringEntry1;
     }
 }

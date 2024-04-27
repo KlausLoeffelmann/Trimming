@@ -4,27 +4,24 @@ namespace CommunityToolkit.Mvvm.WinForms.Controls;
 
 internal class GridViewCell : DataGridViewCell
 {
-    private static readonly Padding s_defaultPadding = new(5, 5, 8, 5);
+    private static readonly Padding s_defaultPadding = new(5, 5, 5, 0);
 
     private BindingSource? _bindingSource;
     private GridViewItemTemplate? _itemTemplate;
     private bool _isMouseOver;
 
-    public GridViewCell()
-    {
-    }
-
     protected override void OnMouseEnter(int rowIndex)
     {
         base.OnMouseEnter(rowIndex);
+
         _isMouseOver = true;
         DataGridView?.InvalidateCell(this);
-
     }
 
     override protected void OnMouseLeave(int rowIndex)
     {
         base.OnMouseLeave(rowIndex);
+
         _isMouseOver = false;
         DataGridView?.InvalidateCell(this);
     }
@@ -89,7 +86,11 @@ internal class GridViewCell : DataGridViewCell
         return $"{(value is null ? "- - -" : value)}";
     }
 
-    protected override Size GetPreferredSize(Graphics graphics, DataGridViewCellStyle cellStyle, int rowIndex, Size constraintSize) 
+    protected override Size GetPreferredSize(
+        Graphics graphics, 
+        DataGridViewCellStyle cellStyle, 
+        int rowIndex, 
+        Size constraintSize) 
         => ItemTemplate is not null
             ? ItemTemplate.GetPreferredSize(constraintSize)
             : base.GetPreferredSize(graphics, cellStyle, rowIndex, constraintSize);
@@ -122,11 +123,16 @@ internal class GridViewCell : DataGridViewCell
             ? s_defaultPadding
             : ItemTemplate.Padding;
 
-        // Set the padding for the cell:
-        cellBounds.Inflate(-padding.Right, -padding.Bottom);
-        cellBounds.Offset(padding.Left, padding.Top);
+        Rectangle paddedBounds = new(
+            cellBounds.X + padding.Left,
+            cellBounds.Y + padding.Top,
+            cellBounds.Width - (padding.Left + padding.Right),
+            cellBounds.Height - (padding.Top + padding.Bottom));
 
-        ItemTemplate?.OnPaintContent(new PaintEventArgs(graphics, clipBounds), cellBounds, _isMouseOver);
+        ItemTemplate?.OnPaintContent(
+            new PaintEventArgs(graphics, clipBounds), 
+            paddedBounds, 
+            _isMouseOver);
     }
 
     protected override void PaintErrorIcon(

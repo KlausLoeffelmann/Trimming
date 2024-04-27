@@ -20,7 +20,7 @@ namespace TaskTamer9.WinForms.Views
         {
             // For simplicity, we just return a fixed size for the height.
             // But we can as well calculate the height based on the content.
-            return new(restrictedSize.Width, 150);
+            return new(restrictedSize.Width, 100);
         }
 
         protected override void OnPaintContent(PaintEventArgs e, Rectangle clipBounds, bool isMouseOver)

@@ -18,7 +18,7 @@ public partial class FrmTaskTamerMain : Form
         // If set up correctly, at this point the IWinFormsStartService took care
         // of creating the ViewModel and setting it to the DataContext of this view.
         // So, we can now bind the controls to the ViewModel properties.
-        _mainViewModelBindingSource.DataSource = DataContext;
+        _mainViewModelSource.DataSource = DataContext;
     }
 
     private void _cmbProject_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.WinForms.Controls;
-using System.ComponentModel;
-using TaskTamer.DTOs;
 
 namespace TaskTamer9.WinForms.Views
 {
