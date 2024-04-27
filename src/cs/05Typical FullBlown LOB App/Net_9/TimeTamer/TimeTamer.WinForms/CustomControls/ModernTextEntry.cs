@@ -1,19 +1,25 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Drawing.Design;
 
 namespace TaskTamer9.WinForms.CustomControls;
 
 public abstract partial class ModernTextEntry<T> 
     : Panel, ModernTextEntry<T>.IModernTextEntry
 {
+    public event EventHandler? OriginalInputTextChanged;
     public event EventHandler? TextBoxPaddingChanged;
     public event EventHandler? ValueChanged;
+    public event EventHandler? ValidationResultChanged;
 
     private const int DefaultPenWidth = 2;
-    private const int DefaultTextBoxPadding = 4;
+    private static readonly Padding DefaultTextBoxPadding = new(8, 4, 8, 4);
 
     private readonly ModernTextEntryTextBox _textBox;
     private Pen _foreColorPen;
     private Padding _textBoxPadding;
+    private string? _originalInputText;
+    private string? _validationResult;
 
     public ModernTextEntry()
     {
@@ -24,7 +30,7 @@ public abstract partial class ModernTextEntry<T>
         SuspendLayout();
 
         _foreColorPen = new Pen(ForeColor, DefaultPenWidth);
-        TextBoxPadding = new Padding(DefaultTextBoxPadding);
+        TextBoxPadding = DefaultTextBoxPadding;
 
         _textBox = new ModernTextEntryTextBox(this);
         Controls.Add((Control)_textBox);
@@ -45,10 +51,84 @@ public abstract partial class ModernTextEntry<T>
     /// <param name="text">The original text, which needs to be converted into the value.</param>
     /// <param name="value">The converted value.</param>
     /// <returns></returns>
-    public abstract bool TryParseValue(string text, out T value);
+    public abstract Task<bool> TryParseValueAsync(string text, out T value);
 
-    protected override void OnValidating(CancelEventArgs e)
-        => base.OnValidating(e);
+    protected async override void OnValidating(CancelEventArgs e)
+    {
+        try
+        {
+            // We never want to cancel the event, since we need to validate asynchronously.
+            // So, "holding" the focus doesn't make sense. Instead, we're delaying or preventing
+            // updating the value, if the validation fails, in which case, we would set the
+            // ValidationResult property.
+            e.Cancel = false;
+            base.OnValidating(e);
+            if (await TryParseValueAsync(_textBox.Text, out _))
+            {
+                return;
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+        e.Cancel = true;
+    }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Bindable(true)]
+    [Browsable(true)]
+    [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+    public string? OriginalInputText
+    {
+        get => _originalInputText;
+        set
+        {
+            if (_originalInputText == value)
+            {
+                return;
+            }
+
+            _originalInputText = value;
+            OnOriginalInputTextChanged(EventArgs.Empty);
+        }
+    }
+
+    private bool ShouldSerializeOriginalInputText()
+    => _originalInputText is not null;
+
+    private void ResetOriginalInputText()
+        => OriginalInputText = null;
+
+    protected virtual void OnOriginalInputTextChanged(EventArgs e)
+        => OriginalInputTextChanged?.Invoke(this, e);
+
+    public string? ValidationResult 
+    {
+        get => _validationResult;
+        set
+        {
+
+            if (_validationResult == value)
+            {
+                return;
+            }
+
+            _validationResult = value;
+            OnValidationResultChanged(EventArgs.Empty);
+        }
+    }
+
+    private bool ShouldSerializeValidationResult()
+        => _validationResult is not null;
+
+    private void ResetValidationResult()
+        => ValidationResult = null;
+
+    protected virtual void OnValidationResultChanged(EventArgs e)
+        => ValidationResultChanged?.Invoke(this, e);
 
     // Our cached value, once to was validated.
     (T actualValue, bool isCached) IModernTextEntry.CachedValue { get; set; }
@@ -95,7 +175,19 @@ public abstract partial class ModernTextEntry<T>
     }
 
     protected virtual void OnTextBoxPaddingChanged(EventArgs e)
-        => TextBoxPaddingChanged?.Invoke(this, e);
+    => TextBoxPaddingChanged?.Invoke(this, e);
+
+    private bool ShouldSerializeTextBoxPadding()
+        => _textBoxPadding != DefaultTextBoxPadding;
+
+    private void ResetTextBoxPadding()
+        => TextBoxPadding = DefaultTextBoxPadding;
+
+    protected T ValueInternal
+    {
+        get => ((ModernTextEntry<T>.IModernTextEntry)this).Value;
+        set => ((ModernTextEntry<T>.IModernTextEntry)this).Value = value;
+    }
 
     protected override void OnForeColorChanged(EventArgs e)
     {
@@ -118,7 +210,10 @@ public abstract partial class ModernTextEntry<T>
         // Set the bounds of the TextBox to be the same as the bounds of the Panel,
         // but take the passed padding into account:
 
-        var preferredSize = _textBox.GetPreferredSize(new Size(width - (TextBoxPadding.Left + TextBoxPadding.Right), height));
+        var preferredSize = _textBox.GetPreferredSize(
+            new Size(
+                width - (TextBoxPadding.Left + TextBoxPadding.Right), 
+                height));
 
         _textBox.SetBounds(
             x: TextBoxPadding.Left,

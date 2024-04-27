@@ -333,7 +333,7 @@
             _cmbProject.DropDownHeight = 100;
             _cmbProject.FormattingEnabled = true;
             _cmbProject.IntegralHeight = false;
-            _cmbProject.Location = new Point(123, 10);
+            _cmbProject.Location = new Point(123, 7);
             _cmbProject.Name = "_cmbProject";
             _cmbProject.Size = new Size(280, 29);
             _cmbProject.TabIndex = 4;
@@ -349,9 +349,9 @@
             modernDateEntry1.AutoSize = true;
             modernDateEntry1.Location = new Point(519, 3);
             modernDateEntry1.Name = "modernDateEntry1";
+            modernDateEntry1.OriginalInputText = null;
             modernDateEntry1.Size = new Size(280, 37);
             modernDateEntry1.TabIndex = 5;
-            modernDateEntry1.TextBoxPadding = new Padding(4);
             // 
             // _tlpNewTask
             // 
@@ -401,9 +401,10 @@
             modernStringEntry1.AutoSize = true;
             modernStringEntry1.Location = new Point(36, 3);
             modernStringEntry1.Name = "modernStringEntry1";
+            modernStringEntry1.OriginalInputText = null;
             modernStringEntry1.Size = new Size(766, 37);
             modernStringEntry1.TabIndex = 1;
-            modernStringEntry1.TextBoxPadding = new Padding(4);
+            modernStringEntry1.Value = "123456789";
             // 
             // _semanticKernel
             // 
@@ -422,7 +423,7 @@
             MainMenuStrip = _mainMenuStrip;
             Margin = new Padding(4);
             Name = "FrmTaskTamerMain";
-            Text = "Time Tamer";
+            Text = "Task Tamer - .NET 9 Prerelase Demo. And yes. It's WinForms.";
             _statusStrip.ResumeLayout(false);
             _statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)_mainViewModelSource).EndInit();

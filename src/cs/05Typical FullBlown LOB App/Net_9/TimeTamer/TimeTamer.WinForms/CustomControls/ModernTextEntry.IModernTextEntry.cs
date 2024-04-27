@@ -12,7 +12,7 @@ public partial class ModernTextEntry<T>
 
         string FormatValue(T value);
 
-        bool TryParseValue(string text, out T value);
+        Task<bool> TryParseValueAsync(string text, out T value);
 
         public T Value
         {
@@ -23,12 +23,8 @@ public partial class ModernTextEntry<T>
                     return CachedValue.actualValue;
                 }
 
-                if (TryParseValue(TextBoxInternal.Text, out T value))
-                {
-                    CachedValue = (value, true);
-                }
-
-                return CachedValue.actualValue;
+                throw new ValueNotAvailableException(
+                    "Value is not available. Please use the GetValueAsync method to get the value.");
             }
 
             set
@@ -41,6 +37,23 @@ public partial class ModernTextEntry<T>
         }
 
         (T actualValue, bool isCached) CachedValue { get; set; }
+
+        public async Task<T> GetValueAsync()
+        {
+            if (CachedValue.isCached)
+            {
+                return CachedValue.actualValue;
+            }
+
+            if (await TryParseValueAsync(TextBoxInternal.Text, out var value))
+            {
+                CachedValue = (value, true);
+                return value;
+            }
+
+            // TODO: Set the ValidationError property.
+            return default!;
+        }
 
         void OnValueChangedInternal(CancelEventArgs e);
         void OnValidatingInternal(CancelEventArgs e);
