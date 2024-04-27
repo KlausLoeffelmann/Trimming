@@ -63,11 +63,11 @@ namespace TaskTamer.WinForms
             _lblDueDate = new Label();
             _cmbProject = new BindableComboBox();
             _projectsSource = new BindingSource(components);
-            modernDateEntry1 = new ModernDateEntry();
+            _entDueDate = new ModernDateOffsetEntry();
             _tlpNewTask = new TableLayoutPanel();
             _btnNewTask = new ModernCommandButton();
             _optNewTaskDone = new RadioButton();
-            modernStringEntry1 = new ModernStringEntry();
+            _entNewTask = new ModernStringEntry();
             _semanticKernel = new SemanticKernelBaseComponent();
             _statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)_mainViewModelSource).BeginInit();
@@ -88,19 +88,19 @@ namespace TaskTamer.WinForms
             _statusStrip.GripStyle = ToolStripGripStyle.Visible;
             _statusStrip.ImageScalingSize = new Size(20, 20);
             _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSpringLabel, _lblCurrentUser, _lblDateTime });
-            _statusStrip.Location = new Point(0, 515);
+            _statusStrip.Location = new Point(0, 425);
             _statusStrip.Margin = new Padding(0, 0, 3, 0);
             _statusStrip.Name = "_statusStrip";
             _statusStrip.Padding = new Padding(1, 0, 16, 0);
             _statusStrip.RenderMode = ToolStripRenderMode.ManagerRenderMode;
-            _statusStrip.Size = new Size(976, 36);
+            _statusStrip.Size = new Size(795, 36);
             _statusStrip.TabIndex = 3;
             _statusStrip.Text = "statusStrip1";
             // 
             // _lblSpringLabel
             // 
             _lblSpringLabel.Name = "_lblSpringLabel";
-            _lblSpringLabel.Size = new Size(746, 31);
+            _lblSpringLabel.Size = new Size(565, 31);
             _lblSpringLabel.Spring = true;
             _lblSpringLabel.Text = "#SelectedTaskSpring#";
             _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -134,7 +134,7 @@ namespace TaskTamer.WinForms
             _mainMenuStrip.Location = new Point(0, 0);
             _mainMenuStrip.Name = "_mainMenuStrip";
             _mainMenuStrip.Padding = new Padding(12, 5, 5, 5);
-            _mainMenuStrip.Size = new Size(976, 35);
+            _mainMenuStrip.Size = new Size(795, 35);
             _mainMenuStrip.TabIndex = 0;
             _mainMenuStrip.Text = "menuStrip1";
             // 
@@ -236,7 +236,7 @@ namespace TaskTamer.WinForms
             _tasksGridView.Location = new Point(14, 52);
             _tasksGridView.Margin = new Padding(4, 3, 4, 3);
             _tasksGridView.Name = "_tasksGridView";
-            _tasksGridView.Size = new Size(949, 275);
+            _tasksGridView.Size = new Size(768, 185);
             _tasksGridView.TabIndex = 1;
             _tasksGridView.VirtualMode = true;
             // 
@@ -256,10 +256,10 @@ namespace TaskTamer.WinForms
             // 
             _addTaskGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _addTaskGroupBox.Controls.Add(_tlpNewTaskOuter);
-            _addTaskGroupBox.Location = new Point(14, 341);
+            _addTaskGroupBox.Location = new Point(14, 251);
             _addTaskGroupBox.Margin = new Padding(4, 3, 4, 3);
             _addTaskGroupBox.Name = "_addTaskGroupBox";
-            _addTaskGroupBox.Size = new Size(949, 164);
+            _addTaskGroupBox.Size = new Size(768, 164);
             _addTaskGroupBox.TabIndex = 2;
             _addTaskGroupBox.TabStop = false;
             _addTaskGroupBox.Text = "Add a new task:";
@@ -280,7 +280,7 @@ namespace TaskTamer.WinForms
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle());
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle());
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            _tlpNewTaskOuter.Size = new Size(864, 105);
+            _tlpNewTaskOuter.Size = new Size(683, 105);
             _tlpNewTaskOuter.TabIndex = 6;
             // 
             // _tlpNewTaskParams
@@ -295,14 +295,14 @@ namespace TaskTamer.WinForms
             _tlpNewTaskParams.Controls.Add(_lblProject, 0, 0);
             _tlpNewTaskParams.Controls.Add(_lblDueDate, 2, 0);
             _tlpNewTaskParams.Controls.Add(_cmbProject, 1, 0);
-            _tlpNewTaskParams.Controls.Add(modernDateEntry1, 3, 0);
+            _tlpNewTaskParams.Controls.Add(_entDueDate, 3, 0);
             _tlpNewTaskParams.Dock = DockStyle.Fill;
             _tlpNewTaskParams.Location = new Point(4, 3);
             _tlpNewTaskParams.Margin = new Padding(4, 3, 4, 3);
             _tlpNewTaskParams.Name = "_tlpNewTaskParams";
             _tlpNewTaskParams.RowCount = 1;
             _tlpNewTaskParams.RowStyles.Add(new RowStyle());
-            _tlpNewTaskParams.Size = new Size(856, 43);
+            _tlpNewTaskParams.Size = new Size(675, 43);
             _tlpNewTaskParams.TabIndex = 5;
             // 
             // _lblProject
@@ -320,7 +320,7 @@ namespace TaskTamer.WinForms
             // 
             _lblDueDate.Anchor = AnchorStyles.Right;
             _lblDueDate.AutoSize = true;
-            _lblDueDate.Location = new Point(435, 11);
+            _lblDueDate.Location = new Point(345, 11);
             _lblDueDate.Margin = new Padding(29, 0, 4, 0);
             _lblDueDate.Name = "_lblDueDate";
             _lblDueDate.Size = new Size(77, 21);
@@ -331,15 +331,15 @@ namespace TaskTamer.WinForms
             // _cmbProject
             // 
             _cmbProject.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            _cmbProject.BindingValue = null;
-            _cmbProject.DataBindings.Add(new Binding("BindingValue", _mainViewModelSource, "SelectedProject", true, DataSourceUpdateMode.OnPropertyChanged));
+            _cmbProject.DataBindings.Add(new Binding("SelectedItem", _mainViewModelSource, "SelectedProject", true, DataSourceUpdateMode.OnPropertyChanged));
             _cmbProject.DataSource = _projectsSource;
             _cmbProject.DropDownHeight = 100;
             _cmbProject.FormattingEnabled = true;
             _cmbProject.IntegralHeight = false;
             _cmbProject.Location = new Point(123, 10);
             _cmbProject.Name = "_cmbProject";
-            _cmbProject.Size = new Size(280, 29);
+            _cmbProject.SelectedBindingValue = null;
+            _cmbProject.Size = new Size(190, 29);
             _cmbProject.TabIndex = 4;
             // 
             // _projectsSource
@@ -347,15 +347,15 @@ namespace TaskTamer.WinForms
             _projectsSource.DataMember = "Projects";
             _projectsSource.DataSource = _mainViewModelSource;
             // 
-            // modernDateEntry1
+            // _entDueDate
             // 
-            modernDateEntry1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            modernDateEntry1.AutoSize = true;
-            modernDateEntry1.DataBindings.Add(new Binding("Value", _mainViewModelSource, "NewTaskDueDate", true, DataSourceUpdateMode.OnPropertyChanged));
-            modernDateEntry1.Location = new Point(519, 3);
-            modernDateEntry1.Name = "modernDateEntry1";
-            modernDateEntry1.Size = new Size(280, 37);
-            modernDateEntry1.TabIndex = 5;
+            _entDueDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            _entDueDate.AutoSize = true;
+            _entDueDate.DataBindings.Add(new Binding("Value", _mainViewModelSource, "NewTaskDueDate", true, DataSourceUpdateMode.OnPropertyChanged));
+            _entDueDate.Location = new Point(429, 3);
+            _entDueDate.Name = "_entDueDate";
+            _entDueDate.Size = new Size(190, 37);
+            _entDueDate.TabIndex = 5;
             // 
             // _tlpNewTask
             // 
@@ -367,13 +367,13 @@ namespace TaskTamer.WinForms
             _tlpNewTask.ColumnStyles.Add(new ColumnStyle());
             _tlpNewTask.Controls.Add(_btnNewTask, 2, 0);
             _tlpNewTask.Controls.Add(_optNewTaskDone, 0, 0);
-            _tlpNewTask.Controls.Add(modernStringEntry1, 1, 0);
+            _tlpNewTask.Controls.Add(_entNewTask, 1, 0);
             _tlpNewTask.Dock = DockStyle.Fill;
             _tlpNewTask.Location = new Point(3, 52);
             _tlpNewTask.Name = "_tlpNewTask";
             _tlpNewTask.RowCount = 1;
             _tlpNewTask.RowStyles.Add(new RowStyle());
-            _tlpNewTask.Size = new Size(858, 43);
+            _tlpNewTask.Size = new Size(677, 43);
             _tlpNewTask.TabIndex = 4;
             // 
             // _btnNewTask
@@ -381,7 +381,7 @@ namespace TaskTamer.WinForms
             _btnNewTask.Anchor = AnchorStyles.None;
             _btnNewTask.DataBindings.Add(new Binding("Command", _mainViewModelSource, "AddTaskCommand", true));
             _btnNewTask.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            _btnNewTask.Location = new Point(808, 5);
+            _btnNewTask.Location = new Point(627, 5);
             _btnNewTask.Margin = new Padding(3, 3, 3, 0);
             _btnNewTask.Name = "_btnNewTask";
             _btnNewTask.Size = new Size(47, 35);
@@ -399,15 +399,15 @@ namespace TaskTamer.WinForms
             _optNewTaskDone.TabStop = true;
             _optNewTaskDone.UseVisualStyleBackColor = true;
             // 
-            // modernStringEntry1
+            // _entNewTask
             // 
-            modernStringEntry1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            modernStringEntry1.AutoSize = true;
-            modernStringEntry1.DataBindings.Add(new Binding("Value", _mainViewModelSource, "NewTaskName", true, DataSourceUpdateMode.OnPropertyChanged));
-            modernStringEntry1.Location = new Point(36, 3);
-            modernStringEntry1.Name = "modernStringEntry1";
-            modernStringEntry1.Size = new Size(766, 37);
-            modernStringEntry1.TabIndex = 1;
+            _entNewTask.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            _entNewTask.AutoSize = true;
+            _entNewTask.DataBindings.Add(new Binding("Value", _mainViewModelSource, "NewTaskName", true, DataSourceUpdateMode.OnPropertyChanged));
+            _entNewTask.Location = new Point(36, 3);
+            _entNewTask.Name = "_entNewTask";
+            _entNewTask.Size = new Size(585, 37);
+            _entNewTask.TabIndex = 1;
             // 
             // _semanticKernel
             // 
@@ -417,7 +417,7 @@ namespace TaskTamer.WinForms
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(976, 551);
+            ClientSize = new Size(795, 461);
             Controls.Add(_addTaskGroupBox);
             Controls.Add(_tasksGridView);
             Controls.Add(_statusStrip);
@@ -482,7 +482,8 @@ namespace TaskTamer.WinForms
         private BindingSource _projectsSource;
         private BindableComboBox _cmbProject;
         private SemanticKernelBaseComponent _semanticKernel;
-        private ModernDateEntry modernDateEntry1;
-        private ModernStringEntry modernStringEntry1;
+        private ModernDateOffsetEntry modernDateEntry1;
+        private ModernStringEntry _entNewTask;
+        private ModernDateOffsetEntry _entDueDate;
     }
 }

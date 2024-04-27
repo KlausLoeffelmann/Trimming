@@ -148,7 +148,7 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
         => OriginalInputTextChanged?.Invoke(this, e);
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    [Bindable(true)]
+    [Bindable(false)]
     [Browsable(false)]
     public string? ValidationResult 
     {
@@ -197,7 +197,6 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Bindable(true)]
     [Browsable(true)]
     public Padding TextBoxPadding
     {

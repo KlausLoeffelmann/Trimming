@@ -7,7 +7,7 @@ public class BindableComboBox : ComboBox
     public event EventHandler? BindingValueChanged;
 
     [Bindable(true)]
-    public object? BindingValue
+    public object? SelectedBindingValue
     {
         get => SelectedIndex == -1
             ? null

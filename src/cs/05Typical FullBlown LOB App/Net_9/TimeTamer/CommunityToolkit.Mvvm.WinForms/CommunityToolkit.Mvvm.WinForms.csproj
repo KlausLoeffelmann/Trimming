@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows8</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -19,40 +19,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="AIControls\SemanticKernelBaseComponent.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="AIControls\SemanticKernelBaseComponent.cs" />
     <Compile Update="Components\PeriodicTimerComponent.cs" />
-    <Compile Update="Controls\GridView\GridView_ShadowingBaseProperties.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\BindableComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\ModernEntry\ModernCommandButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\ModernEntry\ModernDateEntry.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\GridView\GridView_ShadowingBaseProperties.cs" />
+    <Compile Update="Controls\BindableComboBox.cs" />
+    <Compile Update="Controls\ModernEntry\ModernCommandButton.cs" />
+    <Compile Update="Controls\ModernEntry\ModernDateOffsetEntry.cs" />
     <Compile Update="Controls\ModernEntry\ModernGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\ModernEntry\ModernStringEntry.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\ModernEntry\ModernTextEntry.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\ModernEntry\ModernTextEntry.IModernTextEntry.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\ModernEntry\ModernTextEntry.ModernTextEntryTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\ModernEntry\SpinnerControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\ModernEntry\ModernStringEntry.cs" />
+    <Compile Update="Controls\ModernEntry\ModernTextEntry.cs" />
+    <Compile Update="Controls\ModernEntry\ModernTextEntry.IModernTextEntry.cs" />
+    <Compile Update="Controls\ModernEntry\ModernTextEntry.ModernTextEntryTextBox.cs" />
+    <Compile Update="Controls\ModernEntry\SpinnerControl.cs" />
   </ItemGroup>
 
 </Project>

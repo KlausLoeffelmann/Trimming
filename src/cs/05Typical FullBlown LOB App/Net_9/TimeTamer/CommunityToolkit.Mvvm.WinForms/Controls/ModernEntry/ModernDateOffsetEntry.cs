@@ -3,11 +3,11 @@ using TaskTamer9.WinForms.CustomControls;
 
 namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
-public class ModernDateEntry : ModernTextEntry<DateTime?>
+public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
 {
-    public override string FormatValue(DateTime? value) => $"{value:d}";
+    public override string FormatValue(DateTimeOffset? value) => $"{value:d}";
 
-    public override Task<bool> TryParseValueAsync(string text, out DateTime? value)
+    public override Task<bool> TryParseValueAsync(string text, out DateTimeOffset? value)
     {
         if (DateTime.TryParse(text, out var result))
         {
@@ -23,7 +23,7 @@ public class ModernDateEntry : ModernTextEntry<DateTime?>
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     [Bindable(true)]
     [Browsable(true)]
-    public DateTime? Value
+    public DateTimeOffset? Value
     {
         get => ValueInternal;
         set => ValueInternal = value;
