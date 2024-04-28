@@ -1,5 +1,6 @@
 ﻿using DemoToolkit.Mvvm.WinForms.Controls;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
@@ -13,7 +14,9 @@ public partial class ModernTextEntry<T>
 
         string FormatValue(T value);
 
-        Task<(bool parseSucceded, T result)> TryParseValueAsync(string text);
+        Task<(bool parseSucceeded, T result)> TryParseValueAsync(string text);
+
+        (bool parseSucceeded, T result) TryParseValue(string text);
 
         public T Value
         {
@@ -29,11 +32,9 @@ public partial class ModernTextEntry<T>
             }
 
             set
-            {   
-                TextBoxInternal.SuspendChangedEvent();
+            {
                 TextBoxInternal.Text = FormatValue(value);
                 CachedValue = (value, true);
-                TextBoxInternal.ResumeChangedEvent();
             }
         }
 

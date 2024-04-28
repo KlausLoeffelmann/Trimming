@@ -106,7 +106,7 @@ namespace TaskTamer.WinForms
             // 
             _lblSpringLabel.DataBindings.Add(new Binding("Text", _mainVmSource, "SelectedProject", true));
             _lblSpringLabel.Name = "_lblSpringLabel";
-            _lblSpringLabel.Size = new Size(678, 31);
+            _lblSpringLabel.Size = new Size(709, 31);
             _lblSpringLabel.Spring = true;
             _lblSpringLabel.Text = "#SelectedTasksProjectSpring#";
             _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -387,8 +387,11 @@ namespace TaskTamer.WinForms
             _entDueDate.AutoSize = true;
             _entDueDate.DataBindings.Add(new Binding("Value", _mainVmSource, "NewTaskDueDate", true, DataSourceUpdateMode.OnPropertyChanged));
             _entDueDate.Location = new Point(501, 3);
+            _entDueDate.MakeItIntelligent = true;
             _entDueDate.Name = "_entDueDate";
+            _entDueDate.SemanticKernelComponent = _semanticKernel;
             _entDueDate.Size = new Size(262, 37);
+            _entDueDate.Spinner = _dateParsingSpinner;
             _entDueDate.TabIndex = 3;
             // 
             // _dateParsingSpinner

@@ -1,7 +1,10 @@
-﻿using System.ComponentModel;
+﻿using DemoToolkit.Mvvm.WinForms.AI;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing.Design;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
@@ -9,8 +12,13 @@ namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 ///  Represents a base class for a modern text entry control.
 /// </summary>
 /// <typeparam name="T">The type of the value.</typeparam>
-public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IModernTextEntry
+public abstract partial class ModernTextEntry<T>
+    : Panel, ModernTextEntry<T>.IModernTextEntry
 {
+    private SpinnerControl? _spinner;
+    private SemanticKernelBaseComponent? _skComponent;
+    private bool _validationEventSuspended;
+
     /// <summary>
     ///  Occurs when the text, which the user initially entered, changed.
     /// </summary>
@@ -76,17 +84,114 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     /// <returns>Converted value. Preferably in a format which can be parsed back.</returns>
     public abstract string FormatValue(T value);
 
+    public abstract (bool parseSucceeded, T result) TryParseValue(string text);
+
     /// <summary>
     ///  Deriving classes need to implement this method to parse the text into the specific value.
     /// </summary>
     /// <param name="text">The original text, which needs to be converted into the value.</param>
     /// <param name="value">The converted value.</param>
     /// <returns></returns>
-    public abstract Task<(bool, T)> TryParseValueAsync(string text);
+    public virtual async Task<(bool, T)> TryParseValueAsync(string text)
+    {
+        var (parseSucceeded, result) = TryParseValue(text);
+
+        if (parseSucceeded)
+        {
+            return (true, result);
+        }
+
+        if (MakeItIntelligent
+            && this.SemanticKernelComponent is SemanticKernelBaseComponent skComponent)
+        {
+            if (Spinner is { })
+            {
+                Spinner.IsSpinning = true;
+            }
+
+            try
+            {
+                var resultString = await skComponent.RequestPromptProcessingAsync(
+                    typeof(DateTimeOffset).Name,
+                    text);
+
+                if (string.IsNullOrWhiteSpace(resultString) || resultString.StartsWith("**"))
+                {
+                    ValidationResult = resultString;
+
+                    return (false, default!);
+                }
+
+                // Let's try to JSON-parse the result:
+                return TryParseJsonResultString(resultString);
+
+            }
+            finally
+            {
+                if (Spinner is { })
+                {
+                    Spinner.IsSpinning = false;
+                }
+            }
+        }
+
+        return TryParseValue(text);
+    }
+
+    // Generic method to send a message and parse the JSON response to a specific type.
+    public (bool, T) TryParseJsonResultString(string llmReturnString)
+    {
+        if (llmReturnString is null)
+        {
+            throw new ArgumentNullException(nameof(llmReturnString));
+        }
+
+        try
+        {
+            (bool succeeded, string jsonResultString) = CheckAndRemoveCodeTags(llmReturnString);
+            using JsonDocument doc = JsonDocument.Parse(jsonResultString);
+            JsonElement root = doc.RootElement;
+
+            string rawValue = root.GetProperty("ReturnValue").GetString()!;
+            return TryParseValue(rawValue);
+        }
+        catch (JsonException jEx)
+        {
+            ValidationResult = $"Could not parse the JSON response: {jEx.Message}";
+            return (false, default!);
+        }
+        catch (Exception ex)
+        {
+            ValidationResult = $"Could not parse the JSON response: {ex.Message}";
+            return (false, default!);
+        }
+    }
+
+    // Method to check for and remove code tags from a string.
+    public static (bool, string) CheckAndRemoveCodeTags(string input)
+    {
+        // Regex pattern to match code blocks with optional language specifier
+        var regex = new Regex(@"^```[a-zA-Z]*\s*\n?([\s\S]*?)\n?```$");
+        var match = regex.Match(input);
+
+        if (match.Success)
+        {
+            // Remove the code tags and trim any excess whitespace/newlines
+            return (true, match.Groups[1].Value.Trim());
+        }
+        return (false, input);
+    }
+
+    protected virtual bool ProvidesAiSupport => false;
 
     /// <inheritdoc/>
     protected async override void OnValidating(CancelEventArgs e)
     {
+        if (_validationEventSuspended)
+        {
+            return;
+        }
+
         try
         {
             // We never will cancel this event, since we need to validate asynchronously.
@@ -118,7 +223,12 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     protected T ValueInternal
     {
         get => ((ModernTextEntry<T>.IModernTextEntry)this).Value;
-        set => ((ModernTextEntry<T>.IModernTextEntry)this).Value = value;
+        set
+        {
+            SuspendValidationEvent();
+            ((ModernTextEntry<T>.IModernTextEntry)this).Value = value;
+            ResumeValidationEvent();
+        }
     }
 
     // We need to raise the event, so Binding works in both directions.
@@ -163,7 +273,7 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     [Bindable(false)]
     [Browsable(false)]
-    public string? ValidationResult 
+    public string? ValidationResult
     {
         get => _validationResult;
         set
@@ -179,12 +289,6 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
         }
     }
 
-    private bool ShouldSerializeValidationResult()
-        => _validationResult is not null;
-
-    private void ResetValidationResult()
-        => ValidationResult = null;
-
     protected virtual void OnValidationResultChanged(EventArgs e)
         => ValidationResultChanged?.Invoke(this, e);
 
@@ -192,12 +296,18 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     (T actualValue, bool isCached) IModernTextEntry.CachedValue { get; set; }
 
     // Provide access to the internal TextBox - we're limiting this via the Interface.
-    ModernTextEntryTextBox IModernTextEntry.TextBoxInternal 
+    ModernTextEntryTextBox IModernTextEntry.TextBoxInternal
         => _textBox;
 
     // Passing this just on from the internal TextBox:
     void IModernTextEntry.OnValidatingInternal(CancelEventArgs e)
         => OnValidating(e);
+
+    internal void ResumeValidationEvent()
+        => _validationEventSuspended = false;
+
+    internal void SuspendValidationEvent()
+        => _validationEventSuspended = true;
 
     protected override void CreateHandle()
     {
@@ -235,6 +345,48 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     private void ResetTextBoxPadding()
         => TextBoxPadding = DefaultTextBoxPadding;
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Browsable(true)]
+    [DefaultValue(false)]
+    [Category("AI Supported")]
+    public bool MakeItIntelligent { get; set; }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Browsable(true)]
+    [Bindable(false)]
+    [DefaultValue(null)]
+    public SpinnerControl? Spinner
+    {
+        get => _spinner;
+        set
+        {
+            if (_spinner == value)
+            {
+                return;
+            }
+
+            _spinner = value;
+        }
+    }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Browsable(true)]
+    [Bindable(false)]
+    [DefaultValue(null)]
+    public SemanticKernelBaseComponent? SemanticKernelComponent
+    {
+        get => _skComponent;
+        set
+        {
+            if (_skComponent == value)
+            {
+                return;
+            }
+
+            _skComponent = value;
+        }
+    }
+
     protected override void OnForeColorChanged(EventArgs e)
     {
         base.OnForeColorChanged(e);
@@ -260,7 +412,7 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
 
         var preferredSize = _textBox.GetPreferredSize(
             new Size(
-                width - (TextBoxPadding.Left + TextBoxPadding.Right), 
+                width - (TextBoxPadding.Left + TextBoxPadding.Right),
                 height));
 
         _textBox.SetBounds(
@@ -318,7 +470,7 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
 
         e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-       // Draw a border as the client rectangle:
+        // Draw a border as the client rectangle:
         e.Graphics.DrawRoundedRectangle(
             pen: _foreColorPen,
             rect: new Rectangle(
@@ -326,6 +478,6 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
                 y: 1,
                 width: Width - 2,
                 height: Height - 2),
-            radius: new(10,10));
+            radius: new(10, 10));
     }
 }

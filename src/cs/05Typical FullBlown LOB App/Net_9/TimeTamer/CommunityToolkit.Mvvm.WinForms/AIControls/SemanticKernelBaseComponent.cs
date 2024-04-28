@@ -51,7 +51,7 @@ public class SemanticKernelBaseComponent : BindableComponent
             throw new InvalidOperationException("Semantic Kernel could not been initialized");
         }
 
-        return await GetResponseAsync(AssistantInstructions, promptDataValue, promptDataTypeName);
+        return await GetResponseAsync(promptDataValue, promptDataTypeName);
     }
 
     private void Initialize()
@@ -110,7 +110,6 @@ public class SemanticKernelBaseComponent : BindableComponent
     }
 
     public async Task<string?> GetResponseAsync(
-        string request, 
         string parameterPromptValue, 
         string parameterPromptDataType)
     {
@@ -119,7 +118,7 @@ public class SemanticKernelBaseComponent : BindableComponent
             throw new InvalidOperationException("The Semantic Kernel has not been initialized.");
         }
 
-        var completion = await _kernelDataParserFunction.InvokeAsync<StreamingChatMessageContent>(
+        var completion = await _kernelDataParserFunction.InvokeAsync<ChatMessageContent>(
             kernel: _kernel,
             arguments: new()
             {
@@ -174,9 +173,9 @@ public class SemanticKernelBaseComponent : BindableComponent
     private static string s_AssistantInstructionsTemplate =
     """
         Hello.
-        Today is {{promptCurrentTime}}.
+        Today is {{$promptCurrentTime}}.
 
-        * You are an Assistant supporting a running WinForms Application which uses the culture {{promptCulture}}.
+        * You are an Assistant supporting a running WinForms Application which uses the culture {{$promptCulture}}.
         * You're primary purpose is to help to transform verbal user requests into structured data of certain types.
         * The user enters the data in typical WinForms UI Controls, like TextBoxes, ComboBoxes, etc.
         * You expertise is requested, when the user needs to describe the data rather than directly entering it.
