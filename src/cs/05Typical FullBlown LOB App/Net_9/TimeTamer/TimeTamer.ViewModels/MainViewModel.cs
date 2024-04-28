@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.DesktopGeneric;
 using CommunityToolkit.Mvvm.DesktopGeneric.ValueConverters;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using TaskTamer.DataLayer.Models;
 
 namespace TaskTamer.ViewModels;
@@ -60,4 +61,9 @@ public partial class MainViewModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private TaskItem? _selectedTask;
+
+    partial void OnSelectedTaskChanged(TaskItem? oldValue, TaskItem? newValue)
+    {
+        Debug.Print($"Selected Task changed from {oldValue} to {newValue}");
+    }
 }

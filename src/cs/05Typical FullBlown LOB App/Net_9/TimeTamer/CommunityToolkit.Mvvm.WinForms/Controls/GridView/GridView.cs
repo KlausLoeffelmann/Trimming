@@ -65,7 +65,7 @@ public partial class GridView : DataGridView
     public object? SelectedItem
     {
         get => _selectedItem = base.SelectedRows.Count > 0
-            ? base.SelectedRows[0].DataBoundItem
+            ? ((IList)_underlayingList!)[SelectedRows[0].Index]
             : null;
 
         set
@@ -75,26 +75,38 @@ public partial class GridView : DataGridView
                 return;
             }
 
-            base.SelectedRows.Clear();
-            _selectedItem = value;
-            OnSelectedItemChanged(EventArgs.Empty);
-
-            if (value is null)
+            try
             {
-                return;
-            }
+                _selectedItem = value;
 
-            base.SelectedRows.Clear();
-
-            foreach (DataGridViewRow row in Rows)
-            {
-                if (row.DataBoundItem == value)
+                if (value is null)
                 {
-                    row.Selected = true;
-                    break;
+                    ClearSelection();
+                    return;
+                }
+
+                foreach (DataGridViewRow row in Rows)
+                {
+                    if (((IList)_underlayingList!)[row.Index] == value)
+                    {
+                        ClearSelection();
+                        row.Selected = true;
+                        FirstDisplayedScrollingRowIndex = row.Index;
+                        break;
+                    }
                 }
             }
+            finally
+            {
+                OnSelectedItemChanged(EventArgs.Empty);
+            }
         }
+    }
+
+    protected override void OnSelectionChanged(EventArgs e)
+    {
+        base.OnSelectionChanged(e);
+        OnSelectedItemChanged(EventArgs.Empty);
     }
 
     protected virtual void OnSelectedItemChanged(EventArgs e)

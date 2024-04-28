@@ -32,6 +32,8 @@ public partial class TaskViewModel : ObservableObject
     [ObservableProperty]
     private string? _externalReference;
 
+    override public string ToString() => Name;
+
     public static TaskViewModel FromTaskItem(TaskItem taskItem)
     {
         return new TaskViewModel

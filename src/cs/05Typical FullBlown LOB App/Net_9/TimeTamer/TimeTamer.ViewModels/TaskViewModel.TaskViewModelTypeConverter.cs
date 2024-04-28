@@ -10,6 +10,7 @@ public partial class TaskViewModel
         public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType) 
             => destinationType == typeof(string) 
                 || destinationType == typeof(DateTimeOffset)
+                || destinationType == typeof(ProjectViewModel)
                 || base.CanConvertTo(context, destinationType);
 
         public override object? ConvertTo(
@@ -31,6 +32,11 @@ public partial class TaskViewModel
                 {
                     return taskItem.DueDate;
                 }
+            }
+            else if (typeof(ProjectViewModel).IsAssignableFrom(destinationType) 
+                && value is TaskViewModel taskViewModel)
+            {
+                return taskViewModel.Project;
             }
 
             return base.ConvertTo(context, culture, value, destinationType);

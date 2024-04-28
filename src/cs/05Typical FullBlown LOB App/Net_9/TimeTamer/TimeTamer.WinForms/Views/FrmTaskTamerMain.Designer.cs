@@ -35,8 +35,8 @@ namespace TaskTamer.WinForms
             components = new System.ComponentModel.Container();
             _statusStrip = new StatusStrip();
             _lblSpringLabel = new ToolStripStatusLabel();
-            _lblCurrentUser = new ToolStripStatusLabel();
             _mainVmSource = new BindingSource(components);
+            _lblCurrentUser = new ToolStripStatusLabel();
             _lblDateTime = new ToolStripStatusLabel();
             _mainMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
@@ -104,11 +104,16 @@ namespace TaskTamer.WinForms
             // 
             // _lblSpringLabel
             // 
+            _lblSpringLabel.DataBindings.Add(new Binding("Text", _mainVmSource, "SelectedProject", true));
             _lblSpringLabel.Name = "_lblSpringLabel";
-            _lblSpringLabel.Size = new Size(709, 31);
+            _lblSpringLabel.Size = new Size(678, 31);
             _lblSpringLabel.Spring = true;
-            _lblSpringLabel.Text = "#SelectedTaskSpring#";
+            _lblSpringLabel.Text = "#SelectedTasksProjectSpring#";
             _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // _mainVmSource
+            // 
+            _mainVmSource.DataSource = typeof(ViewModels.MainViewModel);
             // 
             // _lblCurrentUser
             // 
@@ -116,10 +121,6 @@ namespace TaskTamer.WinForms
             _lblCurrentUser.Name = "_lblCurrentUser";
             _lblCurrentUser.Size = new Size(60, 31);
             _lblCurrentUser.Text = "#User#";
-            // 
-            // _mainVmSource
-            // 
-            _mainVmSource.DataSource = typeof(ViewModels.MainViewModel);
             // 
             // _lblDateTime
             // 
@@ -235,9 +236,9 @@ namespace TaskTamer.WinForms
             testsToolStripMenuItem.Size = new Size(55, 25);
             testsToolStripMenuItem.Text = "&Tests";
             // 
-            // generateTestDataToolStripMenuItem
+            // _demoInvokeAsyncMenuItem
             // 
-            _demoInvokeAsyncMenuItem.Name = "generateTestDataToolStripMenuItem";
+            _demoInvokeAsyncMenuItem.Name = "_demoInvokeAsyncMenuItem";
             _demoInvokeAsyncMenuItem.Size = new Size(206, 26);
             _demoInvokeAsyncMenuItem.Text = "&Generate test data";
             // 
@@ -260,12 +261,14 @@ namespace TaskTamer.WinForms
             _tasksGridView.AllowUserToDeleteRows = false;
             _tasksGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _tasksGridView.BorderStyle = BorderStyle.None;
+            _tasksGridView.DataBindings.Add(new Binding("SelectedItem", _mainVmSource, "SelectedProject", true, DataSourceUpdateMode.OnPropertyChanged));
             _tasksGridView.DataBindings.Add(new Binding("DataContext", _mainVmSource, "Tasks", true));
             _tasksGridView.DataContext = null;
             _tasksGridView.GridViewItemTemplate = _taskItemView;
             _tasksGridView.Location = new Point(14, 52);
             _tasksGridView.Margin = new Padding(4, 3, 4, 3);
             _tasksGridView.Name = "_tasksGridView";
+            _tasksGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             _tasksGridView.Size = new Size(912, 242);
             _tasksGridView.TabIndex = 1;
             _tasksGridView.VirtualMode = true;
