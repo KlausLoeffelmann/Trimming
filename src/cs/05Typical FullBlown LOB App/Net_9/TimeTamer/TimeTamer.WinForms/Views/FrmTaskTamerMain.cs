@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 
 namespace TaskTamer.WinForms;
@@ -8,6 +7,10 @@ public partial class FrmTaskTamerMain : Form
     public FrmTaskTamerMain()
     {
         InitializeComponent();
+
+        // This is just for demo purposes.
+        _demoInvokeAsyncMenuItem.Click += 
+            (_,_) => _dateParsingSpinner.IsSpinning = !_dateParsingSpinner.IsSpinning;
     }
 
     protected override void OnLoad(EventArgs e)
@@ -18,11 +21,12 @@ public partial class FrmTaskTamerMain : Form
         // If set up correctly, at this point the IWinFormsStartService took care
         // of creating the ViewModel and setting it to the DataContext of this view.
         // So, we can now bind the controls to the ViewModel properties.
-        _mainViewModelSource.DataSource = DataContext;
+        _mainVmSource.DataSource = DataContext;
     }
 
-    private void _cmbProject_SelectedIndexChanged(object sender, EventArgs e)
+    protected override void OnShown(EventArgs e)
     {
-        Debug.Print($"Selected Project: {_cmbProject.SelectedItem}");
+        base.OnShown(e);
+        _entDueDate.Focus();
     }
 }

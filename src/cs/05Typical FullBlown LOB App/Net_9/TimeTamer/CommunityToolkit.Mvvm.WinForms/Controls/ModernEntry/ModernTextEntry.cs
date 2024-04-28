@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Drawing.Design;
 
 namespace TaskTamer9.WinForms.CustomControls;
@@ -44,19 +45,28 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     /// </summary>
     public ModernTextEntry()
     {
+        BorderStyle = BorderStyle.None;
         DoubleBuffered = true;
         ResizeRedraw = true;
-        BorderStyle = BorderStyle.None;
+        TabStop = false;
+        TextBoxPadding = DefaultTextBoxPadding;
 
         SuspendLayout();
 
         _foreColorPen = new Pen(ForeColor, DefaultPenWidth);
-        TextBoxPadding = DefaultTextBoxPadding;
 
         _textBox = new ModernTextEntryTextBox(this);
+        _textBox.TabStop = true;
+
         Controls.Add((Control)_textBox);
 
         ResumeLayout(true);
+    }
+
+    protected override void OnEnter(EventArgs e)
+    {
+        base.OnEnter(e);
+        _textBox.Focus();
     }
 
     /// <summary>
@@ -79,27 +89,28 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     {
         try
         {
-            // We never want to cancel the event, since we need to validate asynchronously.
+            // We never will cancel this event, since we need to validate asynchronously.
             // So, "holding" the focus doesn't make sense. Instead, we're delaying or preventing
             // updating the value, if the validation fails, in which case, we would set the
             // ValidationResult property.
-            e.Cancel = false;
             base.OnValidating(e);
 
             // TODO: Introduce cancellation token, so another validation would cancel the current one.
             // TODO: Also, cancel the parsing, if the control receives a new value or another keystroke.
-            if (await TryParseValueAsync(_textBox.Text, out _))
+            if (await TryParseValueAsync(_textBox.Text, out var value))
             {
+                ValueInternal = value;
+                OnValueChanged();
+
                 return;
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             // TODO: Give a derived control the chance to provide a more detailed error message.
             ValidationResult = "Could not retrieve a value based on the context provided.";
+            Debug.Print($"Validation failed for {Name}: {ex.Message}");
         }
-
-        e.Cancel = true;
     }
 
     protected T ValueInternal

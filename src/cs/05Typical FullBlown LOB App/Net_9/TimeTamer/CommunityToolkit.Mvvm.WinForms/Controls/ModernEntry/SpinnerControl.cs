@@ -1,59 +1,142 @@
-﻿namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
+﻿using System.ComponentModel;
+using System.Drawing.Text;
 
-public class SpinnerControl : Panel
+namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
+
+public class SpinnerControl : Label
 {
-    private readonly Bitmap[] _frames = new Bitmap[32];
-    private int _currentFrame;
-    private readonly System.Threading.Timer _timer;
+    public event EventHandler? IsSpinningChanged;
+
+    private const string BootFontPath = "Boot\\Fonts_EX";
+    private const string FontFileName = "segoe_slboot_EX.ttf";
+
+    // Just to know, how this works: This would produce the following string:
+    // "ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+    private char[] _simpleCharArray = CharSequence(65..96);
+
+    // Well - there is a special Font in the Windows Boot Folder, that - if we
+    // use a certain range of characters - will be doing something cool!
+    private char[] _charParts = CharSequence(0xE052..0xE0CB);
+
+    private PrivateFontCollection _fontCollection;
+    private bool _isSpinning;
+    private CancellationTokenSource? _cancellationTokenSource;
 
     public SpinnerControl()
     {
         DoubleBuffered = true;
-        InitializeFrames();
-
-        _timer = new(
-            callback: new TimerCallback(
-                (_ /* state, dont need */) =>
-                    {
-                        _currentFrame = (_currentFrame + 1) % _frames.Length;
-                        Invalidate();
-                    }),
-            state: null,
-            dueTime: 0,
-            period: 100);
+        _fontCollection = new PrivateFontCollection();
+        _isSpinning = false;
+        Text = "";
+        LoadBootFontFromBootFolder();
     }
 
-    private void InitializeFrames()
+    private void LoadBootFontFromBootFolder()
     {
-        for (int i = 0; i < _frames.Length; i++)
+        string windowsFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+        string bootFolderPath = Path.Combine(windowsFolderPath, BootFontPath);
+        _fontCollection.AddFontFile(Path.Combine(bootFolderPath, FontFileName));
+    }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Bindable(true)]
+    [Browsable(true)]
+    public bool IsSpinning
+    {
+        get => _isSpinning;
+        set
         {
-            _frames[i] = new Bitmap(Width, Height);
-            using (Graphics g = Graphics.FromImage(_frames[i]))
+            if (_isSpinning == value)
             {
-                g.TranslateTransform(Width / 2.0f, Height / 2.0f);
-                g.RotateTransform(i * (360.0f / _frames.Length));
-                g.DrawString("🔄", Font, Brushes.Black, -Width / 4, -Height / 4);
+                return;
+            }
+
+            _isSpinning = value;
+            OnIsSpinningChanged(EventArgs.Empty);
+        }
+    }
+
+    protected async virtual void OnIsSpinningChanged(EventArgs e)
+    {
+        IsSpinningChanged?.Invoke(this, e);
+
+        if (_cancellationTokenSource is not null)
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = null;
+
+            return;
+        }
+        
+        _cancellationTokenSource = new CancellationTokenSource();
+        await SpinAsync(_cancellationTokenSource.Token);
+    }
+
+    private async Task SpinAsync(CancellationToken cancellationToken)
+    {
+        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(20));
+
+        try
+        {
+            int partCount = 0;
+
+            while (await timer.WaitForNextTickAsync(cancellationToken))
+            {
+                if (cancellationToken.IsCancellationRequested) break;
+
+                if (IsHandleCreated)
+                {
+                    await InvokeAsync(
+                        async () => await DrawSpinnerPartAsync(
+                            partCount++,
+                            cancellationToken),
+                        cancellationToken);
+
+                    partCount %= _charParts.Length;
+                }
             }
         }
-    }
-
-    protected override void OnPaint(PaintEventArgs e)
-    {
-        base.OnPaint(e);
-        if (_frames[_currentFrame] != null)
+        catch (OperationCanceledException)
         {
-            e.Graphics.DrawImage(_frames[_currentFrame], 0, 0);
+        }
+        finally
+        {
+            timer?.Dispose();
         }
     }
 
-    protected override void Dispose(bool disposing)
+    private async Task DrawSpinnerPartAsync(int partCount, CancellationToken cancellationToken)
     {
-        if (disposing)
+        Text = _charParts[partCount].ToString();
+        try
         {
-            _timer?.Dispose();
-            foreach (var frame in _frames)
-                frame?.Dispose();
+            await Task.Delay(20, cancellationToken);
         }
-        base.Dispose(disposing);
+        catch (OperationCanceledException)
+        {
+        }
     }
+
+    protected override void OnCreateControl()
+    {
+        base.OnCreateControl();
+        Text = " ";
+
+        if (IsAncestorSiteInDesignMode)
+        {
+            return;
+        }
+
+        Font = new Font(_fontCollection.Families[0], Font.Size + 2);
+        ForeColor = Application.SystemColors.HighlightText;
+    }
+
+    private static char[] CharSequence(Range range)
+    => Enumerable
+        .Range(
+            start: range.Start.Value,
+            count: range.End.Value - range.Start.Value + 1)
+        .Select(i => (char)i)
+        .ToArray();
 }

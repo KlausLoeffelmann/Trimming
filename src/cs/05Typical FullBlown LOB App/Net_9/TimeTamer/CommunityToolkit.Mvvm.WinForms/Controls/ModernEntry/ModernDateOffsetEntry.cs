@@ -5,6 +5,8 @@ namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
 {
+    private SpinnerControl? _spinner;
+
     public override string FormatValue(DateTimeOffset? value) => $"{value:d}";
 
     public override Task<bool> TryParseValueAsync(string text, out DateTimeOffset? value)
@@ -30,6 +32,27 @@ public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
     }
 
     private bool ShouldSerializeValue() => Value.HasValue;
-
     private void ResetValue() => Value = default;
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Browsable(true)]
+    [DefaultValue(false)]
+    public bool MakeItIntelligent { get; set; }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Browsable(true)]
+    [DefaultValue(null)]
+    public SpinnerControl Spinner
+    {
+        get => _spinner;
+        set
+        {
+            if (_spinner == value)
+            {
+                return;
+            }
+
+            _spinner = value;
+        }
+    }
 }

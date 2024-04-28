@@ -7,12 +7,16 @@ namespace CommunityToolkit.Mvvm.WinForms.Controls;
 
 public partial class GridView : DataGridView
 {
+    public event EventHandler? SelectedItemChanged;
+
     private GridViewItemTemplate? _gridViewItemTemplate;
     private INotifyCollectionChanged? _observableCollection;
     private ICollection? _underlayingList;
 
-    private Color DarkModeBackgroundColor = Color.FromArgb(255, 20, 20, 20);
-    private Color LightModeBackgroundColor = Color.FromArgb(255, 164, 164, 164);
+    private readonly Color DarkModeBackgroundColor = Color.FromArgb(255, 20, 20, 20);
+    private readonly Color LightModeBackgroundColor = Color.FromArgb(255, 164, 164, 164);
+    private object? _selectedItem;
+
     private Color ThemedDataGridBackground 
         => IsDarkModeEnabled 
         ? DarkModeBackgroundColor 
@@ -41,10 +45,77 @@ public partial class GridView : DataGridView
     public new object? DataContext
     {
         get => base.DataContext;
+        set => base.DataContext = value;
+    }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    [Bindable(true)]
+    [Browsable(false)]
+    public object? SelectedItem
+    {
+        get => _selectedItem = base.SelectedRows.Count > 0
+            ? base.SelectedRows[0].DataBoundItem
+            : null;
+
         set
         {
-            base.DataContext = value;
+            if (value == _selectedItem)
+            {
+                return;
+            }
+
+            base.SelectedRows.Clear();
+            _selectedItem = value;
+            OnSelectedItemChanged(EventArgs.Empty);
+
+            if (value is null)
+            {
+                return;
+            }
+
+            base.SelectedRows.Clear();
+
+            foreach (DataGridViewRow row in Rows)
+            {
+                if (row.DataBoundItem == value)
+                {
+                    row.Selected = true;
+                    break;
+                }
+            }
         }
+    }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Bindable(false)]
+    [Browsable(true)]
+    public GridViewItemTemplate? GridViewItemTemplate
+    {
+        get => _gridViewItemTemplate;
+        set
+        {
+            if (_gridViewItemTemplate == value)
+            {
+                return;
+            }
+
+            _gridViewItemTemplate = value;
+
+            if (_gridViewItemTemplate is not null)
+            {
+                _gridViewItemTemplate.IsDarkMode = this.IsDarkModeEnabled;
+            }
+
+            OnGridViewItemTemplateChanged();
+        }
+    }
+
+    protected virtual void OnSelectedItemChanged(EventArgs e)
+        => SelectedItemChanged?.Invoke(this, e);
+
+    protected override void OnSelectionChanged(EventArgs e)
+    {
+        base.OnSelectionChanged(e);
     }
 
     protected override void OnDataContextChanged(EventArgs e)
@@ -85,27 +156,6 @@ public partial class GridView : DataGridView
             {
                 throw;
             }
-        }
-    }
-
-    public GridViewItemTemplate? GridViewItemTemplate
-    {
-        get => _gridViewItemTemplate;
-        set
-        {
-            if (_gridViewItemTemplate == value)
-            {
-                return;
-            }
-
-            _gridViewItemTemplate = value;
-
-            if (_gridViewItemTemplate is not null)
-            {
-                _gridViewItemTemplate.IsDarkMode = this.IsDarkModeEnabled;
-            }
-
-            OnGridViewItemTemplateChanged();
         }
     }
 

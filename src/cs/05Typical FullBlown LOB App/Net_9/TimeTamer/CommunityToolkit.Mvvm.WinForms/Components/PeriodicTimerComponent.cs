@@ -28,7 +28,7 @@ public class PeriodicTimerComponent : Component
     ///  Gets or sets the interval in milliseconds between timer ticks.
     /// </summary>
     [DefaultValue(500)]
-    public int IntervalMs { get; set; } = 500;
+    public int IntervalMs { get; set; } = 200;
 
     [Browsable(false)]
     public bool IsRunning => _timer != null;

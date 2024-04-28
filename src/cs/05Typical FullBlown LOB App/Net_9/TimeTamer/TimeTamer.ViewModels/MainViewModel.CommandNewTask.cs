@@ -27,9 +27,12 @@ public partial class MainViewModel : ObservableObject
     private ProjectViewModel? _selectedProject;
 
     [ObservableProperty]
-    private DateTimeOffset _newTaskDueDate;
+    private DateTimeOffset? _newTaskDueDate;
 
     partial void OnNewTaskNameChanged(string? oldValue, string? newValue)
+        => AddTaskCommand.NotifyCanExecuteChanged();
+
+    partial void OnNewTaskDueDateChanged(DateTimeOffset? oldValue, DateTimeOffset? newValue)
         => AddTaskCommand.NotifyCanExecuteChanged();
 
     partial void OnSelectedProjectChanged(ProjectViewModel? oldValue, ProjectViewModel? newValue)

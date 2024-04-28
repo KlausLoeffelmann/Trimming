@@ -100,11 +100,20 @@ public partial class GridView
     }
 
     [Browsable(false)]
+    [Bindable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new string DataMember
     {
         get => base.DataMember;
         set => base.DataMember = value;
+    }
+
+    [Bindable(false)]
+    [Browsable(false)]
+    public new object? DataSource
+    {
+        get => base.DataSource;
+        set => base.DataSource = value;
     }
 
     [Browsable(false)]
