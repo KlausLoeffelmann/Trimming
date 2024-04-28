@@ -13,7 +13,7 @@ public partial class ModernTextEntry<T>
 
         string FormatValue(T value);
 
-        Task<bool> TryParseValueAsync(string text, out T value);
+        Task<(bool parseSucceded, T result)> TryParseValueAsync(string text);
 
         public T Value
         {
@@ -46,10 +46,12 @@ public partial class ModernTextEntry<T>
                 return CachedValue.actualValue;
             }
 
-            if (await TryParseValueAsync(TextBoxInternal.Text, out var value))
+            var (parseSucceeded, returnValue) = await TryParseValueAsync(TextBoxInternal.Text);
+
+            if (parseSucceeded)
             {
-                CachedValue = (value, true);
-                return value;
+                CachedValue = (returnValue, true);
+                return returnValue;
             }
 
             // TODO: Set the ValidationError property.
@@ -57,6 +59,7 @@ public partial class ModernTextEntry<T>
         }
 
         void OnValueChangedInternal(CancelEventArgs e);
+
         void OnValidatingInternal(CancelEventArgs e);
     }
 }

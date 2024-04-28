@@ -8,10 +8,9 @@ public class ModernStringEntry : ModernTextEntry<string>
 {
     public override string FormatValue(string value) => value;
 
-    public override Task<bool> TryParseValueAsync(string text, out string value)
+    public override Task<(bool, string)> TryParseValueAsync(string text)
     {
-        value = text;
-        return Task.FromResult(true);
+        return Task.FromResult((true, text));
     }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]

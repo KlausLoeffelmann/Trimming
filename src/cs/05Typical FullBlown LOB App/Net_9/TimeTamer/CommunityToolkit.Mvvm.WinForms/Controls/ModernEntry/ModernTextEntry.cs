@@ -82,7 +82,7 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
     /// <param name="text">The original text, which needs to be converted into the value.</param>
     /// <param name="value">The converted value.</param>
     /// <returns></returns>
-    public abstract Task<bool> TryParseValueAsync(string text, out T value);
+    public abstract Task<(bool, T)> TryParseValueAsync(string text);
 
     /// <inheritdoc/>
     protected async override void OnValidating(CancelEventArgs e)
@@ -97,9 +97,11 @@ public abstract partial class ModernTextEntry<T> : Panel, ModernTextEntry<T>.IMo
 
             // TODO: Introduce cancellation token, so another validation would cancel the current one.
             // TODO: Also, cancel the parsing, if the control receives a new value or another keystroke.
-            if (await TryParseValueAsync(_textBox.Text, out var value))
+            var (parseSucceeded, returnValue) = await TryParseValueAsync(_textBox.Text);
+
+            if (parseSucceeded)
             {
-                ValueInternal = value;
+                ValueInternal = returnValue;
                 OnValueChanged();
 
                 return;

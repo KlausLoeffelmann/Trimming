@@ -1,24 +1,58 @@
-﻿using System.ComponentModel;
+﻿using DemoToolkit.Mvvm.WinForms.AI;
+using System.ComponentModel;
 
 namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
 {
     private SpinnerControl? _spinner;
+    private SemanticKernelBaseComponent? _skComponent;
 
     public override string FormatValue(DateTimeOffset? value) => $"{value:d}";
 
-    public override Task<bool> TryParseValueAsync(string text, out DateTimeOffset? value)
+    public override async Task<(bool, DateTimeOffset?)> TryParseValueAsync(string text)
     {
-        if (DateTime.TryParse(text, out var result))
+        if (DateTimeOffset.TryParse(text, out var result))
         {
-            value = result;
-            return Task.FromResult(true);
+            return (true, result);
         }
 
-        // We invoke the LLM:
-        value = default;
-        return Task.FromResult(false);
+        if (MakeItIntelligent 
+            && this.SemanticKernelComponent is SemanticKernelBaseComponent skComponent)
+        {
+            if (Spinner is { })
+            {
+                Spinner.IsSpinning = true;
+            }
+
+            try
+            {
+                var resultString = await skComponent.RequestPromptProcessingAsync(
+                    typeof(DateTimeOffset).Name,
+                    text);
+
+                if (string.IsNullOrWhiteSpace(resultString) || resultString.StartsWith("**"))
+                {
+                    ValidationResult = resultString;
+                    return (false, default);
+                }
+            }
+            finally
+            {
+                if (Spinner is { })
+                {
+                    Spinner.IsSpinning = false;
+                }
+            }
+        }
+
+        if (DateTimeOffset.TryParse(text, out result))
+        {
+            return (true, result);
+        }
+
+        ValidationResult = "Could not parse the entry into a valid Date value.";
+        return (false, default);
     }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -40,6 +74,7 @@ public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     [Browsable(true)]
+    [Bindable(false)]
     [DefaultValue(null)]
     public SpinnerControl? Spinner
     {
@@ -52,6 +87,24 @@ public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
             }
 
             _spinner = value;
+        }
+    }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Browsable(true)]
+    [Bindable(false)]
+    [DefaultValue(null)]
+    public SemanticKernelBaseComponent? SemanticKernelComponent
+    {
+        get => _skComponent;
+        set
+        {
+            if (_skComponent == value)
+            {
+                return;
+            }
+
+            _skComponent = value;
         }
     }
 }

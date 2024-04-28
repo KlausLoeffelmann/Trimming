@@ -1,4 +1,5 @@
-﻿using Microsoft.SemanticKernel;
+﻿using Azure.Core;
+using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using System.ComponentModel;
 using System.Globalization;
@@ -12,7 +13,6 @@ public class SemanticKernelBaseComponent : BindableComponent
     private Kernel? _kernel;
     private KernelFunction? _kernelDataParserFunction;
 
-    private const string ParameterRequest = "request";
     private const string ParameterAssistantInstructions = "assistantInstructions";
     private const string ParameterPromptCulture = "promptCulture";
     private const string ParameterPromptCurrentTime = "promptCurrentTime";
@@ -26,7 +26,6 @@ public class SemanticKernelBaseComponent : BindableComponent
     public string? AssistantInstructions { get; set; }
 
     public async Task<string?> RequestPromptProcessingAsync(
-        string userRequest,
         string promptDataTypeName,
         string promptDataValue)
     {
@@ -52,7 +51,7 @@ public class SemanticKernelBaseComponent : BindableComponent
             throw new InvalidOperationException("Semantic Kernel could not been initialized");
         }
 
-        return await GetResponseAsync(userRequest, promptDataValue, promptDataTypeName);
+        return await GetResponseAsync(AssistantInstructions, promptDataValue, promptDataTypeName);
     }
 
     private void Initialize()
@@ -79,8 +78,10 @@ public class SemanticKernelBaseComponent : BindableComponent
                 InputVariables =
                 [
                     new() { Name = ParameterAssistantInstructions, Description = "The general instructions for the role which the LLM should incorporate.", IsRequired = true },
-                    new() { Name = ParameterRequest, Description = "The user's request.", IsRequired = true },
-                    new() { Name = ParameterPromptValue, Description = "The Parameters in the context of the Prompt.", IsRequired = false }
+                    new() { Name = ParameterPromptValue, Description = "The Parameters in the context of the Prompt.", IsRequired = true },
+                    new() { Name = ParameterPromptDataType, Description = "The DataType of the Prompt.", IsRequired = true },
+                    new() { Name = ParameterPromptCulture, Description = "The Culture of the Prompt.", IsRequired = true },
+                    new() { Name = ParameterPromptCurrentTime, Description = "The Current Time of the Prompt.", IsRequired = true }
                 ],
 
                 ExecutionSettings =
@@ -123,7 +124,6 @@ public class SemanticKernelBaseComponent : BindableComponent
             arguments: new()
             {
                 { ParameterAssistantInstructions, AssistantInstructions },
-                { ParameterRequest, request },
                 { ParameterPromptValue, parameterPromptValue },
                 { ParameterPromptDataType, parameterPromptDataType },
                 { ParameterPromptCulture, CultureInfo.CurrentCulture.ThreeLetterISOLanguageName },
@@ -149,7 +149,6 @@ public class SemanticKernelBaseComponent : BindableComponent
             arguments: new()
             {
                 { ParameterAssistantInstructions, AssistantInstructions },
-                { ParameterRequest, request },
                 { ParameterPromptValue, parameterPromptValue },
                 { ParameterPromptDataType, parameterPromptDataType },
                 { ParameterPromptCulture, CultureInfo.CurrentCulture.ThreeLetterISOLanguageName },
