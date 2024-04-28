@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TaskTamer9.WinForms.CustomControls;
+namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 public partial class ModernTextEntry<T>
 {

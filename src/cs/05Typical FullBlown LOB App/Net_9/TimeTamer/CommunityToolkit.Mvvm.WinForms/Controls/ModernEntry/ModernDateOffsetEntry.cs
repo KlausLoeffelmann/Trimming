@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
-using TaskTamer9.WinForms.CustomControls;
 
-namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
+namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
 {

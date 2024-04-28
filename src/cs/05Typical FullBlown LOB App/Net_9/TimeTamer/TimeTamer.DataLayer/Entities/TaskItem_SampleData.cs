@@ -1,5 +1,4 @@
-﻿using System;
-using TaskTamer.DTOs;
+﻿using TaskTamer.DTOs;
 
 namespace TaskTamer.DataLayer.Models;
 

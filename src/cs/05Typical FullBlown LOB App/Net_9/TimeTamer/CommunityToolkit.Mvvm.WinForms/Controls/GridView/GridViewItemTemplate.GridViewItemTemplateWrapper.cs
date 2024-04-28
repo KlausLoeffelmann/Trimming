@@ -1,4 +1,4 @@
-﻿namespace CommunityToolkit.Mvvm.WinForms.Controls;
+﻿namespace DemoToolkit.Mvvm.WinForms.Controls;
 
 public partial class GridViewItemTemplate
 {

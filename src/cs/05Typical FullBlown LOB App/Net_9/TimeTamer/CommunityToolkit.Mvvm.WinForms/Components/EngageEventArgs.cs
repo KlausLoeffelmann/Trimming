@@ -1,4 +1,4 @@
-﻿namespace CommunityToolkit.Mvvm.WinForms.Components;
+﻿namespace DemoToolkit.Mvvm.WinForms.Components;
 
 /// <summary>
 ///  Provides data for the engage event of the <see cref="AsyncTimerComponent"/>.

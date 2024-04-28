@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+﻿using DemoToolkit.Mvvm.DesktopGeneric;
 using System.ComponentModel;
 
-namespace CommunityToolkit.Mvvm.WinForms;
+namespace DemoToolkit.Mvvm.WinForms.Services;
 
 /// <summary>
 ///  Service for starting a WinForms application with a specified view model.

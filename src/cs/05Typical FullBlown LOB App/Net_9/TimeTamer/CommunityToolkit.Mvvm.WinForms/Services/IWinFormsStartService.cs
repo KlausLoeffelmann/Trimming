@@ -1,10 +1,10 @@
-﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+﻿using DemoToolkit.Mvvm.DesktopGeneric;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using TaskTamer.ViewModels.Services;
 
-namespace CommunityToolkit.Mvvm.WinForms;
+namespace DemoToolkit.Mvvm.WinForms.Services;
 
 public interface IWinFormsStartService : IApplicationStartService
 {

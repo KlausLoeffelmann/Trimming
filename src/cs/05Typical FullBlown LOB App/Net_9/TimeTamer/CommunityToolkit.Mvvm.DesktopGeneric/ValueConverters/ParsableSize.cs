@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 
-namespace CommunityToolkit.Mvvm.DesktopGeneric.ValueConverters;
+namespace DemoToolkit.Mvvm.DesktopGeneric.ValueConverters;
 
 public readonly struct ParsableSize(Size size) : IParsable<ParsableSize>
 {

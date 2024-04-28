@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DesktopGeneric;
-using CommunityToolkit.Mvvm.DesktopGeneric.ValueConverters;
+using DemoToolkit.Mvvm.DesktopGeneric;
+using DemoToolkit.Mvvm.DesktopGeneric.ValueConverters;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;

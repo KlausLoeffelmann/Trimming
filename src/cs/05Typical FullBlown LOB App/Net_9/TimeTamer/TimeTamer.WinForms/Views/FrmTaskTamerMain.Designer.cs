@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.WinForms.AI;
-using CommunityToolkit.Mvvm.WinForms.Controls;
-using CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
+﻿using DemoToolkit.Mvvm.WinForms.AI;
+using DemoToolkit.Mvvm.WinForms.Controls;
+using DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 namespace TaskTamer.WinForms
 {
@@ -512,7 +512,7 @@ namespace TaskTamer.WinForms
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem optionsToolStripMenuItem;
         private ToolStripStatusLabel _lblSpringLabel;
-        private CommunityToolkit.Mvvm.WinForms.Controls.GridView _tasksGridView;
+        private DemoToolkit.Mvvm.WinForms.Controls.GridView _tasksGridView;
         private TaskTamer9.WinForms.Views.TaskItemView _taskItemView;
         private BindingSource _mainVmSource;
         private BindingSource _taskVmSource;

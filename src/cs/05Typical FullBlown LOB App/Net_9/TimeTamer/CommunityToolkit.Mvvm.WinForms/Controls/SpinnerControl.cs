@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Text;
 
-namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
+namespace DemoToolkit.Mvvm.WinForms.Controls;
 
 public class SpinnerControl : Label
 {
@@ -68,7 +68,7 @@ public class SpinnerControl : Label
 
             return;
         }
-        
+
         _cancellationTokenSource = new CancellationTokenSource();
         await SpinAsync(_cancellationTokenSource.Token);
     }

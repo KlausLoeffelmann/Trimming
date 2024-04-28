@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CommunityToolkit.Mvvm.DesktopGeneric.ValueConverters;
+namespace DemoToolkit.Mvvm.DesktopGeneric.ValueConverters;
 
 public abstract class ValueConverter<T> : TypeConverter
 {

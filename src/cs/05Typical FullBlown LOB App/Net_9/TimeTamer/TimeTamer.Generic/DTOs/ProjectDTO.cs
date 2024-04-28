@@ -1,5 +1,3 @@
-using System;
-
 namespace TaskTamer.DTOs;
 
 public class ProjectDto

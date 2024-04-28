@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 
-namespace CommunityToolkit.Mvvm.DesktopGeneric.ValueConverters;
+namespace DemoToolkit.Mvvm.DesktopGeneric.ValueConverters;
 
 public abstract class ValueConverter : TypeConverter
 {

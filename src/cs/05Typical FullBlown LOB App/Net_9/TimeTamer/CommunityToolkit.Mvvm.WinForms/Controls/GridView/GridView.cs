@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace CommunityToolkit.Mvvm.WinForms.Controls;
+namespace DemoToolkit.Mvvm.WinForms.Controls;
 
 public partial class GridView : DataGridView
 {

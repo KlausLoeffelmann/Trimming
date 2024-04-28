@@ -1,4 +1,4 @@
-﻿namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
+﻿namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 using System.ComponentModel;
 using System.Drawing;

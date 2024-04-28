@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+﻿using DemoToolkit.Mvvm.DesktopGeneric;
 
-namespace CommunityToolkit.Mvvm.WinForms;
+namespace DemoToolkit.Mvvm.WinForms.Services;
 
 /// <summary>
 ///  Provides a service that allows the synchronization context to be registered.

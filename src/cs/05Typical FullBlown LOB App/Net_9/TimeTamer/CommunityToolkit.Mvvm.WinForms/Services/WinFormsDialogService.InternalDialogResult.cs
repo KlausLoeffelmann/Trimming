@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+﻿using DemoToolkit.Mvvm.DesktopGeneric;
+
+namespace DemoToolkit.Mvvm.WinForms.Services;
 
 internal partial class WinFormsDialogService
 {

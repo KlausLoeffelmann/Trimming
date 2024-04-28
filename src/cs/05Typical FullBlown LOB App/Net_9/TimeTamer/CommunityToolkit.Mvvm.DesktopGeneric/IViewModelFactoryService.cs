@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CommunityToolkit.Mvvm.DesktopGeneric;
+namespace DemoToolkit.Mvvm.DesktopGeneric;
 
 public interface IViewModelFactoryService
 {

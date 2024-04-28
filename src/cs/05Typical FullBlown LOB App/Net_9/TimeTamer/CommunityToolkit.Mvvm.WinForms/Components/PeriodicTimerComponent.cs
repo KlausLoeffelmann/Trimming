@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CommunityToolkit.Mvvm.WinForms.Components;
+namespace DemoToolkit.Mvvm.WinForms.Components;
 
 public delegate Task AsyncEventHandler<TEventArgs>(object sender, TEventArgs e);
 

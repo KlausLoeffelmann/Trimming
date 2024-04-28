@@ -1,18 +1,13 @@
-﻿namespace CommunityToolkit.Mvvm.WinForms.Controls
-{
+﻿namespace DemoToolkit.Mvvm.WinForms.Controls;
+
     [Serializable]
-    internal class ValueNotAvailableException : Exception
-    {
-        public ValueNotAvailableException()
-        {
-        }
+public class ValueNotAvailableException : Exception
+{
+    public ValueNotAvailableException() { }
 
-        public ValueNotAvailableException(string? message) : base(message)
-        {
-        }
+    public ValueNotAvailableException(string? message)
+        : base(message) { }
 
-        public ValueNotAvailableException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-    }
+    public ValueNotAvailableException(string? message, Exception? innerException)
+        : base(message, innerException) { }
 }

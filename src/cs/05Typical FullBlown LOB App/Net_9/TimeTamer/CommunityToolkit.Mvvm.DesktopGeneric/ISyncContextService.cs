@@ -1,4 +1,4 @@
-﻿namespace CommunityToolkit.Mvvm.DesktopGeneric;
+﻿namespace DemoToolkit.Mvvm.DesktopGeneric;
 
 /// <summary>
 /// Represents a service for managing synchronization context.

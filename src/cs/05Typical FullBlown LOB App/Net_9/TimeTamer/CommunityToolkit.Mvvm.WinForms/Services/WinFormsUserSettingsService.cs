@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+﻿using DemoToolkit.Mvvm.DesktopGeneric;
 using System.Reflection;
 using System.Text.Json;
 
-namespace CommunityToolkit.Mvvm.WinForms.Services;
+namespace DemoToolkit.Mvvm.WinForms.Services;
 
 public class WinFormsUserSettingsService : IUserSettingsService
 {

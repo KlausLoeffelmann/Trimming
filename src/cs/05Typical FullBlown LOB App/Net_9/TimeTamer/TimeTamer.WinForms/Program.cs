@@ -1,7 +1,7 @@
 using TaskTamer.ViewModels;
 using TaskTamer.WinForms.Views;
 
-using static CommunityToolkit.Mvvm.WinForms.IWinFormsStartService;
+using static DemoToolkit.Mvvm.WinForms.Services.IWinFormsStartService;
 
 namespace TaskTamer.WinForms;
 

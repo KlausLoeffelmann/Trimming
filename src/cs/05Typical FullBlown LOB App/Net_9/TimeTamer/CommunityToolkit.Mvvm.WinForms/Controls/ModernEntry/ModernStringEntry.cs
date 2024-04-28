@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.Design;
 using System.ComponentModel;
 using System.Drawing.Design;
-using TaskTamer9.WinForms.CustomControls;
 
-namespace CommunityToolkit.Mvvm.WinForms.Controls.ModernEntry;
+namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 public class ModernStringEntry : ModernTextEntry<string>
 {

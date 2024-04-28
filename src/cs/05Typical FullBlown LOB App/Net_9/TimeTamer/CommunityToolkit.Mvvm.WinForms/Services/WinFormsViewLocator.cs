@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.DesktopGeneric;
+﻿using DemoToolkit.Mvvm.DesktopGeneric;
 
-namespace CommunityToolkit.Mvvm.WinForms;
+namespace DemoToolkit.Mvvm.WinForms.Services;
 
 public class WinFormsViewLocator : IViewLocatorService<Form>
 {

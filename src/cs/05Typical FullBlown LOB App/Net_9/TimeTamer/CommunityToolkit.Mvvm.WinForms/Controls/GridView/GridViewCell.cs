@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CommunityToolkit.Mvvm.WinForms.Controls;
+namespace DemoToolkit.Mvvm.WinForms.Controls;
 
 internal class GridViewCell : DataGridViewCell
 {

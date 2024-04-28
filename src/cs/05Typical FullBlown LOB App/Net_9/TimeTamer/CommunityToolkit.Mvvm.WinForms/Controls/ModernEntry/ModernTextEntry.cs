@@ -3,7 +3,7 @@ using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing.Design;
 
-namespace TaskTamer9.WinForms.CustomControls;
+namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 /// <summary>
 ///  Represents a base class for a modern text entry control.

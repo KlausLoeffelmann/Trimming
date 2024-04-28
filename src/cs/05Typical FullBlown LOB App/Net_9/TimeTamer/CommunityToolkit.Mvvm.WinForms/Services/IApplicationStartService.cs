@@ -1,4 +1,4 @@
-﻿namespace CommunityToolkit.Mvvm.WinForms;
+﻿namespace DemoToolkit.Mvvm.WinForms.Services;
 
 public interface IApplicationStartService
 {
