@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommunityToolkit.Mvvm.WinForms\CommunityToolkit.Mvvm.WinForms.csproj" />
+    <ProjectReference Include="..\CommunityToolkit.Mvvm.WinForms\DemoToolkit.Mvvm.WinForms.csproj" />
     <ProjectReference Include="..\TimeTamer.Generic\TaskTamer.Generic.csproj" />
     <ProjectReference Include="..\TimeTamer.ViewModels\TaskTamer.ViewModels.csproj" />
   </ItemGroup>

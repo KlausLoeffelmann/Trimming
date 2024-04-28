@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WinForms", "WinForms", "{41
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskTamer.Generic", "TimeTamer.Generic\TaskTamer.Generic.csproj", "{A04A42E0-12AA-4D18-B5F3-E813E5FC6C32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Mvvm.WinForms", "CommunityToolkit.Mvvm.WinForms\CommunityToolkit.Mvvm.WinForms.csproj", "{322CF836-BFD9-4651-A751-B5DAE209E1DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoToolkit.Mvvm.WinForms", "CommunityToolkit.Mvvm.WinForms\DemoToolkit.Mvvm.WinForms.csproj", "{322CF836-BFD9-4651-A751-B5DAE209E1DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityToolkit.Mvvm.DesktopGeneric", "CommunityToolkit.Mvvm.DesktopGeneric\CommunityToolkit.Mvvm.DesktopGeneric.csproj", "{F966B6D8-4D5C-4661-9EC0-CBC30BFD669D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoToolkit.Mvvm.DesktopGeneric", "CommunityToolkit.Mvvm.DesktopGeneric\DemoToolkit.Mvvm.DesktopGeneric.csproj", "{F966B6D8-4D5C-4661-9EC0-CBC30BFD669D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
