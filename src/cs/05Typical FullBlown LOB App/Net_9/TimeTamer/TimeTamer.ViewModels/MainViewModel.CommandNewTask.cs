@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
+using TaskTamer.DataLayer.Models;
 
 namespace TaskTamer.ViewModels;
 
@@ -9,12 +10,13 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanAddTask))]
     private void AddTask()
     {
-        var task = new TaskViewModel()
-        {
-            Name = NewTaskName!,
-            DueDate = NewTaskDueDate,
-            Project = SelectedProject!
-        };
+        TaskItem.CreateNew(
+            NewTaskName!, 
+            NewTaskDueDate, 
+            SelectedProject!.ProjectId,
+            CurrentUser!.UserId);
+
+        Tasks = GetTasksForCurrentUser();
     }
 
     private bool CanAddTask()

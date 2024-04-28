@@ -65,6 +65,7 @@ public class SpinnerControl : Label
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
             _cancellationTokenSource = null;
+            Text = " ";
 
             return;
         }

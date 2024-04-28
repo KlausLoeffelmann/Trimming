@@ -1,4 +1,5 @@
-﻿using TaskTamer.DTOs;
+﻿using System.Threading.Tasks;
+using TaskTamer.DTOs;
 
 namespace TaskTamer.DataLayer.Models;
 
@@ -127,5 +128,29 @@ public partial class TaskItem
         DateTimeOffset newDueDate = dueDate + randomOffset;
 
         return newDueDate;
+    }
+
+    public static void CreateNew(
+        string newTaskName,
+        DateTimeOffset? newTaskDueDate,
+        Guid projectId,
+        Guid userId)
+    {
+        var context = new TaskTamerContext();
+
+        // Create new sample tasks
+        TaskItem task = new()
+        {
+            Name = newTaskName,
+            DueDate = newTaskDueDate,
+            DateCreated = DateTimeOffset.Now,
+            DateLastModified = DateTimeOffset.Now,
+            Status = TaskItemStatus.NotStarted,
+            Owner = context.Users.Find(userId)!,
+            Project = context.Projects.Find(projectId)
+        };
+
+        context.TaskItems.Add(task);
+        context.SaveChanges();
     }
 }

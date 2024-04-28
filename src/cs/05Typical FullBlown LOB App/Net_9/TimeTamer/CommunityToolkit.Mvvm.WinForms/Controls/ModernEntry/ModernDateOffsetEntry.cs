@@ -10,6 +10,11 @@ public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
 
     public override (bool parseSucceeded, DateTimeOffset? result) TryParseValue(string text)
     {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return (true, default);
+        }
+
         if (DateTimeOffset.TryParse(text, out var result))
         {
             return (true, result);
