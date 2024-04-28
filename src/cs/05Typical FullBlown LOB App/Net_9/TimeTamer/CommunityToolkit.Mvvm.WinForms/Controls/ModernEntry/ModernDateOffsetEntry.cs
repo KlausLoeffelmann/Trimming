@@ -42,7 +42,7 @@ public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     [Browsable(true)]
     [DefaultValue(null)]
-    public SpinnerControl Spinner
+    public SpinnerControl? Spinner
     {
         get => _spinner;
         set

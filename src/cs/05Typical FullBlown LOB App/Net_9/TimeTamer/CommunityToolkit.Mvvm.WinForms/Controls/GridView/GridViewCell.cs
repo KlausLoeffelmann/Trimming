@@ -123,11 +123,7 @@ internal class GridViewCell : DataGridViewCell
             ? s_defaultPadding
             : ItemTemplate.Padding;
 
-        Rectangle paddedBounds = new(
-            cellBounds.X + padding.Left,
-            cellBounds.Y + padding.Top,
-            cellBounds.Width - (padding.Left + padding.Right),
-            cellBounds.Height - (padding.Top + padding.Bottom));
+        var paddedBounds=cellBounds.Pad(padding);
 
         ItemTemplate?.OnPaintContent(
             new PaintEventArgs(graphics, clipBounds), 

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace CommunityToolkit.Mvvm.WinForms.Controls;
 
 public partial class GridView : DataGridView
 {
+    public event EventHandler? GridViewItemTemplateChanged;
     public event EventHandler? SelectedItemChanged;
 
     private GridViewItemTemplate? _gridViewItemTemplate;
@@ -15,14 +15,22 @@ public partial class GridView : DataGridView
 
     private readonly Color DarkModeBackgroundColor = Color.FromArgb(255, 20, 20, 20);
     private readonly Color LightModeBackgroundColor = Color.FromArgb(255, 164, 164, 164);
+    private readonly Color DarkModeSelectionColor = Color.FromArgb(255, 240, 240, 240);
+    private readonly Color LightModeSelectionColor = Color.FromArgb(255, 10, 10, 10);
+
     private object? _selectedItem;
+    private Pen _selectionPen;
+    private readonly Padding _selectionPadding = new(2, 2, 2, 2);
 
     private Color ThemedDataGridBackground 
         => IsDarkModeEnabled 
         ? DarkModeBackgroundColor 
         : LightModeBackgroundColor;
 
-    public event EventHandler? GridViewItemTemplateChanged;
+    private Color ThemedDataGridSelectionColor
+            => IsDarkModeEnabled
+        ? DarkModeSelectionColor
+        : LightModeSelectionColor;
 
     public GridView()
     {
@@ -34,9 +42,12 @@ public partial class GridView : DataGridView
         AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         AutoSizeRowsMode= DataGridViewAutoSizeRowsMode.AllCells;
         DoubleBuffered = true;
+        SelectionMode= DataGridViewSelectionMode.FullRowSelect;
         ColumnHeadersVisible = false;
         RowHeadersVisible = false;
         VirtualMode = true;
+
+        _selectionPen = new Pen(ThemedDataGridSelectionColor, 2);
     }
 
     [Bindable(false)]
@@ -86,6 +97,9 @@ public partial class GridView : DataGridView
         }
     }
 
+    protected virtual void OnSelectedItemChanged(EventArgs e)
+        => SelectedItemChanged?.Invoke(this, e);
+
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     [Bindable(false)]
     [Browsable(true)]
@@ -103,19 +117,11 @@ public partial class GridView : DataGridView
 
             if (_gridViewItemTemplate is not null)
             {
-                _gridViewItemTemplate.IsDarkMode = this.IsDarkModeEnabled;
+                _gridViewItemTemplate.IsDarkMode = IsDarkModeEnabled;
             }
 
             OnGridViewItemTemplateChanged();
         }
-    }
-
-    protected virtual void OnSelectedItemChanged(EventArgs e)
-        => SelectedItemChanged?.Invoke(this, e);
-
-    protected override void OnSelectionChanged(EventArgs e)
-    {
-        base.OnSelectionChanged(e);
     }
 
     protected override void OnDataContextChanged(EventArgs e)
@@ -133,8 +139,8 @@ public partial class GridView : DataGridView
         {
             _underlayingList = null;
             _observableCollection = null;
-            this.Rows.Clear();
-            this.RowCount = 0;
+            Rows.Clear();
+            RowCount = 0;
 
             return;
         }
@@ -146,16 +152,8 @@ public partial class GridView : DataGridView
             _observableCollection = observableCollection;
             _underlayingList = list;
 
-            this.Rows.Clear();
-
-            try
-            {
-                this.RowCount = list.Count;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            Rows.Clear();
+            RowCount = list.Count;
         }
     }
 
@@ -187,14 +185,30 @@ public partial class GridView : DataGridView
     }
 
     protected override void OnRowPrePaint(DataGridViewRowPrePaintEventArgs e)
-    {
-        e.Graphics.FillRectangle(new SolidBrush(ThemedDataGridBackground), e.RowBounds);
-    }
+        => e.Graphics.FillRectangle(
+            new SolidBrush(ThemedDataGridBackground), 
+            e.RowBounds);
 
-    protected override void OnRowHeightInfoNeeded(DataGridViewRowHeightInfoNeededEventArgs e)
+    protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
     {
-        base.OnRowHeightInfoNeeded(e);
-        Debug.Print($"GridView - {nameof(OnRowHeightInfoNeeded)} Row: {e.RowIndex}");
+        if (e.RowIndex == -1)
+            return;
+
+        // Get the row
+        var currentRow = Rows[e.RowIndex];
+
+        if (currentRow.Selected)
+        {
+            // We're drawing a rounded rectangle around the selected row.
+            var rowBounds = new Rectangle(
+                    e.RowBounds.Left, 
+                    e.RowBounds.Top, 
+                    e.RowBounds.Width - 1, 
+                    e.RowBounds.Height - 1)
+                .Pad(_selectionPadding);
+
+            e.Graphics.DrawRoundedRectangle(_selectionPen, rowBounds, new(10, 10));
+        }
     }
 
     protected override void OnCellValueNeeded(DataGridViewCellValueEventArgs e)
