@@ -22,6 +22,12 @@ public partial class FrmTaskTamerMain : Form
         // of creating the ViewModel and setting it to the DataContext of this view.
         // So, we can now bind the controls to the ViewModel properties.
         _mainVmSource.DataSource = DataContext;
+
+        #region Extended OpenAI Control Parsing
+
+        _semanticKernel.ApiKey = Environment.GetEnvironmentVariable("AI:OpenAi:ApiKey");
+
+        #endregion
     }
 
     protected override void OnShown(EventArgs e)
