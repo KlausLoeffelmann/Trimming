@@ -127,6 +127,7 @@ public abstract partial class ModernTextEntry<T>
 
             try
             {
+                SuspendValidationEvent();
                 var resultString = await skComponent.RequestPromptProcessingAsync(
                     typeof(T).Name,
                     text);
@@ -147,6 +148,7 @@ public abstract partial class ModernTextEntry<T>
                 {
                     Spinner.IsSpinning = false;
                 }
+                ResumeValidationEvent();
             }
         }
 
