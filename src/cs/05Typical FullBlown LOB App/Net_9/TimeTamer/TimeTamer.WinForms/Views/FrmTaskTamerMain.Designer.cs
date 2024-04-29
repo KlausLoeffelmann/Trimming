@@ -1,5 +1,4 @@
-﻿using DemoToolkit.Mvvm.WinForms.AI;
-using DemoToolkit.Mvvm.WinForms.Controls;
+﻿using DemoToolkit.Mvvm.WinForms.Controls;
 using DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
 namespace TaskTamer.WinForms

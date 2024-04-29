@@ -46,5 +46,29 @@ namespace TaskTamer9.WinForms.Properties {
                 this["AppSettingJSonBag"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point MainWindowLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["MainWindowLocation"]));
+            }
+            set {
+                this["MainWindowLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Size MainWindowSize {
+            get {
+                return ((global::System.Drawing.Size)(this["MainWindowSize"]));
+            }
+            set {
+                this["MainWindowSize"] = value;
+            }
+        }
     }
 }
