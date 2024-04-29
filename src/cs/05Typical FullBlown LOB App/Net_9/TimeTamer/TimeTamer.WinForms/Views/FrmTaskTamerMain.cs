@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace TaskTamer.WinForms;
+﻿namespace TaskTamer.WinForms;
 
 public partial class FrmTaskTamerMain : Form
 {

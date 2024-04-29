@@ -33,6 +33,7 @@ namespace TaskTamer.WinForms
         {
             components = new System.ComponentModel.Container();
             _statusStrip = new StatusStrip();
+            _lblSortOrder = new ToolStripStatusLabel();
             _lblSpringLabel = new ToolStripStatusLabel();
             _mainVmSource = new BindingSource(components);
             _lblCurrentUser = new ToolStripStatusLabel();
@@ -90,7 +91,7 @@ namespace TaskTamer.WinForms
             _statusStrip.GripMargin = new Padding(5);
             _statusStrip.GripStyle = ToolStripGripStyle.Visible;
             _statusStrip.ImageScalingSize = new Size(20, 20);
-            _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSpringLabel, _lblCurrentUser, _lblDateTime });
+            _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSortOrder, _lblSpringLabel, _lblCurrentUser, _lblDateTime });
             _statusStrip.Location = new Point(0, 482);
             _statusStrip.Margin = new Padding(0, 0, 3, 0);
             _statusStrip.Name = "_statusStrip";
@@ -100,11 +101,17 @@ namespace TaskTamer.WinForms
             _statusStrip.TabIndex = 3;
             _statusStrip.Text = "statusStrip1";
             // 
+            // _lblSortOrder
+            // 
+            _lblSortOrder.Name = "_lblSortOrder";
+            _lblSortOrder.Size = new Size(98, 31);
+            _lblSortOrder.Text = "#SortOrder#";
+            // 
             // _lblSpringLabel
             // 
             _lblSpringLabel.DataBindings.Add(new Binding("Text", _mainVmSource, "SelectedProject", true));
             _lblSpringLabel.Name = "_lblSpringLabel";
-            _lblSpringLabel.Size = new Size(709, 31);
+            _lblSpringLabel.Size = new Size(580, 31);
             _lblSpringLabel.Spring = true;
             _lblSpringLabel.Text = "#SelectedTasksProjectSpring#";
             _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
@@ -211,18 +218,23 @@ namespace TaskTamer.WinForms
             // 
             // orderByDueDateToolStripMenuItem
             // 
+            orderByDueDateToolStripMenuItem.CommandParameter = "DueDate";
+            orderByDueDateToolStripMenuItem.DataBindings.Add(new Binding("Command", _mainVmSource, "SetSortOrderCommand", true));
             orderByDueDateToolStripMenuItem.Name = "orderByDueDateToolStripMenuItem";
             orderByDueDateToolStripMenuItem.Size = new Size(240, 26);
             orderByDueDateToolStripMenuItem.Text = "Order by Due Date";
             // 
             // orderByLastModifiedToolStripMenuItem
             // 
+            orderByLastModifiedToolStripMenuItem.CommandParameter = "LastModified";
             orderByLastModifiedToolStripMenuItem.Name = "orderByLastModifiedToolStripMenuItem";
             orderByLastModifiedToolStripMenuItem.Size = new Size(240, 26);
             orderByLastModifiedToolStripMenuItem.Text = "Order by Last Modified";
             // 
             // orderByStatusToolStripMenuItem
             // 
+            orderByStatusToolStripMenuItem.CommandParameter = "Status";
+            orderByStatusToolStripMenuItem.DataBindings.Add(new Binding("Command", _mainVmSource, "SetSortOrderCommand", true));
             orderByStatusToolStripMenuItem.Name = "orderByStatusToolStripMenuItem";
             orderByStatusToolStripMenuItem.Size = new Size(240, 26);
             orderByStatusToolStripMenuItem.Text = "Order by Status";
@@ -231,14 +243,14 @@ namespace TaskTamer.WinForms
             // 
             testsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _demoInvokeAsyncMenuItem });
             testsToolStripMenuItem.Name = "testsToolStripMenuItem";
-            testsToolStripMenuItem.Size = new Size(55, 25);
-            testsToolStripMenuItem.Text = "&Tests";
+            testsToolStripMenuItem.Size = new Size(64, 25);
+            testsToolStripMenuItem.Text = "&Demo";
             // 
             // _demoInvokeAsyncMenuItem
             // 
             _demoInvokeAsyncMenuItem.Name = "_demoInvokeAsyncMenuItem";
-            _demoInvokeAsyncMenuItem.Size = new Size(206, 26);
-            _demoInvokeAsyncMenuItem.Text = "&Generate test data";
+            _demoInvokeAsyncMenuItem.Size = new Size(214, 26);
+            _demoInvokeAsyncMenuItem.Text = "Async in WinForms";
             // 
             // toolsToolStripMenuItem
             // 
@@ -530,5 +542,6 @@ namespace TaskTamer.WinForms
         private ToolStripMenuItem orderByLastModifiedToolStripMenuItem;
         private ToolStripMenuItem orderByStatusToolStripMenuItem;
         private SpinnerControl _dateParsingSpinner;
+        private ToolStripStatusLabel _lblSortOrder;
     }
 }

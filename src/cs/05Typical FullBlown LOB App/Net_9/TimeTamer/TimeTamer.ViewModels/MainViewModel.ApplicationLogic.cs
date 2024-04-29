@@ -6,6 +6,10 @@ namespace TaskTamer.ViewModels;
 
 public partial class MainViewModel
 {
+    private const string SortOrderDueDate = "DueDate";
+    private const string SortOrderLastModified = "LastModified";
+    private const string SortOrderStatus = "Status";
+
     private static string AssignCurrentDateAndTimeInCurrentCulture()
         => DateTime.Now.ToString("G", CultureInfo.CurrentCulture);
 
@@ -13,7 +17,7 @@ public partial class MainViewModel
     {
         EnsureSampleData();
         CurrentDisplayTime = AssignCurrentDateAndTimeInCurrentCulture();
-        Tasks = GetTasksForCurrentUser();
+        Tasks = GetTasksForCurrentUser(SortOrder ?? SortOrderDueDate);
     }
 
     private void UpdateCurrentTime(object? state)
@@ -41,11 +45,11 @@ public partial class MainViewModel
         TaskItem.EnsureSampleTasksData(context, currentUser);
     }
 
-    private ObservableCollection<TaskViewModel>? GetTasksForCurrentUser()
+    private ObservableCollection<TaskViewModel>? GetTasksForCurrentUser(string sortOrder)
     {
         if (CurrentUser is null) return default;
 
-        var userTasks = TaskItem.GetTasksForUser(CurrentUser.UserId);
+        var userTasks = TaskItem.GetTasksForUser(CurrentUser.UserId, sortOrder);
         var tasks = new ObservableCollection<TaskViewModel>();
 
         foreach (var taskItem in userTasks)

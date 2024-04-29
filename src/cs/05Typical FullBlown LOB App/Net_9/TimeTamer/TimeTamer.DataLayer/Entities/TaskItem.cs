@@ -39,7 +39,7 @@ public partial class TaskItem
 
     public Guid SyncId { get; set; }
 
-    public static IEnumerable<TaskItem> GetTasksForUser(Guid userId)
+    public static IEnumerable<TaskItem> GetTasksForUser(Guid userId, string sortOrder)
     {
         using var context = new TaskTamerContext();
 
@@ -49,6 +49,16 @@ public partial class TaskItem
             .Include(task => task.Owner)
             .Include(task => task.Category)
             .ToList();
+
+        // Set the sort order:
+        resultSet = sortOrder switch
+        {
+            "DueDate" => [.. resultSet.OrderBy(task => task.DueDate)],
+            "LastModified" => [.. resultSet.OrderBy(task => task.DateLastModified)],
+            "Status" => [.. resultSet.OrderBy(task => task.Status)],
+            "Name" => [.. resultSet.OrderBy(task => task.Name)],
+            _ => [.. resultSet.OrderBy(task => task.DueDate)]
+        };
 
         return resultSet;
     }
