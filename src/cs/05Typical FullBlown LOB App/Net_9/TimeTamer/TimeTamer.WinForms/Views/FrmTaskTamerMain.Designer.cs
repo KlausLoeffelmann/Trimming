@@ -68,12 +68,12 @@ namespace TaskTamer.WinForms
             _cmbProject = new BindableComboBox();
             _projectsSource = new BindingSource(components);
             _entDueDate = new ModernDateOffsetEntry();
+            _semanticKernel = new SemanticKernelBaseComponent();
             _dateParsingSpinner = new SpinnerControl();
             _tlpNewTask = new TableLayoutPanel();
             _btnNewTask = new ModernCommandButton();
             _optNewTaskDone = new RadioButton();
             _entNewTask = new ModernStringEntry();
-            _semanticKernel = new SemanticKernelBaseComponent();
             _statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)_mainVmSource).BeginInit();
             _mainMenuStrip.SuspendLayout();
@@ -389,10 +389,13 @@ namespace TaskTamer.WinForms
             _entDueDate.Location = new Point(501, 3);
             _entDueDate.MakeItIntelligent = true;
             _entDueDate.Name = "_entDueDate";
-            _entDueDate.SemanticKernelComponent = _semanticKernel;
             _entDueDate.Size = new Size(262, 37);
             _entDueDate.Spinner = _dateParsingSpinner;
             _entDueDate.TabIndex = 3;
+            // 
+            // _semanticKernel
+            // 
+            _semanticKernel.AssistantInstructions = "";
             // 
             // _dateParsingSpinner
             // 
@@ -454,13 +457,11 @@ namespace TaskTamer.WinForms
             _entNewTask.AutoSize = true;
             _entNewTask.DataBindings.Add(new Binding("Value", _mainVmSource, "NewTaskName", true, DataSourceUpdateMode.OnPropertyChanged));
             _entNewTask.Location = new Point(32, 3);
+            _entNewTask.MakeItIntelligent = true;
             _entNewTask.Name = "_entNewTask";
             _entNewTask.Size = new Size(733, 37);
+            _entNewTask.Spinner = _dateParsingSpinner;
             _entNewTask.TabIndex = 0;
-            // 
-            // _semanticKernel
-            // 
-            _semanticKernel.AssistantInstructions = "";
             // 
             // FrmTaskTamerMain
             // 

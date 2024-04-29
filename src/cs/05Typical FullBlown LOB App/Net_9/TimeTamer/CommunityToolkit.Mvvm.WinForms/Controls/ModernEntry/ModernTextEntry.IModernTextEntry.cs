@@ -1,6 +1,4 @@
-﻿using DemoToolkit.Mvvm.WinForms.Controls;
-using System.ComponentModel;
-using System.Text.Json;
+﻿using System.ComponentModel;
 
 namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
@@ -16,7 +14,7 @@ public partial class ModernTextEntry<T>
 
         Task<(bool parseSucceeded, T result)> TryParseValueAsync(string text);
 
-        (bool parseSucceeded, T result) TryParseValue(string text);
+        (bool parseSucceeded, T result) TryParseValue(string text, bool fromAi = false);
 
         public T Value
         {

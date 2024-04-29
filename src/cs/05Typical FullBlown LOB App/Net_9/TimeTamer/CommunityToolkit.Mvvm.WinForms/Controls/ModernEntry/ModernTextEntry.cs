@@ -15,9 +15,12 @@ namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 public abstract partial class ModernTextEntry<T>
     : Panel, ModernTextEntry<T>.IModernTextEntry
 {
+    public event EventHandler<RequestApiKeyEventArgs>? RequestApiKey;
+
     private SpinnerControl? _spinner;
     private SemanticKernelBaseComponent? _skComponent;
     private bool _validationEventSuspended;
+    private string _apiKey = default!;
 
     /// <summary>
     ///  Occurs when the text, which the user initially entered, changed.
@@ -69,6 +72,13 @@ public abstract partial class ModernTextEntry<T>
         Controls.Add((Control)_textBox);
 
         ResumeLayout(true);
+
+        _skComponent = new SemanticKernelBaseComponent()
+        {
+            // For the most cases, we don't need further instructions,
+            // but they cannot be null.
+            AssistantInstructions = ""
+        };
     }
 
     protected override void OnEnter(EventArgs e)
@@ -84,7 +94,9 @@ public abstract partial class ModernTextEntry<T>
     /// <returns>Converted value. Preferably in a format which can be parsed back.</returns>
     public abstract string FormatValue(T value);
 
-    public abstract (bool parseSucceeded, T result) TryParseValue(string text);
+    public abstract (bool parseSucceeded, T result) TryParseValue(
+        string text, 
+        bool fromAi = false);
 
     /// <summary>
     ///  Deriving classes need to implement this method to parse the text into the specific value.
@@ -101,9 +113,13 @@ public abstract partial class ModernTextEntry<T>
             return (true, result);
         }
 
-        if (MakeItIntelligent
-            && this.SemanticKernelComponent is SemanticKernelBaseComponent skComponent)
+        if (MakeItIntelligent && _skComponent is SemanticKernelBaseComponent skComponent)
         {
+            if (string.IsNullOrEmpty(skComponent.ApiKey))
+            {
+                throw new ArgumentException("The Semantic Kernel ApiKey property is not set.");
+            }
+
             if (Spinner is { })
             {
                 Spinner.IsSpinning = true;
@@ -112,13 +128,12 @@ public abstract partial class ModernTextEntry<T>
             try
             {
                 var resultString = await skComponent.RequestPromptProcessingAsync(
-                    typeof(DateTimeOffset).Name,
+                    typeof(T).Name,
                     text);
 
-                if (string.IsNullOrWhiteSpace(resultString) || resultString.StartsWith("**"))
+                if (string.IsNullOrWhiteSpace(resultString))
                 {
-                    ValidationResult = resultString;
-
+                    ValidationResult = "The request did not yield a result!";
                     return (false, default!);
                 }
 
@@ -141,10 +156,7 @@ public abstract partial class ModernTextEntry<T>
     // Generic method to send a message and parse the JSON response to a specific type.
     public (bool, T) TryParseJsonResultString(string llmReturnString)
     {
-        if (llmReturnString is null)
-        {
-            throw new ArgumentNullException(nameof(llmReturnString));
-        }
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(llmReturnString);
 
         try
         {
@@ -152,8 +164,23 @@ public abstract partial class ModernTextEntry<T>
             using JsonDocument doc = JsonDocument.Parse(jsonResultString);
             JsonElement root = doc.RootElement;
 
-            string rawValue = root.GetProperty("ReturnValue").GetString()!;
-            return TryParseValue(rawValue);
+            if (root.TryGetProperty("returnValue", out JsonElement returnValueElement))
+            {
+                string rawValue = returnValueElement.GetString()!;
+                T parsedValue = TryParseValue(rawValue, true).result;
+                return (true, parsedValue);
+            }
+            else if (root.TryGetProperty("errorMessage", out JsonElement errorMessageElement))
+            {
+                string errorMessage = errorMessageElement.GetString()!;
+                ValidationResult = errorMessage;
+                return (false, default!);
+            }
+            else
+            {
+                ValidationResult = "Invalid JSON response: Neither 'returnValue' nor 'errorMessage' property found.";
+                return (false, default!);
+            }
         }
         catch (JsonException jEx)
         {
@@ -190,6 +217,11 @@ public abstract partial class ModernTextEntry<T>
         if (_validationEventSuspended)
         {
             return;
+        }
+
+        if (ProvidesAiSupport && string.IsNullOrWhiteSpace(_apiKey))
+        {
+            RequestApiKeyInternal();
         }
 
         try
@@ -238,6 +270,27 @@ public abstract partial class ModernTextEntry<T>
     // Passing this just on from the internal TextBox:
     void IModernTextEntry.OnValueChangedInternal(CancelEventArgs e)
         => OnValueChanged();
+
+    private void RequestApiKeyInternal()
+    {
+        if (!ProvidesAiSupport || !string.IsNullOrWhiteSpace(_apiKey))
+        {
+            return;
+        }
+
+        var eventArgs = new RequestApiKeyEventArgs();
+
+        RequestApiKey?.Invoke(this, eventArgs);
+
+        if (!string.IsNullOrWhiteSpace(eventArgs.ApiKey))
+        {
+            _apiKey = eventArgs.ApiKey;
+            if (_skComponent is { })
+            {
+                _skComponent.ApiKey = _apiKey;
+            }
+        }
+    }
 
     /// <summary>
     ///  Gets or sets the original input text.
@@ -366,24 +419,6 @@ public abstract partial class ModernTextEntry<T>
             }
 
             _spinner = value;
-        }
-    }
-
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Browsable(true)]
-    [Bindable(false)]
-    [DefaultValue(null)]
-    public SemanticKernelBaseComponent? SemanticKernelComponent
-    {
-        get => _skComponent;
-        set
-        {
-            if (_skComponent == value)
-            {
-                return;
-            }
-
-            _skComponent = value;
         }
     }
 

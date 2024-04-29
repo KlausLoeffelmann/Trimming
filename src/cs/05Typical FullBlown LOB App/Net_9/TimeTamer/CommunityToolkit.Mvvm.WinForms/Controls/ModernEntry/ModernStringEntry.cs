@@ -8,10 +8,17 @@ public class ModernStringEntry : ModernTextEntry<string>
 {
     public override string FormatValue(string value) => value;
 
-    public override (bool, string) TryParseValue(string text)
+    public override (bool, string) TryParseValue(string text, bool fromAi = false)
     {
-        return (true, text);
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return (true, string.Empty);
+        }
+
+        return (fromAi, text);
     }
+
+    protected override bool ProvidesAiSupport => true;
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     [Bindable(true)]

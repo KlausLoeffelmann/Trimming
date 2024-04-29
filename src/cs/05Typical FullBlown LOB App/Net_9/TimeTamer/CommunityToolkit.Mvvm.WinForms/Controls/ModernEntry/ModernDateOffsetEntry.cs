@@ -8,7 +8,7 @@ public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
 
     protected override bool ProvidesAiSupport => true;
 
-    public override (bool parseSucceeded, DateTimeOffset? result) TryParseValue(string text)
+    public override (bool parseSucceeded, DateTimeOffset? result) TryParseValue(string text, bool fromAi = false)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
