@@ -2,8 +2,9 @@
 
 public class ModernCommandButton : Button
 {
-    private Brush _standardForeColor;
-    private Brush _highLightedForeColor;
+    private readonly Brush _standardForeColor;
+    private readonly Brush _highLightedForeColor;
+
     private Font _iconFont = default!;
     private bool _requestHighlight;
 
@@ -42,17 +43,17 @@ public class ModernCommandButton : Button
 
     protected override void OnPaint(PaintEventArgs paintEventArgs)
     {
-        base.OnPaint(paintEventArgs); // Call base to handle basic painting.
+        base.OnPaint(paintEventArgs);
 
         Graphics graphics = paintEventArgs.Graphics;
-        graphics.Clear(BackColor); // Clears the background with the button's background color.
+        graphics.Clear(BackColor);
 
-        string sendIcon;
+        string engageSymbol;
         Brush currentBrush;
 
         if (Enabled)
         {
-            sendIcon = "\uE725";
+            engageSymbol = "\uE725";
             if (_requestHighlight)
             {
                 currentBrush = _highLightedForeColor;
@@ -64,18 +65,18 @@ public class ModernCommandButton : Button
         }
         else
         {
-            sendIcon = "\uE724";
+            engageSymbol = "\uE724";
             currentBrush = _standardForeColor;
         }
 
         // Measure the string to center it in the button
-        SizeF stringSize = graphics.MeasureString(sendIcon, _iconFont);
+        SizeF stringSize = graphics.MeasureString(engageSymbol, _iconFont);
 
         // Calculate the position to draw the string so it is centered
         float x = (Width - stringSize.Width) / 2;
         float y = (Height - stringSize.Height) / 2;
 
         // Draw the icon character
-        graphics.DrawString(sendIcon, _iconFont, currentBrush, x, y);
+        graphics.DrawString(engageSymbol, _iconFont, currentBrush, x, y);
     }
 }

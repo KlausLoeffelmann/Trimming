@@ -25,8 +25,15 @@ public partial class ModernTextEntry<T>
                     return CachedValue.actualValue;
                 }
 
-                throw new ValueNotAvailableException(
-                    "Value is not available. Please use the GetValueAsync method to get the value.");
+                var (parseSucceeded, returnValue) = TryParseValue(TextBoxInternal.Text);
+
+                if (parseSucceeded)
+                {
+                    CachedValue = (returnValue, true);
+                    return returnValue;
+                }
+
+                return default!;
             }
 
             set

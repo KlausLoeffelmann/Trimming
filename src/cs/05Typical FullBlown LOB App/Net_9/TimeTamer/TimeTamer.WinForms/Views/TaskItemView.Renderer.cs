@@ -28,7 +28,6 @@ namespace TaskTamer9.WinForms.Views
             // Do we have a vertical scrollbar?
             var hasVerticalScrollbar = e.ClipRectangle.Width < clipBounds.Width;
 
-
             // Here we're painting the context of the TaskViewItem:
             DrawBackground(e.Graphics, clipBounds, isMouseOver);
             DrawTaskCheckedRadioButton(e.Graphics, clipBounds);

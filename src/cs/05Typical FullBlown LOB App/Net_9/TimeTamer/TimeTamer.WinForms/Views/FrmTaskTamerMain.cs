@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace TaskTamer.WinForms;
 
@@ -11,6 +11,14 @@ public partial class FrmTaskTamerMain : Form
         // This is just for demo purposes.
         _demoInvokeAsyncMenuItem.Click += 
             (_,_) => _dateParsingSpinner.IsSpinning = !_dateParsingSpinner.IsSpinning;
+
+        #region Very extended Control Value Parsin...😉
+
+        _entDueDate.RequestApiKey += (_, e) => e.ApiKey = Environment.GetEnvironmentVariable("AI:OpenAi:ApiKey");
+        _entNewTask.RequestApiKey += (_, e) => e.ApiKey = Environment.GetEnvironmentVariable("AI:OpenAi:ApiKey");
+
+        #endregion
+
     }
 
     protected override void OnLoad(EventArgs e)
@@ -22,12 +30,6 @@ public partial class FrmTaskTamerMain : Form
         // of creating the ViewModel and setting it to the DataContext of this view.
         // So, we can now bind the controls to the ViewModel properties.
         _mainVmSource.DataSource = DataContext;
-
-        #region Extended OpenAI Control Parsing
-
-        _semanticKernel.ApiKey = Environment.GetEnvironmentVariable("AI:OpenAi:ApiKey");
-
-        #endregion
     }
 
     protected override void OnShown(EventArgs e)

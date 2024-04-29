@@ -4,18 +4,18 @@ using System.Drawing.Design;
 
 namespace DemoToolkit.Mvvm.WinForms.Controls.ModernEntry;
 
-public class ModernStringEntry : ModernTextEntry<string>
+public class ModernStringEntry : ModernTextEntry<string?>
 {
-    public override string FormatValue(string value) => value;
+    public override string FormatValue(string? value) => value ?? string.Empty;
 
-    public override (bool, string) TryParseValue(string text, bool fromAi = false)
+    public override (bool, string?) TryParseValue(string? text, bool fromAi = false)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
-            return (true, string.Empty);
+            return (true, default);
         }
 
-        return (fromAi, text);
+        return (MakeItIntelligent ? fromAi : true, text);
     }
 
     protected override bool ProvidesAiSupport => true;
@@ -23,8 +23,9 @@ public class ModernStringEntry : ModernTextEntry<string>
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     [Bindable(true)]
     [Browsable(true)]
+    [DefaultValue(null)]
     [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
-    public string Value
+    public string? Value
     {
         get => ValueInternal;
         set => ValueInternal = value;
