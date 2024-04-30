@@ -402,6 +402,7 @@ namespace TaskTamer.WinForms
             _entDueDate.AutoSize = true;
             _entDueDate.DataBindings.Add(new Binding("Value", _mainVmSource, "NewTaskDueDate", true, DataSourceUpdateMode.OnPropertyChanged));
             _entDueDate.Location = new Point(449, 4);
+            _entDueDate.MakeItIntelligent = true;
             _entDueDate.Margin = new Padding(3, 4, 3, 4);
             _entDueDate.Name = "_entDueDate";
             _entDueDate.Size = new Size(225, 40);
@@ -457,6 +458,7 @@ namespace TaskTamer.WinForms
             _entNewTask.AutoSize = true;
             _entNewTask.DataBindings.Add(new Binding("Value", _mainVmSource, "NewTaskName", true, DataSourceUpdateMode.OnPropertyChanged));
             _entNewTask.Location = new Point(3, 4);
+            _entNewTask.MakeItIntelligent = true;
             _entNewTask.Margin = new Padding(3, 4, 3, 4);
             _entNewTask.Name = "_entNewTask";
             _entNewTask.Size = new Size(676, 40);

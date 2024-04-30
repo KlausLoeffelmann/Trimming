@@ -67,8 +67,16 @@ public abstract partial class ModernTextEntry<T>
 
         _foreColorPen = new Pen(ForeColor, DefaultPenWidth);
 
-        _textBox = new ModernTextEntryTextBox(this);
-        _textBox.TabStop = true;
+        _textBox = new ModernTextEntryTextBox(this)
+        {
+            TabStop = true,
+            Name=this.Name + "_TextBox",
+        };
+
+        _textBox.TextChanged += (s, e) =>
+        {
+            Debug.Print($"Internal TextBox changed!");
+        };
 
         Controls.Add((Control)_textBox);
 
@@ -78,7 +86,7 @@ public abstract partial class ModernTextEntry<T>
         {
             // For the most cases, we don't need further instructions,
             // but they cannot be null.
-            AssistantInstructions = ""
+            AssistantInstructions = string.Empty
         };
     }
 
@@ -96,7 +104,7 @@ public abstract partial class ModernTextEntry<T>
     public abstract string FormatValue(T value);
 
     public abstract (bool parseSucceeded, T result) TryParseValue(
-        string text, 
+        string text,
         bool fromAi = false);
 
     /// <summary>
@@ -114,46 +122,50 @@ public abstract partial class ModernTextEntry<T>
             return (true, result);
         }
 
-        if (MakeItIntelligent && _skComponent is SemanticKernelBaseComponent skComponent)
+        if (!MakeItIntelligent 
+            || _skComponent is not SemanticKernelBaseComponent skComponent)
         {
-            if (string.IsNullOrEmpty(skComponent.ApiKey))
-            {
-                throw new ArgumentException("The Semantic Kernel ApiKey property is not set.");
-            }
-
-            if (Spinner is { })
-            {
-                Spinner.IsSpinning = true;
-            }
-
-            try
-            {
-                SuspendValidationEvent();
-                var resultString = await skComponent.RequestPromptProcessingAsync(
-                    typeof(T).Name,
-                    text);
-
-                if (string.IsNullOrWhiteSpace(resultString))
-                {
-                    ValidationResult = "The request did not yield a result!";
-                    return (false, default!);
-                }
-
-                // Let's try to JSON-parse the result:
-                return TryParseJsonResultString(resultString);
-
-            }
-            finally
-            {
-                if (Spinner is { })
-                {
-                    Spinner.IsSpinning = false;
-                }
-                ResumeValidationEvent();
-            }
+            return TryParseValue(text);
         }
 
-        return TryParseValue(text);
+        if (string.IsNullOrEmpty(skComponent.ApiKey))
+        {
+            throw new ArgumentException("The Semantic Kernel ApiKey property is not set.");
+        }
+
+        if (Spinner is { })
+        {
+            Spinner.IsSpinning = true;
+        }
+
+        ValidationResult = $"{ValidationResult} - Asking for suggestions! [{DateTime.Now:HH:mm:ss}]";
+
+        try
+        {
+            SuspendValidationEvent();
+            var resultString = await skComponent.RequestPromptProcessingAsync(
+                typeof(T).Name,
+                text);
+
+            if (string.IsNullOrWhiteSpace(resultString))
+            {
+                ValidationResult = "The request did not yield a result!";
+                return (false, default!);
+            }
+
+            // Let's try to JSON-parse the result:
+            return TryParseJsonResultString(resultString);
+        }
+
+        finally
+        {
+            if (Spinner is { })
+            {
+                Spinner.IsSpinning = false;
+            }
+
+            ResumeValidationEvent();
+        }
     }
 
     // Generic method to send a message and parse the JSON response to a specific type.
@@ -178,27 +190,26 @@ public abstract partial class ModernTextEntry<T>
             else if (root.TryGetProperty("errorMessage", out JsonElement errorMessageElement))
             {
                 string errorMessage = errorMessageElement.GetString()!;
-                ValidationResult = errorMessage;
-                
+                ValidationResult = $"We got an issue processing the results:\n{errorMessage}";
+
                 return (false, default!);
             }
             else
             {
-                ValidationResult = "Invalid JSON response: Neither 'returnValue' nor 'errorMessage' property found.";
-                
+                ValidationResult = $"We got an issue processing the results:\nThe returned data was unclear.";
                 return (false, default!);
             }
         }
         catch (JsonException jEx)
         {
-            ValidationResult = $"Could not parse the JSON response: {jEx.Message}";
-            
+            ValidationResult = $"We got an issue processing the results:\n{jEx.Message}";
+
             return (false, default!);
         }
         catch (Exception ex)
         {
-            ValidationResult = $"Could not parse the JSON response: {ex.Message}";
-            
+            ValidationResult = $"We got an issue processing the results:\n{ex.Message}";
+
             return (false, default!);
         }
     }
@@ -239,7 +250,7 @@ public abstract partial class ModernTextEntry<T>
             // So, "holding" the focus doesn't make sense. Instead, we're delaying or preventing
             // updating the value, if the validation fails, in which case, we would set the
             // ValidationResult property.
-            base.OnValidating(e);
+            // base.OnValidating(e);
 
             // TODO: Introduce cancellation token, so another validation would cancel the current one.
             // TODO: Also, cancel the parsing, if the control receives a new value or another keystroke.
@@ -259,6 +270,7 @@ public abstract partial class ModernTextEntry<T>
             // TODO: Give a derived control the chance to provide a more detailed error message.
             ValidationResult = "Could not retrieve a value based on the context provided.";
             Debug.Print($"Validation failed for {Name}: {ex.Message}");
+            ValueInternal = default!;
         }
     }
 
@@ -347,6 +359,12 @@ public abstract partial class ModernTextEntry<T>
             }
 
             _validationResult = value;
+
+            if (!String.IsNullOrWhiteSpace(_validationResult))
+            {
+                ((IModernTextEntry)this).CachedValue = (default!, false);
+            }
+
             OnValidationResultChangedInternal();
             OnValidationResultChanged(EventArgs.Empty);
         }
@@ -357,14 +375,28 @@ public abstract partial class ModernTextEntry<T>
 
     private void OnValidationResultChangedInternal()
     {
-        if (string.IsNullOrWhiteSpace(_validationResult))
-        {
-            _tooltip?.Dispose();
-        }
-        else
+        _tooltip?.Dispose();
+
+        if (!string.IsNullOrWhiteSpace(_validationResult))
         {
             _tooltip = new ToolTip();
-            _tooltip.Show(ValidationResult, this, 0, -25, 2000);
+            if (ValidationResult?.IndexOf('[') > -1)
+            {
+                _tooltip.ToolTipTitle = "Connecting...";
+            }
+
+            bool hasTitle = !string.IsNullOrWhiteSpace(_tooltip.ToolTipTitle);
+
+            _tooltip.Show(
+                text: ValidationResult,
+                window: this,
+                x: 0,
+                y: !hasTitle
+                    ? -50
+                    : -80,
+                duration: !hasTitle
+                    ? 6000
+                    : 3500);
         }
     }
 

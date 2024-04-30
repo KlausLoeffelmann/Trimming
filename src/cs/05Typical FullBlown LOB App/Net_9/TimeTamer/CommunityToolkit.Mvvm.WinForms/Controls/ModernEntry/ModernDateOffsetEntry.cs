@@ -20,7 +20,7 @@ public class ModernDateOffsetEntry : ModernTextEntry<DateTimeOffset?>
             return (true, result);
         }
 
-        ValidationResult = "Could not parse the entry into a valid Date value.";
+        ValidationResult = "Could convert to a valid Date!";
         return (false, default);
     }
 
