@@ -5,22 +5,55 @@ using TaskTamer.DTOs;
 namespace TaskTamer9.WinForms.Views
 {
     [ToolboxItem(true)]
-    public partial class TaskItemView : GridViewItemTemplate
+    public partial class TaskViewItem : GridViewItemTemplate
     {
-        private Font _taskNameFont = new("Segoe UI", 14, FontStyle.Bold);
-        private Font _taskDescriptionFont = new("Segoe UI", 11, FontStyle.Regular);
+        private Font _taskNameFont = new("Segoe UI", 16, FontStyle.Bold);
+        private Font _taskDescriptionFont = new("Segoe UI", 14, FontStyle.Regular);
+        private Font _taskDetailsFont = new("Segoe UI", 11, FontStyle.Regular);
 
-        public TaskItemView()
+        private int _leadingOffset = 60;
+
+        public TaskViewItem()
         {
             _taskName = string.Empty;
             TaskStatus = TaskItemStatus.Undefined;
+        }
+
+        [Bindable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [Browsable(true)]
+        public Font NameFont
+        {
+            get => _taskNameFont;
+            set
+            {
+                if (_taskNameFont == value)
+                    return;
+
+                _taskNameFont = value;
+            }
+        }
+
+        [Bindable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [Browsable(true)]
+        public Font DescriptionFont
+        {
+            get => _taskNameFont;
+            set
+            {
+                if (_taskNameFont == value)
+                    return;
+
+                _taskNameFont = value;
+            }
         }
 
         protected override Size GetPreferredSize(Size restrictedSize)
         {
             // For simplicity, we just return a fixed size for the height.
             // But we can as well calculate the height based on the content.
-            return new(restrictedSize.Width, 100);
+            return new(restrictedSize.Width, 140);
         }
 
         protected override void OnPaintContent(PaintEventArgs e, Rectangle clipBounds, bool isMouseOver)
@@ -31,8 +64,8 @@ namespace TaskTamer9.WinForms.Views
             // Here we're painting the context of the TaskViewItem:
             DrawBackground(e.Graphics, clipBounds, isMouseOver);
             DrawTaskCheckedRadioButton(e.Graphics, clipBounds);
-            DrawTaskName(e.Graphics, clipBounds);
-            DrawEllipsedTaskDescription(e.Graphics, clipBounds);
+            int taskNameHeight = DrawTaskName(e.Graphics, clipBounds);
+            DrawEllipsedTaskDescription(e.Graphics, clipBounds, taskNameHeight);
             DrawDueDate(e.Graphics, clipBounds);
         }
 
@@ -42,7 +75,10 @@ namespace TaskTamer9.WinForms.Views
                 ? base.HighlightedBackgroundColorBrush
                 : base.ItemBackgroundColorBrush;
 
-            graphics.FillRoundedRectangle(backgroundColorBrush, clipBounds, new(10, 10));
+            graphics.FillRoundedRectangle(
+                backgroundColorBrush, 
+                clipBounds, 
+                new(10, 10));
         }
 
         private void DrawTaskCheckedRadioButton(Graphics graphics, Rectangle clipBounds)
@@ -73,20 +109,18 @@ namespace TaskTamer9.WinForms.Views
                 buttonState);
         }
 
-        private void DrawTaskName(Graphics graphics, Rectangle clipBounds)
+        private int DrawTaskName(Graphics graphics, Rectangle clipBounds)
         {
-            // Should be painted on the top left corner of the TaskViewItem.
+            // We need to draw it ellipsed if it's too long:
+            var taskNameSize = TextRenderer.MeasureText(TaskName, _taskNameFont);
 
             RectangleF taskNameBounds = new(
-                x: clipBounds.Left + 60,
-                y: clipBounds.Top + 15,
-                width: clipBounds.Width - 60,
-                height: 30);
+                x: clipBounds.Left + _leadingOffset,
+                y: clipBounds.Top + ContentPadding.Top,
+                width: clipBounds.Width - _leadingOffset,
+                height: taskNameSize.Height);
 
-            // We need to draw it ellipsed if it's too long:
-            var taskName = TextRenderer.MeasureText(TaskName, _taskNameFont);
-
-            if (taskName.Width > taskNameBounds.Width)
+            if (taskNameSize.Width > taskNameBounds.Width)
             {
                 TextRenderer.DrawText(
                     graphics,
@@ -101,51 +135,48 @@ namespace TaskTamer9.WinForms.Views
                 var brush = new SolidBrush(HighlightFontColor);
                 graphics.DrawString(TaskName, _taskNameFont, brush, taskNameBounds);
             }
+
+            return taskNameSize.Height;
         }
 
-        private void DrawEllipsedTaskDescription(Graphics graphics, Rectangle clipBounds)
+        private void DrawEllipsedTaskDescription(Graphics graphics, Rectangle clipBounds, int taskNameHeight)
         {
-            RectangleF taskDescriptionBounds = new(
+            Rectangle taskDescriptionBounds = new(
                 x: clipBounds.Left + 60,
-                y: clipBounds.Top + 60,
-                width: clipBounds.Width - 60,
-                height: 80);
+                y: clipBounds.Top + taskNameHeight + ContentPadding.Top + LineSpacing,
+                width: clipBounds.Width - 300,
+                height: (int)(_taskDescriptionFont.GetHeight() * 2) + 20);
 
-            // We need to draw it ellipsed if it's too long:
-            var taskDescription = TextRenderer.MeasureText(TaskDescription, _taskDescriptionFont);
-            if (taskDescription.Width > taskDescriptionBounds.Width)
-            {
-                TextRenderer.DrawText(
-                    graphics,
-                    TaskDescription,
-                    _taskDescriptionFont,
-                    Rectangle.Round(taskDescriptionBounds),
-                    StandardFontColor,
-                    TextFormatFlags.EndEllipsis);
-            }
-            else
-            {
-                var brush = new SolidBrush(StandardFontColor);
-                graphics.DrawString(TaskDescription, _taskDescriptionFont, brush, taskDescriptionBounds);
-            }
+            // Now, we're measuring the multi-line height:
+            TextRenderer.DrawText(
+                graphics,
+                TaskDescription,
+                _taskDescriptionFont,
+                taskDescriptionBounds,
+                StandardFontColor,
+                TextFormatFlags.WordEllipsis | TextFormatFlags.WordBreak);
         }
 
         private void DrawDueDate(Graphics graphics, Rectangle clipBounds)
         {
+            string dueDate = DueDate?.ToString("ddd, MM/dd/yyyy HH:mm (K)") ?? "No Due Date";
+
+            // We need to draw it ellipsed if it's too long:
+            var dueDateSize = TextRenderer.MeasureText(dueDate, _taskDetailsFont);
+
             RectangleF dueDateBounds = new(
-                x: clipBounds.Right - 100,
-                y: clipBounds.Top + 10,
-                width: 90,
-                height: 20);
+                x: clipBounds.Right - (ContentPadding.Right + Padding.Right + Padding.Left + dueDateSize.Width + clipBounds.X),
+                y: clipBounds.Top + ContentPadding.Top,
+                width: dueDateSize.Width,
+                height: dueDateSize.Height);
 
             var brush = new SolidBrush(StandardFontColor);
 
             graphics.DrawString(
-                DueDate?.ToString("dd/MM/yyyy") ?? "No Due Date",
-                _taskDescriptionFont,
+                dueDate,
+                _taskDetailsFont,
                 brush,
                 dueDateBounds);
         }
     }
-
 }

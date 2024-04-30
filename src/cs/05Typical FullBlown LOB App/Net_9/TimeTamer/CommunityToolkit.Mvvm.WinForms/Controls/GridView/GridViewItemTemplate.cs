@@ -9,6 +9,9 @@ namespace DemoToolkit.Mvvm.WinForms.Controls;
 public abstract partial class GridViewItemTemplate : BindableComponent, INotifyPropertyChanged
 {
     private static readonly Padding DefaultPadding = new Padding(5, 5, 5, 0);
+    private static readonly Padding DefaultContentPadding = new Padding(5, 10, 5, 5);
+
+    private const int DefaultLineSpacing = 10;
 
     protected static Color LightModeItemBackgroundColor = Color.FromArgb(255, 240, 240, 240);
     protected static Color DarkModeItemBackgroundColor = Color.FromArgb(255, 32, 32, 32);
@@ -41,10 +44,20 @@ public abstract partial class GridViewItemTemplate : BindableComponent, INotifyP
     /// <summary>
     /// Gets or sets the padding for the GridView item template.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public virtual Padding Padding { get; set; } = DefaultPadding;
 
-    private bool ShouldSerializePadding() => Padding == DefaultPadding;
+    private bool ShouldSerializePadding() => Padding != DefaultPadding;
     private void ResetPadding() => Padding = DefaultPadding;
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public virtual Padding ContentPadding { get; set; } = DefaultContentPadding;
+    private bool ShouldSerializeContentPadding() => ContentPadding != DefaultContentPadding;
+    private void ResetContentPadding() => ContentPadding = DefaultContentPadding;
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [DefaultValue(DefaultLineSpacing)]
+    public virtual int LineSpacing { get; set; } = DefaultLineSpacing;
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     internal protected bool IsDarkMode { get; set; }

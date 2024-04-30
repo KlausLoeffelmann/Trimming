@@ -2,7 +2,7 @@
 
 namespace TaskTamer9.WinForms.Views
 {
-    public partial class TaskItemView : GridViewItemTemplate
+    public partial class TaskViewItem : GridViewItemTemplate
     {
         public event EventHandler? TaskNameChanged;
         public event EventHandler? TaskDescriptionChanged;
