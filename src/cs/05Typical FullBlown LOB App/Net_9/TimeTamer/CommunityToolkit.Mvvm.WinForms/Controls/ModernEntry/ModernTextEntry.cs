@@ -50,6 +50,7 @@ public abstract partial class ModernTextEntry<T>
     private Padding _textBoxPadding;
     private string? _originalInputText;
     private string? _validationResult;
+    private ToolTip? _tooltip;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ModernTextEntry{T}"/> class.
@@ -170,28 +171,34 @@ public abstract partial class ModernTextEntry<T>
             {
                 string rawValue = returnValueElement.GetString()!;
                 T parsedValue = TryParseValue(rawValue, true).result;
+                ValidationResult = string.Empty;
+
                 return (true, parsedValue);
             }
             else if (root.TryGetProperty("errorMessage", out JsonElement errorMessageElement))
             {
                 string errorMessage = errorMessageElement.GetString()!;
                 ValidationResult = errorMessage;
+                
                 return (false, default!);
             }
             else
             {
                 ValidationResult = "Invalid JSON response: Neither 'returnValue' nor 'errorMessage' property found.";
+                
                 return (false, default!);
             }
         }
         catch (JsonException jEx)
         {
             ValidationResult = $"Could not parse the JSON response: {jEx.Message}";
+            
             return (false, default!);
         }
         catch (Exception ex)
         {
             ValidationResult = $"Could not parse the JSON response: {ex.Message}";
+            
             return (false, default!);
         }
     }
@@ -241,6 +248,7 @@ public abstract partial class ModernTextEntry<T>
             if (parseSucceeded)
             {
                 ValueInternal = returnValue;
+                ValidationResult = string.Empty;
                 OnValueChanged();
 
                 return;
@@ -333,19 +341,32 @@ public abstract partial class ModernTextEntry<T>
         get => _validationResult;
         set
         {
-
             if (_validationResult == value)
             {
                 return;
             }
 
             _validationResult = value;
+            OnValidationResultChangedInternal();
             OnValidationResultChanged(EventArgs.Empty);
         }
     }
 
     protected virtual void OnValidationResultChanged(EventArgs e)
         => ValidationResultChanged?.Invoke(this, e);
+
+    private void OnValidationResultChangedInternal()
+    {
+        if (string.IsNullOrWhiteSpace(_validationResult))
+        {
+            _tooltip?.Dispose();
+        }
+        else
+        {
+            _tooltip = new ToolTip();
+            _tooltip.Show(ValidationResult, this, 0, -25, 2000);
+        }
+    }
 
     // Our cached value, once to was validated.
     (T actualValue, bool isCached) IModernTextEntry.CachedValue { get; set; }

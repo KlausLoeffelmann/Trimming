@@ -34,8 +34,8 @@ namespace TaskTamer.WinForms
             components = new System.ComponentModel.Container();
             _statusStrip = new StatusStrip();
             _lblSortOrder = new ToolStripStatusLabel();
-            _mainVmSource = new BindingSource(components);
             _lblSpringLabel = new ToolStripStatusLabel();
+            _mainVmSource = new BindingSource(components);
             _lblCurrentUser = new ToolStripStatusLabel();
             _lblDateTime = new ToolStripStatusLabel();
             _mainMenuStrip = new MenuStrip();
@@ -91,7 +91,7 @@ namespace TaskTamer.WinForms
             _statusStrip.GripStyle = ToolStripGripStyle.Visible;
             _statusStrip.ImageScalingSize = new Size(20, 20);
             _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSortOrder, _lblSpringLabel, _lblCurrentUser, _lblDateTime });
-            _statusStrip.Location = new Point(0, 470);
+            _statusStrip.Location = new Point(0, 415);
             _statusStrip.Margin = new Padding(0, 0, 3, 0);
             _statusStrip.Name = "_statusStrip";
             _statusStrip.Padding = new Padding(1, 0, 18, 0);
@@ -102,14 +102,9 @@ namespace TaskTamer.WinForms
             // 
             // _lblSortOrder
             // 
-            _lblSortOrder.DataBindings.Add(new Binding("Text", _mainVmSource, "SortOrder", true));
             _lblSortOrder.Name = "_lblSortOrder";
             _lblSortOrder.Size = new Size(98, 31);
             _lblSortOrder.Text = "#SortOrder#";
-            // 
-            // _mainVmSource
-            // 
-            _mainVmSource.DataSource = typeof(ViewModels.MainViewModel);
             // 
             // _lblSpringLabel
             // 
@@ -119,6 +114,10 @@ namespace TaskTamer.WinForms
             _lblSpringLabel.Spring = true;
             _lblSpringLabel.Text = "#SelectedTasksProjectSpring#";
             _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // _mainVmSource
+            // 
+            _mainVmSource.DataSource = typeof(ViewModels.MainViewModel);
             // 
             // _lblCurrentUser
             // 
@@ -227,7 +226,6 @@ namespace TaskTamer.WinForms
             // orderByLastModifiedToolStripMenuItem
             // 
             orderByLastModifiedToolStripMenuItem.CommandParameter = "LastModified";
-            orderByLastModifiedToolStripMenuItem.DataBindings.Add(new Binding("Command", _mainVmSource, "SetSortOrderCommand", true));
             orderByLastModifiedToolStripMenuItem.Name = "orderByLastModifiedToolStripMenuItem";
             orderByLastModifiedToolStripMenuItem.Size = new Size(240, 26);
             orderByLastModifiedToolStripMenuItem.Text = "Order by Last Modified";
@@ -280,7 +278,7 @@ namespace TaskTamer.WinForms
             _tasksGridView.Margin = new Padding(4);
             _tasksGridView.Name = "_tasksGridView";
             _tasksGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            _tasksGridView.Size = new Size(816, 223);
+            _tasksGridView.Size = new Size(816, 168);
             _tasksGridView.TabIndex = 1;
             _tasksGridView.VirtualMode = true;
             // 
@@ -303,7 +301,7 @@ namespace TaskTamer.WinForms
             // 
             _addTaskGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _addTaskGroupBox.Controls.Add(_tlpNewTaskOuter);
-            _addTaskGroupBox.Location = new Point(16, 284);
+            _addTaskGroupBox.Location = new Point(16, 229);
             _addTaskGroupBox.Margin = new Padding(4);
             _addTaskGroupBox.Name = "_addTaskGroupBox";
             _addTaskGroupBox.Padding = new Padding(3, 4, 3, 4);
@@ -464,13 +462,12 @@ namespace TaskTamer.WinForms
             _entNewTask.Size = new Size(676, 40);
             _entNewTask.Spinner = _dateParsingSpinner;
             _entNewTask.TabIndex = 0;
-            _entNewTask.Paint += _entNewTask_Paint;
             // 
             // FrmTaskTamerMain
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(846, 506);
+            ClientSize = new Size(846, 451);
             Controls.Add(_addTaskGroupBox);
             Controls.Add(_tasksGridView);
             Controls.Add(_statusStrip);

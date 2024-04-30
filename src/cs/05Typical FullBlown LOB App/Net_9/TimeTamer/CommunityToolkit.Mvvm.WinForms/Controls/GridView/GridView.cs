@@ -13,27 +13,25 @@ public partial class GridView : DataGridView
     private INotifyCollectionChanged? _observableCollection;
     private ICollection? _underlayingList;
 
-    private readonly Color DarkModeBackgroundColor = Color.FromArgb(255, 20, 20, 20);
-    private readonly Color LightModeBackgroundColor = Color.FromArgb(255, 164, 164, 164);
-    private readonly Color DarkModeSelectionColor = Color.FromArgb(255, 240, 240, 240);
-    private readonly Color LightModeSelectionColor = Color.FromArgb(255, 10, 10, 10);
+    private readonly Color DarkModeBackgroundColor 
+        = Color.FromArgb(255, 20, 20, 20);
+
+    private readonly Color LightModeBackgroundColor 
+        = Color.FromArgb(255, 164, 164, 164);
 
     private object? _selectedItem;
     private Pen _selectionPen;
-    private readonly Padding _selectionPadding = new(2, 2, 2, 2);
+    private readonly Padding _selectionPadding = new(4, 4, 4, 2);
 
     private Color ThemedDataGridBackground 
         => IsDarkModeEnabled 
         ? DarkModeBackgroundColor 
         : LightModeBackgroundColor;
 
-    private Color ThemedDataGridSelectionColor
-            => IsDarkModeEnabled
-        ? DarkModeSelectionColor
-        : LightModeSelectionColor;
-
     public GridView()
     {
+        _selectionPen = new(Application.SystemColors.WindowText, 2);
+
         AllowUserToAddRows = false;
         AllowUserToDeleteRows = false;
         AllowUserToOrderColumns = false;
@@ -46,8 +44,6 @@ public partial class GridView : DataGridView
         ColumnHeadersVisible = false;
         RowHeadersVisible = false;
         VirtualMode = true;
-
-        _selectionPen = new Pen(ThemedDataGridSelectionColor, 2);
     }
 
     [Bindable(false)]
@@ -204,22 +200,35 @@ public partial class GridView : DataGridView
     protected override void OnRowPostPaint(DataGridViewRowPostPaintEventArgs e)
     {
         if (e.RowIndex == -1)
+        {
             return;
+        }
 
         // Get the row
-        var currentRow = Rows[e.RowIndex];
+        DataGridViewRow currentRow = Rows[e.RowIndex];
 
         if (currentRow.Selected)
         {
-            // We're drawing a rounded rectangle around the selected row.
+            e.Graphics.SmoothingMode = 
+                System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            // We need the bounds of the row to paint the selection rectangle:
             var rowBounds = new Rectangle(
-                    e.RowBounds.Left, 
-                    e.RowBounds.Top, 
-                    e.RowBounds.Width - 1, 
-                    e.RowBounds.Height - 1)
+                    x: e.RowBounds.Left,
+                    y: e.RowBounds.Top,
+                    width: e.RowBounds.Width,
+                    height: e.RowBounds.Height)
+                // Don't look for it - that's an extension method I wrote :-)
                 .Pad(_selectionPadding);
 
-            e.Graphics.DrawRoundedRectangle(_selectionPen, rowBounds, new(10, 10));
+            e.Graphics
+                // New in .NET 9: DrawRoundedRectangle!
+                .DrawRoundedRectangle(
+                    // That pen color is dark-mode aware at this point.
+                    pen: _selectionPen,
+                    rect: rowBounds,
+                    // That's the radius of the rounded corners.
+                    radius: new(10, 10));
         }
     }
 
