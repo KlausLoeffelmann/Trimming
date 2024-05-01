@@ -10,12 +10,14 @@ public class SpinnerControl : Label
     private const string BootFontPath = "Boot\\Fonts_EX";
     private const string FontFileName = "segoe_slboot_EX.ttf";
 
-    // Just to know, how this works: This would produce the following string:
-    // "ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+    // Just to know, how this works: This...
     private char[] _simpleCharArray = CharSequence(65..96);
+    // ...would produce the following string:
+    // "ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
 
-    // Well - there is a special Font in the Windows Boot Folder, that - if we
-    // use a certain range of characters - will be doing something cool!
+    // Well - there is a special Font in the Windows Folder, that - if we
+    // use a certain range of characters - will be doing something really cool!
+    // Keep that in mind, when you're trying this!
     private char[] _charParts = CharSequence(0xE052..0xE0CB);
 
     private PrivateFontCollection _fontCollection;
@@ -84,11 +86,13 @@ public class SpinnerControl : Label
 
             while (await timer.WaitForNextTickAsync(cancellationToken))
             {
-                if (cancellationToken.IsCancellationRequested) break;
+                if (cancellationToken.IsCancellationRequested) 
+                    break;
 
                 if (IsHandleCreated)
                 {
-                    await InvokeAsync(
+                    // Control.InvokeAsync: On the roadmap for .NET 9!
+                    await this.InvokeAsync(
                         async () => await DrawSpinnerPartAsync(
                             partCount++,
                             cancellationToken),

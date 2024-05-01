@@ -34,8 +34,8 @@ namespace TaskTamer.WinForms
             components = new System.ComponentModel.Container();
             _statusStrip = new StatusStrip();
             _lblSortOrder = new ToolStripStatusLabel();
-            _lblSpringLabel = new ToolStripStatusLabel();
             _mainVmSource = new BindingSource(components);
+            _lblSpringLabel = new ToolStripStatusLabel();
             _lblCurrentUser = new ToolStripStatusLabel();
             _lblDateTime = new ToolStripStatusLabel();
             _mainMenuStrip = new MenuStrip();
@@ -102,9 +102,15 @@ namespace TaskTamer.WinForms
             // 
             // _lblSortOrder
             // 
+            _lblSortOrder.BackColor = Color.DeepSkyBlue;
+            _lblSortOrder.DataBindings.Add(new Binding("Text", _mainVmSource, "SortOrder", true));
             _lblSortOrder.Name = "_lblSortOrder";
             _lblSortOrder.Size = new Size(98, 31);
             _lblSortOrder.Text = "#SortOrder#";
+            // 
+            // _mainVmSource
+            // 
+            _mainVmSource.DataSource = typeof(ViewModels.MainViewModel);
             // 
             // _lblSpringLabel
             // 
@@ -114,10 +120,6 @@ namespace TaskTamer.WinForms
             _lblSpringLabel.Spring = true;
             _lblSpringLabel.Text = "#SelectedTasksProjectSpring#";
             _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // _mainVmSource
-            // 
-            _mainVmSource.DataSource = typeof(ViewModels.MainViewModel);
             // 
             // _lblCurrentUser
             // 
@@ -226,6 +228,7 @@ namespace TaskTamer.WinForms
             // orderByLastModifiedToolStripMenuItem
             // 
             orderByLastModifiedToolStripMenuItem.CommandParameter = "LastModified";
+            orderByLastModifiedToolStripMenuItem.DataBindings.Add(new Binding("Command", _mainVmSource, "SetSortOrderCommand", true));
             orderByLastModifiedToolStripMenuItem.Name = "orderByLastModifiedToolStripMenuItem";
             orderByLastModifiedToolStripMenuItem.Size = new Size(240, 26);
             orderByLastModifiedToolStripMenuItem.Text = "Order by Last Modified";

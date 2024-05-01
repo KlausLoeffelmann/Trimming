@@ -13,6 +13,9 @@ partial class FrmTaskTamerMain
     {
         base.CreateHandle();
 
+        //_lblSortOrder.Text = "Semantic Parsing active!";
+        //_lblSortOrder.ForeColor = Color.Red;
+
         // Hook-up the event handlers for the Form's Load event, and do the check there:
         Load += FrmTaskTamerMain_Load;
 
