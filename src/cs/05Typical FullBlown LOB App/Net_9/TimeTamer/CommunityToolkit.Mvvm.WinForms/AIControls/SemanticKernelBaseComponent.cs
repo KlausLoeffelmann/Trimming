@@ -1,6 +1,8 @@
 ﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Drawing.Design;
 using System.Globalization;
 
 namespace DemoToolkit.Mvvm.WinForms.AI;
@@ -22,6 +24,27 @@ public class SemanticKernelBaseComponent : BindableComponent
     [Browsable(false)]
     public string? ApiKey { get; set; }
 
+    [Bindable(true)]
+    [Browsable(true)]
+    [DefaultValue("string")]
+    [Category("AI")]
+    [Description("Gets or sets the .NET type name, the LLM should generate parsable string results for.")]
+    public string? PromptTypeName { get; set; } = "string";
+
+    [Bindable(true)]
+    [Browsable(true)]
+    [DefaultValue(null)]
+    [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+    [Category("AI")]
+    [Description("Gets or sets the value which the LLM should process based on the Assistant Instructions.")]
+    public string? PromptDataValue { get; set; }
+
+    [Bindable(true)]
+    [Browsable(true)]
+    [DefaultValue(null)]
+    [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+    [Category("AI")]
+    [Description("Gets or sets the general instructions how to process requests, which are provided via the PromptTypeName and the PromptDataValue properties.")]
     public string? AssistantInstructions { get; set; }
 
     public async Task<string?> RequestPromptProcessingAsync(

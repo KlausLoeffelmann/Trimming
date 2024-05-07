@@ -76,6 +76,7 @@ public class SpinnerControl : Label
         await SpinAsync(_cancellationTokenSource.Token);
     }
 
+    // Using the new WinForms API: Control.InvokeAsync
     private async Task SpinAsync(CancellationToken cancellationToken)
     {
         var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(20));
@@ -91,7 +92,7 @@ public class SpinnerControl : Label
 
                 if (IsHandleCreated)
                 {
-                    // Control.InvokeAsync: On the roadmap for .NET 9!
+                    // In test-phase for .NET 9: Control.InvokeAsync.
                     await this.InvokeAsync(
                         async () => await DrawSpinnerPartAsync(
                             partCount++,

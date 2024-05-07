@@ -143,6 +143,11 @@ public abstract partial class ModernTextEntry<T>
         try
         {
             SuspendValidationEvent();
+
+            // *******************************************************************************
+            // Here is where we're calling the OpenAI-(ChatGPT-4-Turbo in the case)-configured
+            // Semantic Kernel component:
+            // *******************************************************************************
             var resultString = await skComponent.RequestPromptProcessingAsync(
                 typeof(T).Name,
                 text);
