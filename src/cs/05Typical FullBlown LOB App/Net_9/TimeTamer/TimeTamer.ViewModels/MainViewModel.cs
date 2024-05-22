@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DemoToolkit.Mvvm.DesktopGeneric;
-using DemoToolkit.Mvvm.DesktopGeneric.ValueConverters;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using TaskTamer.DataLayer.Models;
 
@@ -37,16 +36,6 @@ public partial class MainViewModel : ObservableObject
     [property: TypeConverter(typeof(UserToStringConverter))]
     private UserViewModel? _currentUser;
 
-    // UserViewModel cannot be displayed directly. So, we tell the Binding engine:
-    // When you need to convert a User(ViewModel) into a string, use this converter.
-    private class UserToStringConverter : ValueConverter<UserViewModel>
-    {
-        protected override UserViewModel FromString(string value) => throw new NotImplementedException();
-
-        protected override string ToString(UserViewModel? value)
-            => $"{value?.FirstName} {value?.LastName}";
-    }
-
     ///// <summary>
     /////  Property, which will provide the list of tasks to be displayed in the MainView.
     ///// </summary>
@@ -60,9 +49,9 @@ public partial class MainViewModel : ObservableObject
     ///  Property, which will reflect the currently selected task in the MainView. This is a 2-way binding property.
     /// </summary>
     [ObservableProperty]
-    private TaskItem? _selectedTask;
+    private TaskViewModel? _selectedTask;
 
-    partial void OnSelectedTaskChanged(TaskItem? oldValue, TaskItem? newValue)
+    partial void OnSelectedTaskChanged(TaskViewModel? oldValue, TaskViewModel? newValue)
     {
         Debug.Print($"Selected Task changed from {oldValue} to {newValue}");
     }

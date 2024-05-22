@@ -43,6 +43,8 @@ partial class FrmTaskTamerMain
 
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
+        // TODO: Why is this true?
+        e.Cancel = false;
         base.OnFormClosing(e);
 
         if (WindowState == FormWindowState.Normal)

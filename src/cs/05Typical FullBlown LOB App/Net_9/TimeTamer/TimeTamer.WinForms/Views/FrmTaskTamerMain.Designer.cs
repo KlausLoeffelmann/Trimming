@@ -35,7 +35,7 @@ namespace TaskTamer.WinForms
             _statusStrip = new StatusStrip();
             _lblSortOrder = new ToolStripStatusLabel();
             _mainVmSource = new BindingSource(components);
-            _lblSpringLabel = new ToolStripStatusLabel();
+            _lblSelectedTasksProjectInfo = new ToolStripStatusLabel();
             _lblCurrentUser = new ToolStripStatusLabel();
             _lblDateTime = new ToolStripStatusLabel();
             _mainMenuStrip = new MenuStrip();
@@ -91,20 +91,20 @@ namespace TaskTamer.WinForms
             _statusStrip.GripMargin = new Padding(5);
             _statusStrip.GripStyle = ToolStripGripStyle.Visible;
             _statusStrip.ImageScalingSize = new Size(20, 20);
-            _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSortOrder, _lblSpringLabel, _lblCurrentUser, _lblDateTime });
-            _statusStrip.Location = new Point(0, 611);
+            _statusStrip.Items.AddRange(new ToolStripItem[] { _lblSortOrder, _lblSelectedTasksProjectInfo, _lblCurrentUser, _lblDateTime });
+            _statusStrip.Location = new Point(0, 549);
             _statusStrip.Margin = new Padding(0, 0, 3, 0);
             _statusStrip.Name = "_statusStrip";
             _statusStrip.Padding = new Padding(1, 0, 18, 0);
             _statusStrip.RenderMode = ToolStripRenderMode.ManagerRenderMode;
-            _statusStrip.Size = new Size(971, 36);
+            _statusStrip.Size = new Size(941, 36);
             _statusStrip.TabIndex = 3;
             _statusStrip.Text = "statusStrip1";
             // 
             // _lblSortOrder
             // 
             _lblSortOrder.BackColor = Color.DeepSkyBlue;
-            _lblSortOrder.DataBindings.Add(new Binding("Text", _mainVmSource, "SortOrder", true));
+            _lblSortOrder.DataBindings.Add(new Binding("Text", _mainVmSource, "SortOrder", true, DataSourceUpdateMode.OnPropertyChanged));
             _lblSortOrder.Name = "_lblSortOrder";
             _lblSortOrder.Size = new Size(98, 31);
             _lblSortOrder.Text = "#SortOrder#";
@@ -113,14 +113,14 @@ namespace TaskTamer.WinForms
             // 
             _mainVmSource.DataSource = typeof(ViewModels.MainViewModel);
             // 
-            // _lblSpringLabel
+            // _lblSelectedTasksProjectInfo
             // 
-            _lblSpringLabel.DataBindings.Add(new Binding("Text", _mainVmSource, "SelectedProject", true));
-            _lblSpringLabel.Name = "_lblSpringLabel";
-            _lblSpringLabel.Size = new Size(641, 31);
-            _lblSpringLabel.Spring = true;
-            _lblSpringLabel.Text = "#SelectedTasksProjectSpring#";
-            _lblSpringLabel.TextAlign = ContentAlignment.MiddleLeft;
+            _lblSelectedTasksProjectInfo.DataBindings.Add(new Binding("Text", _mainVmSource, "SelectedTask", true, DataSourceUpdateMode.Never));
+            _lblSelectedTasksProjectInfo.Name = "_lblSelectedTasksProjectInfo";
+            _lblSelectedTasksProjectInfo.Size = new Size(580, 31);
+            _lblSelectedTasksProjectInfo.Spring = true;
+            _lblSelectedTasksProjectInfo.Text = "#SelectedTasksProjectSpring#";
+            _lblSelectedTasksProjectInfo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // _lblCurrentUser
             // 
@@ -147,7 +147,7 @@ namespace TaskTamer.WinForms
             _mainMenuStrip.Location = new Point(0, 0);
             _mainMenuStrip.Name = "_mainMenuStrip";
             _mainMenuStrip.Padding = new Padding(13, 6, 6, 6);
-            _mainMenuStrip.Size = new Size(971, 37);
+            _mainMenuStrip.Size = new Size(941, 37);
             _mainMenuStrip.TabIndex = 0;
             _mainMenuStrip.Text = "menuStrip1";
             // 
@@ -220,7 +220,6 @@ namespace TaskTamer.WinForms
             // 
             // orderByDueDateToolStripMenuItem
             // 
-            orderByDueDateToolStripMenuItem.CommandParameter = "DueDate";
             orderByDueDateToolStripMenuItem.DataBindings.Add(new Binding("Command", _mainVmSource, "SetSortOrderCommand", true));
             orderByDueDateToolStripMenuItem.Name = "orderByDueDateToolStripMenuItem";
             orderByDueDateToolStripMenuItem.Size = new Size(240, 26);
@@ -228,7 +227,6 @@ namespace TaskTamer.WinForms
             // 
             // orderByLastModifiedToolStripMenuItem
             // 
-            orderByLastModifiedToolStripMenuItem.CommandParameter = "LastModified";
             orderByLastModifiedToolStripMenuItem.DataBindings.Add(new Binding("Command", _mainVmSource, "SetSortOrderCommand", true));
             orderByLastModifiedToolStripMenuItem.Name = "orderByLastModifiedToolStripMenuItem";
             orderByLastModifiedToolStripMenuItem.Size = new Size(240, 26);
@@ -236,7 +234,6 @@ namespace TaskTamer.WinForms
             // 
             // orderByStatusToolStripMenuItem
             // 
-            orderByStatusToolStripMenuItem.CommandParameter = "Status";
             orderByStatusToolStripMenuItem.DataBindings.Add(new Binding("Command", _mainVmSource, "SetSortOrderCommand", true));
             orderByStatusToolStripMenuItem.Name = "orderByStatusToolStripMenuItem";
             orderByStatusToolStripMenuItem.Size = new Size(240, 26);
@@ -274,7 +271,7 @@ namespace TaskTamer.WinForms
             _tasksGridView.AllowUserToDeleteRows = false;
             _tasksGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _tasksGridView.BorderStyle = BorderStyle.None;
-            _tasksGridView.DataBindings.Add(new Binding("SelectedItem", _mainVmSource, "SelectedProject", true, DataSourceUpdateMode.OnPropertyChanged));
+            _tasksGridView.DataBindings.Add(new Binding("SelectedItem", _mainVmSource, "SelectedTask", true, DataSourceUpdateMode.OnPropertyChanged));
             _tasksGridView.DataBindings.Add(new Binding("DataContext", _mainVmSource, "Tasks", true));
             _tasksGridView.DataContext = null;
             _tasksGridView.GridViewItemTemplate = _taskViewItem;
@@ -282,7 +279,7 @@ namespace TaskTamer.WinForms
             _tasksGridView.Margin = new Padding(4);
             _tasksGridView.Name = "_tasksGridView";
             _tasksGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            _tasksGridView.Size = new Size(941, 364);
+            _tasksGridView.Size = new Size(911, 302);
             _tasksGridView.TabIndex = 1;
             _tasksGridView.VirtualMode = true;
             // 
@@ -305,11 +302,11 @@ namespace TaskTamer.WinForms
             // 
             _addTaskGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             _addTaskGroupBox.Controls.Add(_tlpNewTaskOuter);
-            _addTaskGroupBox.Location = new Point(16, 425);
+            _addTaskGroupBox.Location = new Point(16, 363);
             _addTaskGroupBox.Margin = new Padding(4);
             _addTaskGroupBox.Name = "_addTaskGroupBox";
             _addTaskGroupBox.Padding = new Padding(3, 4, 3, 4);
-            _addTaskGroupBox.Size = new Size(941, 173);
+            _addTaskGroupBox.Size = new Size(911, 173);
             _addTaskGroupBox.TabIndex = 2;
             _addTaskGroupBox.TabStop = false;
             _addTaskGroupBox.Text = "Add a new task:";
@@ -331,7 +328,7 @@ namespace TaskTamer.WinForms
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle());
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle());
             _tlpNewTaskOuter.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            _tlpNewTaskOuter.Size = new Size(871, 111);
+            _tlpNewTaskOuter.Size = new Size(841, 111);
             _tlpNewTaskOuter.TabIndex = 0;
             // 
             // _tlpNewTaskParams
@@ -354,7 +351,7 @@ namespace TaskTamer.WinForms
             _tlpNewTaskParams.Name = "_tlpNewTaskParams";
             _tlpNewTaskParams.RowCount = 1;
             _tlpNewTaskParams.RowStyles.Add(new RowStyle());
-            _tlpNewTaskParams.Size = new Size(863, 48);
+            _tlpNewTaskParams.Size = new Size(833, 48);
             _tlpNewTaskParams.TabIndex = 0;
             // 
             // _lblProject
@@ -372,7 +369,7 @@ namespace TaskTamer.WinForms
             // 
             _lblDueDate.Anchor = AnchorStyles.Right;
             _lblDueDate.AutoSize = true;
-            _lblDueDate.Location = new Point(411, 11);
+            _lblDueDate.Location = new Point(396, 11);
             _lblDueDate.Margin = new Padding(32, 0, 4, 0);
             _lblDueDate.Name = "_lblDueDate";
             _lblDueDate.Size = new Size(94, 25);
@@ -392,7 +389,7 @@ namespace TaskTamer.WinForms
             _cmbProject.Margin = new Padding(3, 4, 3, 4);
             _cmbProject.Name = "_cmbProject";
             _cmbProject.SelectedBindingValue = null;
-            _cmbProject.Size = new Size(288, 33);
+            _cmbProject.Size = new Size(273, 33);
             _cmbProject.TabIndex = 1;
             // 
             // _projectsSource
@@ -405,11 +402,11 @@ namespace TaskTamer.WinForms
             _entDueDate.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             _entDueDate.AutoSize = true;
             _entDueDate.DataBindings.Add(new Binding("Value", _mainVmSource, "NewTaskDueDate", true, DataSourceUpdateMode.OnPropertyChanged));
-            _entDueDate.Location = new Point(512, 4);
+            _entDueDate.Location = new Point(497, 4);
             _entDueDate.MakeItIntelligent = true;
             _entDueDate.Margin = new Padding(3, 4, 3, 4);
             _entDueDate.Name = "_entDueDate";
-            _entDueDate.Size = new Size(288, 40);
+            _entDueDate.Size = new Size(273, 40);
             _entDueDate.Spinner = _dateParsingSpinner;
             _entDueDate.TabIndex = 3;
             // 
@@ -418,7 +415,7 @@ namespace TaskTamer.WinForms
             _dateParsingSpinner.Anchor = AnchorStyles.None;
             _dateParsingSpinner.AutoSize = true;
             _dateParsingSpinner.IsSpinning = false;
-            _dateParsingSpinner.Location = new Point(824, 11);
+            _dateParsingSpinner.Location = new Point(794, 11);
             _dateParsingSpinner.Name = "_dateParsingSpinner";
             _dateParsingSpinner.Size = new Size(17, 25);
             _dateParsingSpinner.TabIndex = 4;
@@ -440,7 +437,7 @@ namespace TaskTamer.WinForms
             _tlpNewTask.Name = "_tlpNewTask";
             _tlpNewTask.RowCount = 1;
             _tlpNewTask.RowStyles.Add(new RowStyle());
-            _tlpNewTask.Size = new Size(865, 48);
+            _tlpNewTask.Size = new Size(835, 48);
             _tlpNewTask.TabIndex = 1;
             // 
             // _btnNewTask
@@ -448,7 +445,7 @@ namespace TaskTamer.WinForms
             _btnNewTask.Anchor = AnchorStyles.None;
             _btnNewTask.DataBindings.Add(new Binding("Command", _mainVmSource, "AddTaskCommand", true));
             _btnNewTask.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            _btnNewTask.Location = new Point(810, 5);
+            _btnNewTask.Location = new Point(780, 5);
             _btnNewTask.Margin = new Padding(3, 4, 3, 0);
             _btnNewTask.Name = "_btnNewTask";
             _btnNewTask.Size = new Size(52, 42);
@@ -465,7 +462,7 @@ namespace TaskTamer.WinForms
             _entNewTask.MakeItIntelligent = true;
             _entNewTask.Margin = new Padding(3, 4, 3, 4);
             _entNewTask.Name = "_entNewTask";
-            _entNewTask.Size = new Size(801, 40);
+            _entNewTask.Size = new Size(771, 40);
             _entNewTask.Spinner = _dateParsingSpinner;
             _entNewTask.TabIndex = 0;
             // 
@@ -477,7 +474,7 @@ namespace TaskTamer.WinForms
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(971, 647);
+            ClientSize = new Size(941, 585);
             Controls.Add(_addTaskGroupBox);
             Controls.Add(_tasksGridView);
             Controls.Add(_statusStrip);
@@ -525,7 +522,7 @@ namespace TaskTamer.WinForms
         private ToolStripMenuItem _demoInvokeAsyncMenuItem;
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem optionsToolStripMenuItem;
-        private ToolStripStatusLabel _lblSpringLabel;
+        private ToolStripStatusLabel _lblSelectedTasksProjectInfo;
         private DemoToolkit.Mvvm.WinForms.Controls.GridView _tasksGridView;
         private TaskTamer9.WinForms.Views.TaskViewItem _taskItemView;
         private BindingSource _mainVmSource;

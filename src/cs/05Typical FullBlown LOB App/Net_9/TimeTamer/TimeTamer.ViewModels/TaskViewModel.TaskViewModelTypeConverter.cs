@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using TaskTamer.DataLayer.Models;
 
 namespace TaskTamer.ViewModels;
@@ -19,6 +20,9 @@ public partial class TaskViewModel
             object? value, 
             Type destinationType)
         {
+            if (Debugger.IsAttached)
+                Debugger.Break();
+
             if (destinationType == typeof(string))
             {
                 if (value is TaskItem taskItem)
