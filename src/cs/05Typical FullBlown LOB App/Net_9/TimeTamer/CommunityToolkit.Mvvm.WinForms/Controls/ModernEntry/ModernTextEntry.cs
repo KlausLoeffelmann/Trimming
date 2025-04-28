@@ -426,7 +426,7 @@ public abstract partial class ModernTextEntry<T>
     {
         base.CreateHandle();
 
-        if (!IsDarkModeEnabled)
+        if (!Application.IsDarkModeEnabled)
         {
             _textBox.BorderStyle = BorderStyle.Fixed3D;
         }

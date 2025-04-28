@@ -58,7 +58,7 @@ public abstract partial class ModernTextEntry<T>
                     height: Height));
         }
 
-        if (!IsDarkModeEnabled)
+        if (!Application.IsDarkModeEnabled)
         {
             return;
         }
@@ -78,7 +78,7 @@ public abstract partial class ModernTextEntry<T>
     /// <inheritdoc/>
     protected override void OnPaint(PaintEventArgs e)
     {
-        if (!IsDarkModeEnabled)
+        if (!Application.IsDarkModeEnabled)
         {
             return;
         }

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 public class ModernGroupBox : GroupBox
 {
     private static Color DefaultModernStyleBackColor
-        => Application.SystemColors.ControlLight;
+        => SystemColors.ControlLight;
 
     private static Rectangle DefaultTextMargin
         => new Rectangle(10, 0, 5, 10);
@@ -29,7 +29,7 @@ public class ModernGroupBox : GroupBox
 
         // Set the default title color to the parent's back color.
         // This will make the title color the same as the form's background.
-        TitleColor = Parent?.BackColor ?? Application.SystemColors.Control;
+        TitleColor = Parent?.BackColor ?? SystemColors.Control;
     }
 
     [DefaultValue(true)]
@@ -44,7 +44,7 @@ public class ModernGroupBox : GroupBox
         }
     }
 
-    private bool UseModernStyle => IsDarkModeEnabled || !ModernStyleInDarkModeOnly;
+    private bool UseModernStyle => Application.IsDarkModeEnabled || !ModernStyleInDarkModeOnly;
 
     public override Color BackColor
     {
@@ -70,7 +70,7 @@ public class ModernGroupBox : GroupBox
     {
         if (UseModernStyle)
         {
-            base.BackColor = Parent?.BackColor ?? Application.SystemColors.Control;
+            base.BackColor = Parent?.BackColor ?? SystemColors.Control;
         }
         else
         {
@@ -82,7 +82,7 @@ public class ModernGroupBox : GroupBox
     {
         // If the control is not in dark mode and the modern style is only for dark mode,
         // we render the base controls exactly as it was.
-        if (!IsDarkModeEnabled && ModernStyleInDarkModeOnly)
+        if (!Application.IsDarkModeEnabled && ModernStyleInDarkModeOnly)
         {
             base.OnPaint(e);
             return;
@@ -115,7 +115,7 @@ public class ModernGroupBox : GroupBox
     public Color TitleColor
     {
         get => _titleColor is null
-            ? Parent?.BackColor ?? Application.SystemColors.Control
+            ? Parent?.BackColor ?? SystemColors.Control
             : _titleColor.Value;
 
         set
@@ -133,7 +133,7 @@ public class ModernGroupBox : GroupBox
 
     private bool ShouldSerializeTitleColor() => _titleColor.HasValue;
 
-    private void ResetTitleColor() => TitleColor = Parent?.BackColor ?? Application.SystemColors.Control;
+    private void ResetTitleColor() => TitleColor = Parent?.BackColor ?? SystemColors.Control;
 
     public Rectangle TextMargin
     {

@@ -1,6 +1,7 @@
 ﻿using DemoToolkit.Mvvm.DesktopGeneric;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace DemoToolkit.Mvvm.WinForms.Services;
 
@@ -17,17 +18,56 @@ internal partial class WinFormsDialogService : IMvvmDialogService
     private IViewLocatorService<ContainerControl> ViewLocator
         => _viewLocator ??= _serviceProvider.GetRequiredService<IViewLocatorService<ContainerControl>>();
 
-    public Task ShowMessageAsync(string message, string title) 
-        => MessageBox.ShowAsync(message, title);
+    public async Task ShowMessageAsync(string message, string title)
+    {
+        var page = new TaskDialogPage()
+        {
+            Heading = title,
+            Text = message,
+            Buttons = [new TaskDialogButton("OK", true)],
+        };
+
+        await TaskDialog.ShowDialogAsync(page);
+    }
 
     public async Task<bool> ShowConfirmationAsync(string message, string title)
-        => await MessageBox.ShowAsync(message, title, MessageBoxButtons.YesNo) == DialogResult.Yes;
+    {
+        var page = new TaskDialogPage()
+        {
+            Heading = title,
+            Text = message,
+            Buttons = [new TaskDialogButton("OK", true)],
+        };
 
-    public Task ShowWarningAsync(string message, string title)
-        => MessageBox.ShowAsync(message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        var result = await TaskDialog.ShowDialogAsync(page);
+        return result == TaskDialogButton.Yes;
+    }
 
-    public Task ShowErrorAsync(string message, string title)
-        => MessageBox.ShowAsync(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+    public async Task ShowWarningAsync(string message, string title)
+    {
+        var page = new TaskDialogPage()
+        {
+            Heading = title,
+            Text = message,
+            Buttons = [new TaskDialogButton("OK", true)],
+            Icon = TaskDialogIcon.Warning
+        };
+
+        await TaskDialog.ShowDialogAsync(page);
+    }
+
+    public async Task ShowErrorAsync(string message, string title)
+    {
+        var page = new TaskDialogPage()
+        {
+            Heading = title,
+            Text = message,
+            Buttons = [new TaskDialogButton("OK", true)],
+            Icon = TaskDialogIcon.Error
+        };
+
+        await TaskDialog.ShowDialogAsync(page);
+    }
 
     public Task<string> RequestInputAsync(string message, string title, string defaultValue = "")
     {

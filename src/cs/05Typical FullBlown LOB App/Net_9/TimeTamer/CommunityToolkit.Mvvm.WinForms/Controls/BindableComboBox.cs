@@ -7,14 +7,8 @@ public class BindableComboBox : ComboBox
     public event EventHandler? BindingValueChanged;
 
     [Bindable(true)]
-    public object? SelectedBindingValue
-    {
-        get => SelectedIndex == -1
-            ? null
-            : Items[SelectedIndex];
-
-        set => SelectedItem = value;
-    }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public object? SelectedBindingValue { get => SelectedIndex == -1 ? null : Items[SelectedIndex]; set => SelectedItem = value; }
 
     protected override void OnSelectedIndexChanged(EventArgs e)
     {

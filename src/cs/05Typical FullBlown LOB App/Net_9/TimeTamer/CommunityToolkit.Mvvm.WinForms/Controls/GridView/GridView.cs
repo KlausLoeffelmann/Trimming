@@ -24,13 +24,13 @@ public partial class GridView : DataGridView
     private readonly Padding _selectionPadding = new(4, 4, 4, 2);
 
     private Color ThemedDataGridBackground 
-        => IsDarkModeEnabled 
+        => Application.IsDarkModeEnabled 
         ? DarkModeBackgroundColor 
         : LightModeBackgroundColor;
 
     public GridView()
     {
-        _selectionPen = new(Application.SystemColors.WindowText, 2);
+        _selectionPen = new(SystemColors.WindowText, 2);
 
         AllowUserToAddRows = false;
         AllowUserToDeleteRows = false;
@@ -49,11 +49,8 @@ public partial class GridView : DataGridView
     [Bindable(false)]
     [Browsable(true)]
     [AttributeProvider(typeof(IListSource))]
-    public new object? DataContext
-    {
-        get => base.DataContext;
-        set => base.DataContext = value;
-    }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public new object? DataContext { get => base.DataContext; set => base.DataContext = value; }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     [Bindable(true)]
@@ -125,7 +122,7 @@ public partial class GridView : DataGridView
 
             if (_gridViewItemTemplate is not null)
             {
-                _gridViewItemTemplate.IsDarkMode = IsDarkModeEnabled;
+                _gridViewItemTemplate.IsDarkMode =  Application.IsDarkModeEnabled;
             }
 
             OnGridViewItemTemplateChanged();

@@ -135,7 +135,7 @@ public class SpinnerControl : Label
         }
 
         Font = new Font(_fontCollection.Families[0], Font.Size + 2);
-        ForeColor = Application.SystemColors.HighlightText;
+        ForeColor = SystemColors.HighlightText;
     }
 
     private static char[] CharSequence(Range range)

@@ -11,7 +11,7 @@ public class ModernCommandButton : Button
     public ModernCommandButton()
     {
         _standardForeColor = new SolidBrush(ForeColor);
-        _highLightedForeColor = new SolidBrush(Application.SystemColors.HighlightText);
+        _highLightedForeColor = new SolidBrush(SystemColors.HighlightText);
     }
 
     protected override void OnMouseEnter(EventArgs e)

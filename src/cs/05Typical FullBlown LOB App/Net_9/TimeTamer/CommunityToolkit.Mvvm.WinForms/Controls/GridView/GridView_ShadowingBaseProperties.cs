@@ -110,11 +110,8 @@ public partial class GridView
 
     [Bindable(false)]
     [Browsable(false)]
-    public new object? DataSource
-    {
-        get => base.DataSource;
-        set => base.DataSource = value;
-    }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public new object? DataSource { get => base.DataSource; set => base.DataSource = value; }
 
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

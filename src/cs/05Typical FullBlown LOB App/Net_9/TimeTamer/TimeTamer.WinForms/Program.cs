@@ -1,3 +1,4 @@
+using System.Drawing.Imaging;
 using TaskTamer.ViewModels;
 using TaskTamer.WinForms.Views;
 
@@ -17,7 +18,8 @@ internal static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
 
-        Application.SetDefaultDarkMode(DarkMode.Enabled);
+        Application.SetColorMode(SystemColorMode.System);
+        Application.SetDefaultVisualStylesMode(VisualStylesMode.Latest);
 
         // We're registering the ViewModels and the view here:
         RegisterView<ProjectViewModel>(() => new FrmManageProjects());
